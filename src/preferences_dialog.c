@@ -272,20 +272,20 @@ rstto_preferences_dialog_init ( RsttoPreferencesDialog *dialog )
     /*
      * Configure the display tab
      */
-    display_main_vbox = gtk_vbox_new(FALSE, 0);
+    display_main_vbox = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
     display_main_lbl = gtk_label_new(_("Display"));
     gtk_notebook_append_page(GTK_NOTEBOOK(notebook), display_main_vbox, display_main_lbl);
 
     /**
      * Bg-color frame
      */
-    dialog->priv->display_tab.bgcolor_vbox = gtk_vbox_new (FALSE, 0);
+    dialog->priv->display_tab.bgcolor_vbox = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
     dialog->priv->display_tab.bgcolor_frame = xfce_gtk_frame_box_new_with_content(_("Background color"),
                                                                                  dialog->priv->display_tab.bgcolor_vbox);
     gtk_box_pack_start (GTK_BOX (display_main_vbox), dialog->priv->display_tab.bgcolor_frame, FALSE, FALSE, 0);
 
     dialog->priv->display_tab.bgcolor_override_check_button = gtk_check_button_new_with_label (_("Override background color:"));
-    dialog->priv->display_tab.bgcolor_hbox = gtk_hbox_new (FALSE, 4);
+    dialog->priv->display_tab.bgcolor_hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 4);
     dialog->priv->display_tab.bgcolor_color_button = gtk_color_button_new();
 
     gtk_box_pack_start (GTK_BOX (dialog->priv->display_tab.bgcolor_hbox), 
@@ -310,7 +310,7 @@ rstto_preferences_dialog_init ( RsttoPreferencesDialog *dialog )
     g_signal_connect (G_OBJECT (dialog->priv->display_tab.bgcolor_color_button), 
                       "color-set", G_CALLBACK (cb_bgcolor_color_set), dialog);
 
-    dialog->priv->display_tab.quality_vbox = gtk_vbox_new(FALSE, 0);
+    dialog->priv->display_tab.quality_vbox = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
     dialog->priv->display_tab.quality_frame = xfce_gtk_frame_box_new_with_content(_("Quality"), dialog->priv->display_tab.quality_vbox);
     gtk_box_pack_start (GTK_BOX (display_main_vbox), dialog->priv->display_tab.quality_frame, FALSE, FALSE, 0);
 
@@ -329,12 +329,12 @@ rstto_preferences_dialog_init ( RsttoPreferencesDialog *dialog )
     /*
      * Fullscreen tab
      */
-    fullscreen_main_vbox = gtk_vbox_new(FALSE, 0);
+    fullscreen_main_vbox = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
     fullscreen_main_lbl = gtk_label_new(_("Fullscreen"));
     gtk_notebook_append_page(GTK_NOTEBOOK(notebook), fullscreen_main_vbox, fullscreen_main_lbl);
 
 
-    dialog->priv->fullscreen_tab.thumbnail_vbox = gtk_vbox_new(FALSE, 0);
+    dialog->priv->fullscreen_tab.thumbnail_vbox = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
     dialog->priv->fullscreen_tab.thumbnail_frame = xfce_gtk_frame_box_new_with_content(_("Thumbnails"), dialog->priv->fullscreen_tab.thumbnail_vbox);
     gtk_box_pack_start (GTK_BOX (fullscreen_main_vbox), dialog->priv->fullscreen_tab.thumbnail_frame, FALSE, FALSE, 0);
 
@@ -348,7 +348,7 @@ rstto_preferences_dialog_init ( RsttoPreferencesDialog *dialog )
     gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (dialog->priv->fullscreen_tab.hide_thumbnails_fullscreen_check_button),
                                   bool_hide_thumbnails_fullscreen);
 
-    dialog->priv->fullscreen_tab.clock_vbox = gtk_vbox_new(FALSE, 0);
+    dialog->priv->fullscreen_tab.clock_vbox = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
     dialog->priv->fullscreen_tab.clock_frame = xfce_gtk_frame_box_new_with_content(_("Clock"), dialog->priv->fullscreen_tab.clock_vbox);
     gtk_box_pack_start (GTK_BOX (fullscreen_main_vbox), dialog->priv->fullscreen_tab.clock_frame, FALSE, FALSE, 0);
 
@@ -371,16 +371,16 @@ rstto_preferences_dialog_init ( RsttoPreferencesDialog *dialog )
     /*
      * Slideshow tab
      */
-    slideshow_main_vbox = gtk_vbox_new(FALSE, 0);
+    slideshow_main_vbox = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
     slideshow_main_lbl = gtk_label_new(_("Slideshow"));
     gtk_notebook_append_page(GTK_NOTEBOOK(notebook), slideshow_main_vbox, slideshow_main_lbl);
 
-    dialog->priv->slideshow_tab.timeout_vbox = gtk_vbox_new(FALSE, 0);
+    dialog->priv->slideshow_tab.timeout_vbox = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
     dialog->priv->slideshow_tab.timeout_frame = xfce_gtk_frame_box_new_with_content(_("Timeout"), dialog->priv->slideshow_tab.timeout_vbox);
     gtk_box_pack_start (GTK_BOX (slideshow_main_vbox), dialog->priv->slideshow_tab.timeout_frame, FALSE, FALSE, 0);
 
     timeout_lbl = gtk_label_new(_("The time period an individual image is displayed during a slideshow\n(in seconds)"));
-    timeout_hscale = gtk_hscale_new_with_range(1, 60, 1);
+    timeout_hscale = gtk_scale_new_with_range(GTK_ORIENTATION_HORIZONTAL, 1, 60, 1);
     gtk_misc_set_alignment(GTK_MISC(timeout_lbl), 0, 0.5);
     gtk_misc_set_padding(GTK_MISC(timeout_lbl), 2, 2);
 
@@ -396,11 +396,11 @@ rstto_preferences_dialog_init ( RsttoPreferencesDialog *dialog )
             dialog);
 
     
-    control_main_vbox = gtk_vbox_new(FALSE, 0);
+    control_main_vbox = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
     control_main_lbl = gtk_label_new(_("Control"));
     gtk_notebook_append_page(GTK_NOTEBOOK(notebook), control_main_vbox, control_main_lbl);
 
-    dialog->priv->control_tab.scroll_vbox = gtk_vbox_new(FALSE, 0);
+    dialog->priv->control_tab.scroll_vbox = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
     dialog->priv->control_tab.scroll_frame = xfce_gtk_frame_box_new_with_content(_("Scroll wheel"), dialog->priv->control_tab.scroll_vbox);
     gtk_box_pack_start (GTK_BOX (control_main_vbox), dialog->priv->control_tab.scroll_frame, FALSE, FALSE, 0);
 
@@ -417,12 +417,12 @@ rstto_preferences_dialog_init ( RsttoPreferencesDialog *dialog )
     /*
      * Behaviour tab
      */
-    behaviour_main_vbox = gtk_vbox_new(FALSE, 0);
+    behaviour_main_vbox = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
     behaviour_main_lbl = gtk_label_new(_("Behaviour"));
     gtk_notebook_append_page(GTK_NOTEBOOK(notebook), behaviour_main_vbox, behaviour_main_lbl);
 
     /********************************************/
-    dialog->priv->behaviour_tab.startup_vbox = gtk_vbox_new(FALSE, 0);
+    dialog->priv->behaviour_tab.startup_vbox = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
     dialog->priv->behaviour_tab.startup_frame = xfce_gtk_frame_box_new_with_content(_("Startup"), dialog->priv->behaviour_tab.startup_vbox);
     gtk_box_pack_start (GTK_BOX (behaviour_main_vbox), dialog->priv->behaviour_tab.startup_frame, FALSE, FALSE, 0);
     dialog->priv->behaviour_tab.maximize_window_on_startup_check_button = gtk_check_button_new_with_label (_("Maximize window on startup when opening an image"));
@@ -448,7 +448,7 @@ rstto_preferences_dialog_init ( RsttoPreferencesDialog *dialog )
             dialog);
 
     /********************************************/
-    dialog->priv->behaviour_tab.desktop_vbox = gtk_vbox_new(FALSE, 4);
+    dialog->priv->behaviour_tab.desktop_vbox = gtk_box_new(GTK_ORIENTATION_VERTICAL, 4);
     dialog->priv->behaviour_tab.desktop_frame = xfce_gtk_frame_box_new_with_content(
             _("Desktop"),
             dialog->priv->behaviour_tab.desktop_vbox);

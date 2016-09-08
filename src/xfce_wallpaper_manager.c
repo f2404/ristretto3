@@ -439,8 +439,8 @@ rstto_xfce_wallpaper_manager_init (GObject *object)
             G_CALLBACK (cb_saturation_adjustment_value_changed),
             manager);
 
-    brightness_slider = gtk_hscale_new (manager->priv->brightness_adjustment);
-    saturation_slider = gtk_hscale_new (manager->priv->saturation_adjustment);
+    brightness_slider = gtk_scale_new (GTK_ORIENTATION_HORIZONTAL, manager->priv->brightness_adjustment);
+    saturation_slider = gtk_scale_new (GTK_ORIENTATION_HORIZONTAL, manager->priv->saturation_adjustment);
     manager->priv->monitor_chooser = rstto_monitor_chooser_new ();
     manager->priv->style_combo = gtk_combo_box_text_new ();
 

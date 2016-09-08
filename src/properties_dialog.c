@@ -129,7 +129,7 @@ rstto_properties_dialog_init (RsttoPropertiesDialog *dialog)
     GtkWidget *table;
     /* General tab */
     GtkWidget *general_label;
-    GtkWidget *name_hbox = gtk_hbox_new (FALSE, 4);
+    GtkWidget *name_hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 4);
     GtkWidget *name_label = gtk_label_new(NULL);
     GtkWidget *mime_label = gtk_label_new(NULL);
 

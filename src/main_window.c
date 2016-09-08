@@ -738,7 +738,7 @@ rstto_main_window_init (RsttoMainWindow *window)
 {
     GtkAccelGroup   *accel_group;
     GtkWidget       *separator;
-    GtkWidget       *main_vbox = gtk_vbox_new (FALSE, 0);
+    GtkWidget       *main_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
     GtkRecentFilter *recent_filter;
     guint            window_width, window_height;
     gchar           *desktop_type = NULL;
@@ -3816,8 +3816,8 @@ rstto_main_window_launch_editor_chooser (
             NULL);
 
     content_area = gtk_dialog_get_content_area (GTK_DIALOG (dialog));
-    vbox = gtk_vbox_new (FALSE, 0);
-    hbox = gtk_hbox_new (FALSE, 0);
+    vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
+    hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
 
     g_icon = g_content_type_get_icon (content_type);
     image = gtk_image_new_from_gicon (g_icon,   GTK_ICON_SIZE_DIALOG);
