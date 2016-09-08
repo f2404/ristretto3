@@ -129,8 +129,8 @@ struct _RsttoXfceWallpaperManagerPriv
     GtkWidget *monitor_chooser;
     GtkWidget *style_combo;
     GtkWidget *check_button;
-    GtkObject *saturation_adjustment;
-    GtkObject *brightness_adjustment;
+    GtkAdjustment *saturation_adjustment;
+    GtkAdjustment *brightness_adjustment;
 
     GtkWidget *dialog;
 };
@@ -170,9 +170,9 @@ rstto_xfce_wallpaper_manager_configure_dialog_run (
         manager->priv->style = gtk_combo_box_get_active (
                 GTK_COMBO_BOX (manager->priv->style_combo));
         manager->priv->saturation = gtk_adjustment_get_value (
-                GTK_ADJUSTMENT (manager->priv->saturation_adjustment));
+                manager->priv->saturation_adjustment);
         manager->priv->brightness = (gint)gtk_adjustment_get_value (
-                GTK_ADJUSTMENT (manager->priv->brightness_adjustment));
+                manager->priv->brightness_adjustment);
         manager->priv->monitor = rstto_monitor_chooser_get_selected (
                 RSTTO_MONITOR_CHOOSER(manager->priv->monitor_chooser));
         manager->priv->workspace_mode = gtk_toggle_button_get_active (
@@ -192,11 +192,12 @@ rstto_xfce_wallpaper_manager_check_running (RsttoWallpaperManager *self)
 
     g_snprintf(selection_name, 100, XFDESKTOP_SELECTION_FMT, xscreen);
 
-    xfce_selection_atom = XInternAtom (gdk_display, selection_name, False);
+    // TODO: fix me
+    /*xfce_selection_atom = XInternAtom (gdk_display, selection_name, False);
     if((XGetSelectionOwner(GDK_DISPLAY(), xfce_selection_atom)))
     {
         return TRUE;
-    }
+    }*/
     return FALSE;
 }
 
@@ -404,11 +405,11 @@ rstto_xfce_wallpaper_manager_init (GObject *object)
             _("Set as wallpaper"),
             NULL,
             0,
-            GTK_STOCK_CANCEL,
+            _("_Cancel"),
             GTK_RESPONSE_CANCEL,
-            GTK_STOCK_APPLY,
+            _("_Apply"),
             GTK_RESPONSE_APPLY,
-            GTK_STOCK_OK,
+            _("_OK"),
             GTK_RESPONSE_OK,
             NULL);
     vbox = gtk_dialog_get_content_area ( GTK_DIALOG (manager->priv->dialog));
@@ -438,10 +439,8 @@ rstto_xfce_wallpaper_manager_init (GObject *object)
             G_CALLBACK (cb_saturation_adjustment_value_changed),
             manager);
 
-    brightness_slider = gtk_hscale_new (
-            GTK_ADJUSTMENT (manager->priv->brightness_adjustment));
-    saturation_slider = gtk_hscale_new (
-            GTK_ADJUSTMENT (manager->priv->saturation_adjustment));
+    brightness_slider = gtk_hscale_new (manager->priv->brightness_adjustment);
+    saturation_slider = gtk_hscale_new (manager->priv->saturation_adjustment);
     manager->priv->monitor_chooser = rstto_monitor_chooser_new ();
     manager->priv->style_combo = gtk_combo_box_text_new ();
 
@@ -881,8 +880,8 @@ configure_monitor_chooser_pixbuf (
 
     gint monitor_width = 0;
     gint monitor_height = 0;
-    gdouble saturation = gtk_adjustment_get_value (GTK_ADJUSTMENT(manager->priv->saturation_adjustment));
-    gdouble brightness = gtk_adjustment_get_value (GTK_ADJUSTMENT(manager->priv->brightness_adjustment));
+    gdouble saturation = gtk_adjustment_get_value (manager->priv->saturation_adjustment);
+    gdouble brightness = gtk_adjustment_get_value (manager->priv->brightness_adjustment);
 
     gint surface_width = 0;
     gint surface_height = 0;

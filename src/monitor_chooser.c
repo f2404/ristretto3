@@ -63,11 +63,13 @@ rstto_monitor_chooser_finalize(GObject *object);
 static void
 rstto_monitor_chooser_realize(GtkWidget *widget);
 static void
-rstto_monitor_chooser_size_request(GtkWidget *, GtkRequisition *);
+rstto_monitor_chooser_get_preferred_width(GtkWidget *, gint *, gint *);
+static void
+rstto_monitor_chooser_get_preferred_height(GtkWidget *, gint *, gint *);
 static void
 rstto_monitor_chooser_size_allocate(GtkWidget *, GtkAllocation *);
 static gboolean 
-rstto_monitor_chooser_expose(GtkWidget *, GdkEventExpose *);
+rstto_monitor_chooser_draw(GtkWidget *, cairo_t *);
 static gboolean
 rstto_monitor_chooser_paint(GtkWidget *widget);
 
@@ -147,9 +149,10 @@ rstto_monitor_chooser_class_init(RsttoMonitorChooserClass *chooser_class)
 
     parent_class = g_type_class_peek_parent(chooser_class);
 
-    widget_class->expose_event = rstto_monitor_chooser_expose;
+    widget_class->draw = rstto_monitor_chooser_draw;
     widget_class->realize = rstto_monitor_chooser_realize;
-    widget_class->size_request = rstto_monitor_chooser_size_request;
+    widget_class->get_preferred_width = rstto_monitor_chooser_get_preferred_width;
+    widget_class->get_preferred_height = rstto_monitor_chooser_get_preferred_height;
     widget_class->size_allocate = rstto_monitor_chooser_size_allocate;
 
     object_class->finalize = rstto_monitor_chooser_finalize;
@@ -200,9 +203,11 @@ rstto_monitor_chooser_realize(GtkWidget *widget)
     attributes.window_type = GDK_WINDOW_CHILD;
     attributes.event_mask = gtk_widget_get_events (widget) | GDK_EXPOSURE_MASK | GDK_BUTTON_PRESS_MASK;
     attributes.visual = gtk_widget_get_visual (widget);
-    attributes.colormap = gtk_widget_get_colormap (widget);
+    // TODO: comment out for now
+    //attributes.colormap = gtk_widget_get_colormap (widget);
 
-    attributes_mask = GDK_WA_X | GDK_WA_Y | GDK_WA_VISUAL | GDK_WA_COLORMAP;
+    // TODO: comment out for now
+    attributes_mask = GDK_WA_X | GDK_WA_Y | GDK_WA_VISUAL /*| GDK_WA_COLORMAP*/;
     window = gdk_window_new (gtk_widget_get_parent_window (widget), &attributes, attributes_mask);
     gtk_widget_set_window (widget, window);
 
@@ -215,10 +220,15 @@ rstto_monitor_chooser_realize(GtkWidget *widget)
 
 
 static void
-rstto_monitor_chooser_size_request(GtkWidget *widget, GtkRequisition *requisition)
+rstto_monitor_chooser_get_preferred_width(GtkWidget *widget, gint *minimal_width, gint *natural_width)
 {
-    requisition->height = 200;
-    requisition->width = 400;
+    *minimal_width = *natural_width = 400;
+}
+
+static void
+rstto_monitor_chooser_get_preferred_height(GtkWidget *widget, gint *minimal_height, gint *natural_height)
+{
+    *minimal_height = *natural_height = 200;
 }
 
 static void
@@ -236,7 +246,7 @@ rstto_monitor_chooser_size_allocate(GtkWidget *widget, GtkAllocation *allocation
 }
 
 static gboolean
-rstto_monitor_chooser_expose(GtkWidget *widget, GdkEventExpose *event)
+rstto_monitor_chooser_draw(GtkWidget *widget, cairo_t *cr)
 {
     rstto_monitor_chooser_paint (widget);
     return FALSE;

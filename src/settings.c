@@ -167,9 +167,9 @@ rstto_settings_init (GObject *object)
         gtk_accel_map_change_entry ("<Window>/previous-image", GDK_KEY_Page_Up, 0, FALSE);
         gtk_accel_map_change_entry ("<Window>/quit", GDK_KEY_q, 0, FALSE);
 
-        gtk_accel_map_change_entry ("<Window>/delete", GDK_Delete, GDK_SHIFT_MASK, FALSE);
+        gtk_accel_map_change_entry ("<Window>/delete", GDK_KEY_Delete, GDK_SHIFT_MASK, FALSE);
 
-        gtk_accel_map_change_entry ("<Window>/refresh", GDK_r, GDK_CONTROL_MASK, FALSE);
+        gtk_accel_map_change_entry ("<Window>/refresh", GDK_KEY_r, GDK_CONTROL_MASK, FALSE);
 
         gtk_accel_map_change_entry ("<Actions>/RsttoWindow/play", GDK_KEY_F5, 0, FALSE);
     }

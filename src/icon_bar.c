@@ -75,7 +75,7 @@ enum
 static GdkPixbuf *thumbnail_missing = NULL;
 
 static void
-rstto_icon_bar_destroy (GtkObject *object);
+rstto_icon_bar_destroy (GtkWidget *widget);
 
 static void
 rstto_icon_bar_finalize (GObject *object);
@@ -302,7 +302,6 @@ G_DEFINE_TYPE (RsttoIconBar, rstto_icon_bar, GTK_TYPE_CONTAINER)
 static void
 rstto_icon_bar_class_init (RsttoIconBarClass *klass)
 {
-    GtkObjectClass *gtkobject_class;
     GtkWidgetClass *gtkwidget_class;
     GObjectClass   *gobject_class;
 
@@ -312,9 +311,6 @@ rstto_icon_bar_class_init (RsttoIconBarClass *klass)
     gobject_class->finalize = rstto_icon_bar_finalize;
     gobject_class->get_property = rstto_icon_bar_get_property;
     gobject_class->set_property = rstto_icon_bar_set_property;
-
-    gtkobject_class = GTK_OBJECT_CLASS (klass);
-    gtkobject_class->destroy = rstto_icon_bar_destroy;
 
     gtkwidget_class = GTK_WIDGET_CLASS (klass);
     gtkwidget_class->style_set = rstto_icon_bar_style_set;
@@ -328,6 +324,7 @@ rstto_icon_bar_class_init (RsttoIconBarClass *klass)
     gtkwidget_class->scroll_event = rstto_icon_bar_scroll;
     gtkwidget_class->button_press_event = rstto_icon_bar_button_press;
     gtkwidget_class->button_release_event = rstto_icon_bar_button_release;
+    gtkwidget_class->destroy = rstto_icon_bar_destroy;
 
     klass->set_scroll_adjustments = rstto_icon_bar_set_adjustments;
 
@@ -530,13 +527,13 @@ rstto_icon_bar_init (RsttoIconBar *icon_bar)
 
 
 static void
-rstto_icon_bar_destroy (GtkObject *object)
+rstto_icon_bar_destroy (GtkWidget *widget)
 {
-    RsttoIconBar *icon_bar = RSTTO_ICON_BAR (object);
+    RsttoIconBar *icon_bar = RSTTO_ICON_BAR (widget);
 
     rstto_icon_bar_set_model (icon_bar, NULL);
 
-    (*GTK_OBJECT_CLASS (rstto_icon_bar_parent_class)->destroy) (object);
+    (*GTK_WIDGET_CLASS (rstto_icon_bar_parent_class)->destroy) (widget);
 }
 
 
