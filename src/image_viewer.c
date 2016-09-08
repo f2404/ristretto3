@@ -630,7 +630,7 @@ rstto_image_viewer_expose(GtkWidget *widget, GdkEventExpose *event)
     cairo_t *ctx;
 
     /* get a cairo_t */
-    ctx = gdk_cairo_create (gtk_widget_get_window (widget);
+    ctx = gdk_cairo_create (gtk_widget_get_window (widget));
 
     /* set a clip region for the expose event */
     if (FALSE == viewer->priv->auto_scale)

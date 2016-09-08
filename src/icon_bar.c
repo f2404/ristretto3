@@ -658,7 +658,7 @@ rstto_icon_bar_realize (GtkWidget *widget)
     RsttoIconBar   *icon_bar = RSTTO_ICON_BAR (widget);
     gint          attributes_mask;
     GtkAllocation allocation;
-    GtkWindow    *window;
+    GdkWindow    *window;
 
     GTK_WIDGET_SET_FLAGS (widget, GTK_REALIZED);
 

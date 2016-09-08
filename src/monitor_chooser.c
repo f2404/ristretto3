@@ -182,7 +182,7 @@ rstto_monitor_chooser_realize(GtkWidget *widget)
     GdkWindowAttr attributes;
     gint attributes_mask;
     GtkAllocation allocation;
-    GtkWindow *window;
+    GdkWindow *window;
 
     g_return_if_fail (widget != NULL);
     g_return_if_fail (RSTTO_IS_MONITOR_CHOOSER (widget));
