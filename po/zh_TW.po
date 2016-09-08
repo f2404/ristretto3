@@ -1,0 +1,903 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# 
+# Translators:
+# Cheng-Chia Tseng <pswo10680@gmail.com>, 2011
+# Jeff Huang <s8321414@gmail.com>, 2015-2016
+# Walter Cheuk <wwycheuk@gmail.com>, 2014
+msgid ""
+msgstr ""
+"Project-Id-Version: Xfce Apps\n"
+"Report-Msgid-Bugs-To: xfce-i18n@xfce.org\n"
+"POT-Creation-Date: 2016-07-03 18:31+0200\n"
+"PO-Revision-Date: 2016-07-04 08:17+0000\n"
+"Last-Translator: Jeff Huang <s8321414@gmail.com>\n"
+"Language-Team: Chinese (Taiwan) (http://www.transifex.com/xfce/xfce-apps/language/zh_TW/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: zh_TW\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: ../src/main.c:62
+msgid "Version information"
+msgstr "版本資訊"
+
+#: ../src/main.c:66
+msgid "Start in fullscreen mode"
+msgstr "以全螢幕模式啟動"
+
+#: ../src/main.c:70
+msgid "Start a slideshow"
+msgstr "開始投影片秀"
+
+#: ../src/main.c:78
+msgid "Show settings dialog"
+msgstr "顯示設定值對話窗"
+
+#: ../src/main.c:108
+#, c-format
+msgid ""
+"%s: %s\n"
+"\n"
+"Try %s --help to see a full list of\n"
+"available command line options.\n"
+msgstr "%s: %s\n\n試試 %s --help 來查看可用指令\n列選項的完整清單。\n"
+
+#: ../src/main_window.c:57 ../ristretto.desktop.in.h:3
+msgid "Image Viewer"
+msgstr "影像檢視器"
+
+#: ../src/main_window.c:367
+msgid "_File"
+msgstr "檔案(_F)"
+
+#. Icon-name
+#: ../src/main_window.c:371
+msgid "_Open..."
+msgstr "開啟(_O)..."
+
+#. Label-text
+#. Keyboard shortcut
+#: ../src/main_window.c:373
+msgid "Open an image"
+msgstr "開啟影像"
+
+#. Icon-name
+#: ../src/main_window.c:377
+msgid "_Save copy..."
+msgstr "儲存副本(_S)..."
+
+#. Label-text
+#. Keyboard shortcut
+#: ../src/main_window.c:379
+msgid "Save a copy of the image"
+msgstr "儲存一份該影像的副本"
+
+#. Icon-name
+#: ../src/main_window.c:383
+msgid "_Properties..."
+msgstr "屬性(_P)..."
+
+#. Label-text
+#. Keyboard shortcut
+#: ../src/main_window.c:385
+msgid "Show file properties"
+msgstr "顯示檔案屬性"
+
+#. Icon-name
+#: ../src/main_window.c:389 ../src/main_window.c:408
+msgid "_Edit"
+msgstr "編輯(_E)"
+
+#. Label-text
+#. Keyboard shortcut
+#: ../src/main_window.c:391
+msgid "Edit this image"
+msgstr "編輯此影像"
+
+#. Icon-name
+#: ../src/main_window.c:395
+msgid "_Close"
+msgstr "關閉(_C)"
+
+#. Label-text
+#. Keyboard shortcut
+#: ../src/main_window.c:397
+msgid "Close this image"
+msgstr "關閉此影像"
+
+#. Icon-name
+#: ../src/main_window.c:401
+msgid "_Quit"
+msgstr "退出(_Q)"
+
+#. Label-text
+#. Keyboard shortcut
+#: ../src/main_window.c:403
+msgid "Quit Ristretto"
+msgstr "退出 Ristretto"
+
+#: ../src/main_window.c:412
+msgid "_Open with"
+msgstr "以此開啟(_O)："
+
+#: ../src/main_window.c:416
+msgid "_Sorting"
+msgstr "排序(_S)"
+
+#. Icon-name
+#: ../src/main_window.c:420
+msgid "_Delete"
+msgstr "刪除(_D)"
+
+#. Label-text
+#. Keyboard shortcut
+#: ../src/main_window.c:422
+msgid "Delete this image from disk"
+msgstr "從磁碟刪除此影像"
+
+#. Icon-name
+#: ../src/main_window.c:426
+msgid "_Clear private data..."
+msgstr "清除隱私資料(_C)..."
+
+#. Icon-name
+#: ../src/main_window.c:432
+msgid "_Preferences..."
+msgstr "偏好設定(_P)..."
+
+#: ../src/main_window.c:439
+msgid "_View"
+msgstr "檢視(_V)"
+
+#. Icon-name
+#: ../src/main_window.c:443
+msgid "_Fullscreen"
+msgstr "全螢幕(_F)"
+
+#. Label-text
+#. Keyboard shortcut
+#: ../src/main_window.c:445
+msgid "Switch to fullscreen"
+msgstr "切換為全螢幕"
+
+#. Icon-name
+#: ../src/main_window.c:449
+msgid "_Leave Fullscreen"
+msgstr "離開全螢幕(_L)"
+
+#. Label-text
+#. Keyboard shortcut
+#: ../src/main_window.c:451
+msgid "Leave Fullscreen"
+msgstr "離開全螢幕"
+
+#. Icon-name
+#: ../src/main_window.c:455
+msgid "Set as _Wallpaper..."
+msgstr "設定為桌布(_W)..."
+
+#: ../src/main_window.c:462
+msgid "_Zoom"
+msgstr "遠近(_Z)"
+
+#. Icon-name
+#: ../src/main_window.c:466
+msgid "Zoom _In"
+msgstr "拉近(_I)"
+
+#. Label-text
+#. Keyboard shortcut
+#: ../src/main_window.c:468
+msgid "Zoom in"
+msgstr "拉近"
+
+#. Icon-name
+#: ../src/main_window.c:472
+msgid "Zoom _Out"
+msgstr "拉遠(_O)"
+
+#. Label-text
+#. Keyboard shortcut
+#: ../src/main_window.c:474
+msgid "Zoom out"
+msgstr "拉遠"
+
+#. Icon-name
+#: ../src/main_window.c:478
+msgid "Zoom _Fit"
+msgstr "拉至符合視窗(_F)"
+
+#. Label-text
+#. Keyboard shortcut
+#: ../src/main_window.c:480
+msgid "Zoom to fit window"
+msgstr "遠近拉至適應視窗"
+
+#. Icon-name
+#: ../src/main_window.c:484
+msgid "_Normal Size"
+msgstr "正常大小(_N)"
+
+#. Label-text
+#. Keyboard shortcut
+#: ../src/main_window.c:486
+msgid "Zoom to 100%"
+msgstr "遠近拉至 100%"
+
+#: ../src/main_window.c:491
+msgid "_Rotation"
+msgstr "旋轉(_R)"
+
+#. Icon-name
+#: ../src/main_window.c:495
+msgid "Rotate _Right"
+msgstr "向右旋轉(_R)"
+
+#. Icon-name
+#: ../src/main_window.c:501
+msgid "Rotate _Left"
+msgstr "向左旋轉(_L)"
+
+#: ../src/main_window.c:508
+msgid "_Go"
+msgstr "前往(_G)"
+
+#. Icon-name
+#: ../src/main_window.c:512
+msgid "_Forward"
+msgstr "前進(_F)"
+
+#. Label-text
+#. Keyboard shortcut
+#: ../src/main_window.c:514
+msgid "Next image"
+msgstr "下張影像"
+
+#. Icon-name
+#: ../src/main_window.c:518
+msgid "_Back"
+msgstr "返回(_B)"
+
+#. Label-text
+#. Keyboard shortcut
+#: ../src/main_window.c:520
+msgid "Previous image"
+msgstr "上張影像"
+
+#. Icon-name
+#: ../src/main_window.c:524
+msgid "F_irst"
+msgstr "第一張(_I)"
+
+#. Label-text
+#. Keyboard shortcut
+#: ../src/main_window.c:526
+msgid "First image"
+msgstr "第一張影像"
+
+#. Icon-name
+#: ../src/main_window.c:530
+msgid "_Last"
+msgstr "尾(_L)"
+
+#. Label-text
+#. Keyboard shortcut
+#: ../src/main_window.c:532
+msgid "Last image"
+msgstr "最後張影像"
+
+#: ../src/main_window.c:537
+msgid "_Help"
+msgstr "幫助(_H)"
+
+#. Icon-name
+#: ../src/main_window.c:541
+msgid "_Contents"
+msgstr "目錄(_C)"
+
+#. Label-text
+#. Keyboard shortcut
+#: ../src/main_window.c:543
+msgid "Display ristretto user manual"
+msgstr "顯示 ristretto 使用者手冊"
+
+#. Icon-name
+#: ../src/main_window.c:547
+msgid "_About"
+msgstr "關於(_A)"
+
+#. Label-text
+#. Keyboard shortcut
+#: ../src/main_window.c:549
+msgid "Display information about ristretto"
+msgstr "顯示有關 ristretto 的資訊"
+
+#: ../src/main_window.c:554
+msgid "_Position"
+msgstr "位置(_P)"
+
+#: ../src/main_window.c:558
+msgid "_Size"
+msgstr "大小(_S)"
+
+#: ../src/main_window.c:562
+msgid "Thumbnail Bar _Position"
+msgstr "縮圖列位置(_P)"
+
+#: ../src/main_window.c:566
+msgid "Thumb_nail Size"
+msgstr "縮圖大小(_N)"
+
+#. Icon-name
+#: ../src/main_window.c:571
+msgid "Leave _Fullscreen"
+msgstr "離開全螢幕(_F)"
+
+#. Icon-name
+#: ../src/main_window.c:587
+msgid "_Show Toolbar"
+msgstr "顯示工具列(_S)"
+
+#. Icon-name
+#: ../src/main_window.c:595
+msgid "Show _Thumbnail Bar"
+msgstr "顯示縮圖列(_T)"
+
+#. Icon-name
+#: ../src/main_window.c:603
+msgid "Show Status _Bar"
+msgstr "顯示狀態列(_B)"
+
+#. Icon-name
+#: ../src/main_window.c:616
+msgid "sort by filename"
+msgstr "依檔名排序"
+
+#. Icon-name
+#: ../src/main_window.c:623
+msgid "sort by date"
+msgstr "依日期排序"
+
+#. Icon-name
+#: ../src/main_window.c:634
+msgid "Left"
+msgstr "左"
+
+#: ../src/main_window.c:640
+msgid "Right"
+msgstr "右"
+
+#: ../src/main_window.c:646
+msgid "Top"
+msgstr "上"
+
+#: ../src/main_window.c:652
+msgid "Bottom"
+msgstr "下"
+
+#: ../src/main_window.c:663
+msgid "Very Small"
+msgstr "非常小"
+
+#: ../src/main_window.c:669
+msgid "Smaller"
+msgstr "更小"
+
+#: ../src/main_window.c:675
+msgid "Small"
+msgstr "小"
+
+#: ../src/main_window.c:681
+msgid "Normal"
+msgstr "正常"
+
+#: ../src/main_window.c:687
+msgid "Large"
+msgstr "大"
+
+#: ../src/main_window.c:693
+msgid "Larger"
+msgstr "更大"
+
+#: ../src/main_window.c:699
+msgid "Very Large"
+msgstr "非常大"
+
+#. Create Play/Pause Slideshow actions
+#: ../src/main_window.c:853
+msgid "_Play"
+msgstr "播放(_P)"
+
+#: ../src/main_window.c:853
+msgid "Play slideshow"
+msgstr "播放投影片秀"
+
+#: ../src/main_window.c:854
+msgid "_Pause"
+msgstr "暫停(_P)"
+
+#: ../src/main_window.c:854
+msgid "Pause slideshow"
+msgstr "暫停投影片秀"
+
+#. Create Recently used items Action
+#: ../src/main_window.c:857
+msgid "_Recently used"
+msgstr "近期使用(_R)"
+
+#: ../src/main_window.c:857
+msgid "Recently used"
+msgstr "近期使用"
+
+#: ../src/main_window.c:961 ../src/main_window.c:1527
+msgid "Press open to select an image"
+msgstr "按下開啟以選取影像"
+
+#: ../src/main_window.c:1386 ../src/main_window.c:1390
+msgid "Open With Other _Application..."
+msgstr "以其他應用程式開啟(_A)..."
+
+#: ../src/main_window.c:1411 ../src/main_window.c:1417
+msgid "Empty"
+msgstr "空"
+
+#: ../src/main_window.c:1537
+msgid "Loading..."
+msgstr "正在載入..."
+
+#: ../src/main_window.c:2141
+msgid "Choose 'set wallpaper' method"
+msgstr "選擇「設定桌布」方法"
+
+#: ../src/main_window.c:2156 ../src/preferences_dialog.c:464
+msgid ""
+"Configure which system is currently managing your desktop.\n"
+"This setting determines the method <i>Ristretto</i> will use\n"
+"to configure the desktop wallpaper."
+msgstr "設定目前管理您桌面的系統為何。\n這個設定值決定 <i>Ristretto</i> 用來\n設定桌布的方法。"
+
+#: ../src/main_window.c:2181 ../src/preferences_dialog.c:488
+msgid "None"
+msgstr "無"
+
+#: ../src/main_window.c:2185 ../src/preferences_dialog.c:492
+msgid "Xfce"
+msgstr "Xfce"
+
+#: ../src/main_window.c:2189 ../src/preferences_dialog.c:496
+msgid "GNOME"
+msgstr "GNOME"
+
+#: ../src/main_window.c:2629
+msgid "Developer:"
+msgstr "開發者："
+
+#: ../src/main_window.c:2638 ../ristretto.appdata.xml.in.h:1
+msgid "Ristretto is an image viewer for the Xfce desktop environment."
+msgstr "Ristretto 是個 Xfce 桌面環境的影像檢視器。"
+
+#: ../src/main_window.c:2646
+msgid "translator-credits"
+msgstr "Cheng-Chia Tseng <pswo10680@gmail.com>, 2011."
+
+#: ../src/main_window.c:2949
+msgid "Open image"
+msgstr "開啟影像"
+
+#: ../src/main_window.c:2968
+msgid "Images"
+msgstr "影像"
+
+#: ../src/main_window.c:2973
+msgid ".jp(e)g"
+msgstr ".jp(e)g"
+
+#: ../src/main_window.c:3000 ../src/main_window.c:3143
+msgid "Could not open file"
+msgstr "無法開啟檔案"
+
+#: ../src/main_window.c:3182
+msgid "Save copy"
+msgstr "儲存副本"
+
+#: ../src/main_window.c:3215
+msgid "Could not save file"
+msgstr "無法儲存檔案"
+
+#: ../src/main_window.c:3378
+#, c-format
+msgid "Are you sure you want to send image '%s' to trash?"
+msgstr "您確定要將「%s」影像傳送至垃圾桶嗎？"
+
+#: ../src/main_window.c:3382
+#, c-format
+msgid "Are you sure you want to delete image '%s' from disk?"
+msgstr "您確定要從磁碟刪除「%s」影像嗎？"
+
+#: ../src/main_window.c:3393
+msgid "_Do not ask again for this session"
+msgstr "在此工作階段不要再詢問(_D)"
+
+#: ../src/main_window.c:3464
+#, c-format
+msgid ""
+"An error occurred when deleting image '%s' from disk.\n"
+"\n"
+"%s"
+msgstr "從磁碟刪除「%s」影像時遭遇錯誤。\n\n%s"
+
+#: ../src/main_window.c:3468
+#, c-format
+msgid ""
+"An error occurred when sending image '%s' to trash.\n"
+"\n"
+"%s"
+msgstr "將「%s」影像傳送至垃圾桶時遭遇錯誤。\n\n%s"
+
+#: ../src/main_window.c:3804
+msgid "Edit with"
+msgstr "以此編輯："
+
+#: ../src/main_window.c:3822
+#, c-format
+msgid "Open %s and other files of type %s with:"
+msgstr "以此開啟 %s 與 %s 類型的其他檔案："
+
+#: ../src/main_window.c:3827
+msgid "Use as _default for this kind of file"
+msgstr "作為這類型檔案的預設值(_D)"
+
+#: ../src/main_window.c:3917
+msgid "Recommended Applications"
+msgstr "建議的應用程式"
+
+#: ../src/main_window.c:3997
+msgid "Other Applications"
+msgstr "其他應用程式"
+
+#: ../src/icon_bar.c:345
+msgid "Orientation"
+msgstr "方向"
+
+#: ../src/icon_bar.c:346
+msgid "The orientation of the iconbar"
+msgstr "圖示列的方向"
+
+#: ../src/icon_bar.c:362
+msgid "File column"
+msgstr "檔案欄"
+
+#: ../src/icon_bar.c:363
+msgid "Model column used to retrieve the file from"
+msgstr "用來從何處擷取檔案的模型欄"
+
+#: ../src/icon_bar.c:375
+msgid "Icon Bar Model"
+msgstr "圖示列模型"
+
+#: ../src/icon_bar.c:376
+msgid "Model for the icon bar"
+msgstr "圖示列的模型"
+
+#: ../src/icon_bar.c:392
+msgid "Active"
+msgstr "使用中"
+
+#: ../src/icon_bar.c:393
+msgid "Active item index"
+msgstr "使用中項目索引"
+
+#: ../src/icon_bar.c:409 ../src/icon_bar.c:410
+msgid "Show Text"
+msgstr "顯示文字"
+
+#: ../src/icon_bar.c:416 ../src/icon_bar.c:417
+msgid "Active item fill color"
+msgstr "使用中項目填充色彩"
+
+#: ../src/icon_bar.c:423 ../src/icon_bar.c:424
+msgid "Active item border color"
+msgstr "使用中項目邊緣色彩"
+
+#: ../src/icon_bar.c:430 ../src/icon_bar.c:431
+msgid "Active item text color"
+msgstr "使用中項目文字色彩"
+
+#: ../src/icon_bar.c:437 ../src/icon_bar.c:438
+msgid "Cursor item fill color"
+msgstr "游標項目填充色彩"
+
+#: ../src/icon_bar.c:444 ../src/icon_bar.c:445
+msgid "Cursor item border color"
+msgstr "游標項目邊緣色彩"
+
+#: ../src/icon_bar.c:451 ../src/icon_bar.c:452
+msgid "Cursor item text color"
+msgstr "游標項目文字色彩"
+
+#: ../src/privacy_dialog.c:152
+msgid "Time range to clear:"
+msgstr "要清除的時間範圍："
+
+#: ../src/privacy_dialog.c:156
+msgid "Cleanup"
+msgstr "清理"
+
+#: ../src/privacy_dialog.c:158
+msgid "Last Hour"
+msgstr "近一小時"
+
+#: ../src/privacy_dialog.c:159
+msgid "Last Two Hours"
+msgstr "近二小時"
+
+#: ../src/privacy_dialog.c:160
+msgid "Last Four Hours"
+msgstr "近四小時"
+
+#: ../src/privacy_dialog.c:161
+msgid "Today"
+msgstr "今天"
+
+#: ../src/privacy_dialog.c:162
+msgid "Everything"
+msgstr "每個"
+
+#: ../src/privacy_dialog.c:460
+msgid "Clear private data"
+msgstr "清除隱私資料"
+
+#: ../src/preferences_dialog.c:276
+msgid "Display"
+msgstr "顯示"
+
+#: ../src/preferences_dialog.c:283
+msgid "Background color"
+msgstr "背景色彩"
+
+#: ../src/preferences_dialog.c:287
+msgid "Override background color:"
+msgstr "凌駕背景色彩："
+
+#: ../src/preferences_dialog.c:314
+msgid "Quality"
+msgstr "品質"
+
+#: ../src/preferences_dialog.c:318
+msgid ""
+"With this option enabled, the maximum image-quality will be limited to the "
+"screen-size."
+msgstr "若啟用此選項，最大的影像品質會限制成螢幕大小。"
+
+#: ../src/preferences_dialog.c:321
+msgid "Limit rendering quality"
+msgstr "限制繪製品質"
+
+#: ../src/preferences_dialog.c:333
+msgid "Fullscreen"
+msgstr "全螢幕"
+
+#: ../src/preferences_dialog.c:338
+msgid "Thumbnails"
+msgstr "縮圖"
+
+#: ../src/preferences_dialog.c:341
+msgid ""
+"The thumbnail bar can be automatically hidden when the window is fullscreen."
+msgstr "當視窗全螢幕時縮圖列可以自動隱藏。"
+
+#: ../src/preferences_dialog.c:344
+msgid "Hide thumbnail bar when fullscreen"
+msgstr "全螢幕時隱藏縮圖列"
+
+#: ../src/preferences_dialog.c:352
+msgid "Clock"
+msgstr "時鐘"
+
+#: ../src/preferences_dialog.c:355
+msgid ""
+"Show an analog clock that displays the current time when the window is "
+"fullscreen"
+msgstr "當視窗全螢幕時顯示目前時間的類比式時鐘。"
+
+#: ../src/preferences_dialog.c:358
+msgid "Show Fullscreen Clock"
+msgstr "顯示全螢幕時鐘"
+
+#: ../src/preferences_dialog.c:375
+msgid "Slideshow"
+msgstr "投影片秀"
+
+#: ../src/preferences_dialog.c:379
+msgid "Timeout"
+msgstr "超出時限"
+
+#: ../src/preferences_dialog.c:382
+msgid ""
+"The time period an individual image is displayed during a slideshow\n"
+"(in seconds)"
+msgstr "投影片秀中各個影像顯示的時間\n(秒)"
+
+#: ../src/preferences_dialog.c:400
+msgid "Control"
+msgstr "控制"
+
+#: ../src/preferences_dialog.c:404
+msgid "Scroll wheel"
+msgstr "滑鼠滾輪"
+
+#: ../src/preferences_dialog.c:407
+msgid "Invert zoom direction"
+msgstr "反轉遠近方向"
+
+#: ../src/preferences_dialog.c:421
+msgid "Behaviour"
+msgstr "行為"
+
+#: ../src/preferences_dialog.c:426
+msgid "Startup"
+msgstr "初始啟動"
+
+#: ../src/preferences_dialog.c:428
+msgid "Maximize window on startup when opening an image"
+msgstr "開啟影像時，初始啟動便將視窗最大化"
+
+#: ../src/preferences_dialog.c:434
+msgid "Wrap around images"
+msgstr "包圍影像"
+
+#: ../src/preferences_dialog.c:453
+msgid "Desktop"
+msgstr "桌面"
+
+#: ../src/preferences_dialog.c:572
+msgid "Image Viewer Preferences"
+msgstr "影像檢視器偏好設定"
+
+#: ../src/properties_dialog.c:181
+msgid "<b>Name:</b>"
+msgstr "<b>名稱：</b>"
+
+#: ../src/properties_dialog.c:182
+msgid "<b>Kind:</b>"
+msgstr "<b>類型：</b>"
+
+#: ../src/properties_dialog.c:183
+msgid "<b>Modified:</b>"
+msgstr "<b>最後修改：</b>"
+
+#: ../src/properties_dialog.c:184
+msgid "<b>Accessed:</b>"
+msgstr "<b>最後存取：</b>"
+
+#: ../src/properties_dialog.c:185
+msgid "<b>Size:</b>"
+msgstr "<b>大小：</b>"
+
+#: ../src/properties_dialog.c:309
+msgid "General"
+msgstr "一般"
+
+#: ../src/properties_dialog.c:313
+msgid "Image"
+msgstr "影像"
+
+#: ../src/properties_dialog.c:541
+#, c-format
+msgid "<b>Date taken:</b>"
+msgstr "<b>拍攝日期：</b>"
+
+#: ../src/properties_dialog.c:553 ../src/properties_dialog.c:565
+#: ../src/properties_dialog.c:577
+#, c-format
+msgid "<b>%s</b>"
+msgstr "<b>%s</b>"
+
+#: ../src/properties_dialog.c:639
+#, c-format
+msgid "%s - Properties"
+msgstr "%s - 屬性"
+
+#: ../src/thumbnailer.c:467
+msgid ""
+"The thumbnailer-service can not be reached,\n"
+"for this reason, the thumbnails can not be\n"
+"created.\n"
+"\n"
+"Install <b>Tumbler</b> or another <i>thumbnailing daemon</i>\n"
+"to resolve this issue."
+msgstr "無法聯絡縮圖製作器服務，\n基於這個原因，縮圖無法\n建立。\n\n請安裝 <b>Tumbler</b> 或其他 <i>縮圖製作幕後程式</i>\n來解決此問題。"
+
+#: ../src/thumbnailer.c:477
+msgid "Do _not show this message again"
+msgstr "不要再顯示此訊息(_N)"
+
+#: ../src/xfce_wallpaper_manager.c:379 ../src/gnome_wallpaper_manager.c:235
+msgid "Style:"
+msgstr "樣式："
+
+#: ../src/xfce_wallpaper_manager.c:380
+msgid "Brightness:"
+msgstr "亮度："
+
+#: ../src/xfce_wallpaper_manager.c:381
+msgid "Saturation:"
+msgstr "飽和度："
+
+#: ../src/xfce_wallpaper_manager.c:397
+msgid "Apply to all workspaces"
+msgstr "套用到所有工作空間"
+
+#: ../src/xfce_wallpaper_manager.c:404 ../src/gnome_wallpaper_manager.c:246
+msgid "Set as wallpaper"
+msgstr "設定為桌布"
+
+#: ../src/xfce_wallpaper_manager.c:557 ../src/gnome_wallpaper_manager.c:313
+msgid "Auto"
+msgstr "自動"
+
+#: ../src/xfce_wallpaper_manager.c:560
+msgid "Centered"
+msgstr "置中"
+
+#: ../src/xfce_wallpaper_manager.c:563
+msgid "Tiled"
+msgstr "鋪排"
+
+#: ../src/xfce_wallpaper_manager.c:566
+msgid "Stretched"
+msgstr "延展"
+
+#: ../src/xfce_wallpaper_manager.c:569
+msgid "Scaled"
+msgstr "縮放"
+
+#: ../src/xfce_wallpaper_manager.c:572
+msgid "Zoomed"
+msgstr "拉近"
+
+#: ../ristretto.desktop.in.h:1
+msgid "Ristretto Image Viewer"
+msgstr "Ristretto 影像檢視器"
+
+#: ../ristretto.desktop.in.h:2
+msgid "Look at your images easily"
+msgstr "輕鬆查看您的影像"
+
+#: ../ristretto.appdata.xml.in.h:2
+msgid ""
+"The Ristretto Image Viewer is an application that can be used to view and "
+"scroll through images, run a slideshow of images, open images with other "
+"applications like an image-editor or configure an image as the desktop "
+"wallpaper."
+msgstr "Ristretto 影像檢視器是一個用來檢視及捲動瀏覽影象、播放影像幻燈片、以其他應用程式（如影像編輯器）開啟、或是將影像設定為桌面的桌布的應用程式。"
+
+#: ../ristretto.appdata.xml.in.h:3
+msgid ""
+"This version comes with the improvements such as thumbnail usage as appicon "
+"and update to the first image in the image-list when receiving a ready-"
+"signal, required to show the thumbnail once it's generated."
+msgstr "此版本帶有一些像是將縮圖使用為應用程式的小圖示、及當收到預備訊號時更新在影像列表中的第一個影像、及當生成後需要顯示縮圖。"
+
+#: ../ristretto.appdata.xml.in.h:4
+msgid ""
+"This release contains lots of translation-updates, and a crash when "
+"configuring the 'limit-quality' property."
+msgstr "此版本包含了許多翻譯更新，會在設定「品質極限」屬性時當掉。"
+
+#: ../ristretto.appdata.xml.in.h:5
+msgid ""
+"This version comes with several changes such as online documentation on "
+"docs.xfce.org, the option to limit the maximum image-quality to the screen "
+"dimensions to improve memory-usage and performance - now ristretto renders "
+"at full quality with this option disabled, only one toolbar - instead of "
+"two, a quick-launch button on the toolbar to execute an editor, the option "
+"to pick a default-editor per mime-type, an optional clock that shows up when"
+" ristretto is fullscreen, Ristretto now shows a 'Loading..' message in the "
+"statusbar to indicate when it is busy and progressive loading of directories"
+" to prevent lockup of the UI. This version is designed to work with version "
+"4.10 of Xfce."
+msgstr "此版本帶來許多改變，像是在 docs.xfce.org 的線上文件、以螢幕的解析度限制最大影像品質以改善記憶體使用量及效能 - ristretto 現在可以以停用這個選項來以完整品質渲染、現在只有一個工具列 - 而非兩個、在工具列上的快速啟動按鈕可以執行編輯器、選取每個 MIME 類型的預設編輯器的選項、一個可以在 ristretto 處於全螢幕狀態選擇性顯示的時鐘、Ristretto 現在會在忙碌及載入資料夾時在狀態列上顯示「載入中..」訊息，以防止使用者介面鎖死。此版本是設計來與 Xfce 4.10 一同運作的。"

@@ -1,0 +1,905 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# 
+# Translators:
+# Harald Servat <redcrash@gmail.com>, 2009
+# Davidmp <medipas@gmail.com>, 2016
+# Pol Ruzafa <kiari62@gmail.com>, 2011
+# Robert Antoni Buj Gelonch <rbuj@fedoraproject.org>, 2016
+# Robert Antoni Buj Gelonch <rbuj@fedoraproject.org>, 2016
+msgid ""
+msgstr ""
+"Project-Id-Version: Xfce Apps\n"
+"Report-Msgid-Bugs-To: xfce-i18n@xfce.org\n"
+"POT-Creation-Date: 2016-07-03 18:31+0200\n"
+"PO-Revision-Date: 2016-08-06 18:39+0000\n"
+"Last-Translator: Robert Antoni Buj Gelonch <rbuj@fedoraproject.org>\n"
+"Language-Team: Catalan (http://www.transifex.com/xfce/xfce-apps/language/ca/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: ca\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: ../src/main.c:62
+msgid "Version information"
+msgstr "Informació de la versió"
+
+#: ../src/main.c:66
+msgid "Start in fullscreen mode"
+msgstr "Inicia en mode de pantalla completa"
+
+#: ../src/main.c:70
+msgid "Start a slideshow"
+msgstr "Inicia una seqüència d'imatges"
+
+#: ../src/main.c:78
+msgid "Show settings dialog"
+msgstr "Mostra el diàleg d'ajusts"
+
+#: ../src/main.c:108
+#, c-format
+msgid ""
+"%s: %s\n"
+"\n"
+"Try %s --help to see a full list of\n"
+"available command line options.\n"
+msgstr "%s: %s\n\nProveu %s --help per a visualitzar la llista completa \nd'opcions disponibles de la línia d'ordres.\n"
+
+#: ../src/main_window.c:57 ../ristretto.desktop.in.h:3
+msgid "Image Viewer"
+msgstr "Visualitzador d'imatges"
+
+#: ../src/main_window.c:367
+msgid "_File"
+msgstr "_Fitxer"
+
+#. Icon-name
+#: ../src/main_window.c:371
+msgid "_Open..."
+msgstr "_Obre..."
+
+#. Label-text
+#. Keyboard shortcut
+#: ../src/main_window.c:373
+msgid "Open an image"
+msgstr "Obre una imatge"
+
+#. Icon-name
+#: ../src/main_window.c:377
+msgid "_Save copy..."
+msgstr "_Desa'n una còpia..."
+
+#. Label-text
+#. Keyboard shortcut
+#: ../src/main_window.c:379
+msgid "Save a copy of the image"
+msgstr "Desa una còpia de la imatge"
+
+#. Icon-name
+#: ../src/main_window.c:383
+msgid "_Properties..."
+msgstr "_Propietats..."
+
+#. Label-text
+#. Keyboard shortcut
+#: ../src/main_window.c:385
+msgid "Show file properties"
+msgstr "Mostra les propietats del fitxer"
+
+#. Icon-name
+#: ../src/main_window.c:389 ../src/main_window.c:408
+msgid "_Edit"
+msgstr "_Edita"
+
+#. Label-text
+#. Keyboard shortcut
+#: ../src/main_window.c:391
+msgid "Edit this image"
+msgstr "Edita aquesta imatge"
+
+#. Icon-name
+#: ../src/main_window.c:395
+msgid "_Close"
+msgstr "_Tanca"
+
+#. Label-text
+#. Keyboard shortcut
+#: ../src/main_window.c:397
+msgid "Close this image"
+msgstr "Tanca aquesta finestra"
+
+#. Icon-name
+#: ../src/main_window.c:401
+msgid "_Quit"
+msgstr "_Surt"
+
+#. Label-text
+#. Keyboard shortcut
+#: ../src/main_window.c:403
+msgid "Quit Ristretto"
+msgstr "Surt de Ristretto"
+
+#: ../src/main_window.c:412
+msgid "_Open with"
+msgstr "_Obre amb"
+
+#: ../src/main_window.c:416
+msgid "_Sorting"
+msgstr "_Ordenació"
+
+#. Icon-name
+#: ../src/main_window.c:420
+msgid "_Delete"
+msgstr "_Suprimeix"
+
+#. Label-text
+#. Keyboard shortcut
+#: ../src/main_window.c:422
+msgid "Delete this image from disk"
+msgstr "Suprimeix aquesta imatge del disc"
+
+#. Icon-name
+#: ../src/main_window.c:426
+msgid "_Clear private data..."
+msgstr "_Neteja les dades privades...."
+
+#. Icon-name
+#: ../src/main_window.c:432
+msgid "_Preferences..."
+msgstr "_Preferències..."
+
+#: ../src/main_window.c:439
+msgid "_View"
+msgstr "_Mostra"
+
+#. Icon-name
+#: ../src/main_window.c:443
+msgid "_Fullscreen"
+msgstr "_Pantalla completa"
+
+#. Label-text
+#. Keyboard shortcut
+#: ../src/main_window.c:445
+msgid "Switch to fullscreen"
+msgstr "Canvia al mode de pantalla completa"
+
+#. Icon-name
+#: ../src/main_window.c:449
+msgid "_Leave Fullscreen"
+msgstr "_Surt de la pantalla completa"
+
+#. Label-text
+#. Keyboard shortcut
+#: ../src/main_window.c:451
+msgid "Leave Fullscreen"
+msgstr "Surt del mode de pantalla completa"
+
+#. Icon-name
+#: ../src/main_window.c:455
+msgid "Set as _Wallpaper..."
+msgstr "Estableix com a _fons de l'escriptori...."
+
+#: ../src/main_window.c:462
+msgid "_Zoom"
+msgstr "_Zoom"
+
+#. Icon-name
+#: ../src/main_window.c:466
+msgid "Zoom _In"
+msgstr "Ampl_ia el zoom"
+
+#. Label-text
+#. Keyboard shortcut
+#: ../src/main_window.c:468
+msgid "Zoom in"
+msgstr "Amplia el zoom"
+
+#. Icon-name
+#: ../src/main_window.c:472
+msgid "Zoom _Out"
+msgstr "Redueix el z_oom"
+
+#. Label-text
+#. Keyboard shortcut
+#: ../src/main_window.c:474
+msgid "Zoom out"
+msgstr "Redueix el zoom"
+
+#. Icon-name
+#: ../src/main_window.c:478
+msgid "Zoom _Fit"
+msgstr "_Ajusta"
+
+#. Label-text
+#. Keyboard shortcut
+#: ../src/main_window.c:480
+msgid "Zoom to fit window"
+msgstr "Encaixa a la finestra"
+
+#. Icon-name
+#: ../src/main_window.c:484
+msgid "_Normal Size"
+msgstr "Mida _normal"
+
+#. Label-text
+#. Keyboard shortcut
+#: ../src/main_window.c:486
+msgid "Zoom to 100%"
+msgstr "Mostra a mida real"
+
+#: ../src/main_window.c:491
+msgid "_Rotation"
+msgstr "_Rotació"
+
+#. Icon-name
+#: ../src/main_window.c:495
+msgid "Rotate _Right"
+msgstr "Gira a la _dreta"
+
+#. Icon-name
+#: ../src/main_window.c:501
+msgid "Rotate _Left"
+msgstr "Gira a l'_esquerra"
+
+#: ../src/main_window.c:508
+msgid "_Go"
+msgstr "_Vés"
+
+#. Icon-name
+#: ../src/main_window.c:512
+msgid "_Forward"
+msgstr "_Endavant"
+
+#. Label-text
+#. Keyboard shortcut
+#: ../src/main_window.c:514
+msgid "Next image"
+msgstr "Imatge següent"
+
+#. Icon-name
+#: ../src/main_window.c:518
+msgid "_Back"
+msgstr "_Endarrere"
+
+#. Label-text
+#. Keyboard shortcut
+#: ../src/main_window.c:520
+msgid "Previous image"
+msgstr "Imatge anterior"
+
+#. Icon-name
+#: ../src/main_window.c:524
+msgid "F_irst"
+msgstr "Pr_imer"
+
+#. Label-text
+#. Keyboard shortcut
+#: ../src/main_window.c:526
+msgid "First image"
+msgstr "Primera imatge"
+
+#. Icon-name
+#: ../src/main_window.c:530
+msgid "_Last"
+msgstr "_Últim"
+
+#. Label-text
+#. Keyboard shortcut
+#: ../src/main_window.c:532
+msgid "Last image"
+msgstr "Última imatge"
+
+#: ../src/main_window.c:537
+msgid "_Help"
+msgstr "A_juda"
+
+#. Icon-name
+#: ../src/main_window.c:541
+msgid "_Contents"
+msgstr "_Continguts"
+
+#. Label-text
+#. Keyboard shortcut
+#: ../src/main_window.c:543
+msgid "Display ristretto user manual"
+msgstr "Mostra el manual d'usuari de ristretto"
+
+#. Icon-name
+#: ../src/main_window.c:547
+msgid "_About"
+msgstr "_Quant a"
+
+#. Label-text
+#. Keyboard shortcut
+#: ../src/main_window.c:549
+msgid "Display information about ristretto"
+msgstr "Mostra informació referent a ristretto"
+
+#: ../src/main_window.c:554
+msgid "_Position"
+msgstr "_Posició"
+
+#: ../src/main_window.c:558
+msgid "_Size"
+msgstr "_Mida"
+
+#: ../src/main_window.c:562
+msgid "Thumbnail Bar _Position"
+msgstr "_Posició de la barra de miniatures"
+
+#: ../src/main_window.c:566
+msgid "Thumb_nail Size"
+msgstr "Mida de la mi_niatura"
+
+#. Icon-name
+#: ../src/main_window.c:571
+msgid "Leave _Fullscreen"
+msgstr "Surt de la _pantalla completa"
+
+#. Icon-name
+#: ../src/main_window.c:587
+msgid "_Show Toolbar"
+msgstr "Mostra la barra d'_eines"
+
+#. Icon-name
+#: ../src/main_window.c:595
+msgid "Show _Thumbnail Bar"
+msgstr "Mostra la _barra de miniatures"
+
+#. Icon-name
+#: ../src/main_window.c:603
+msgid "Show Status _Bar"
+msgstr "Mostra la _barra d'estat"
+
+#. Icon-name
+#: ../src/main_window.c:616
+msgid "sort by filename"
+msgstr "Ordena pel nom de fitxer"
+
+#. Icon-name
+#: ../src/main_window.c:623
+msgid "sort by date"
+msgstr "Ordena per la data"
+
+#. Icon-name
+#: ../src/main_window.c:634
+msgid "Left"
+msgstr "Esquerra"
+
+#: ../src/main_window.c:640
+msgid "Right"
+msgstr "Dreta"
+
+#: ../src/main_window.c:646
+msgid "Top"
+msgstr "Superior"
+
+#: ../src/main_window.c:652
+msgid "Bottom"
+msgstr "Inferior"
+
+#: ../src/main_window.c:663
+msgid "Very Small"
+msgstr "Molt petita"
+
+#: ../src/main_window.c:669
+msgid "Smaller"
+msgstr "Força petita"
+
+#: ../src/main_window.c:675
+msgid "Small"
+msgstr "Petita"
+
+#: ../src/main_window.c:681
+msgid "Normal"
+msgstr "Normal"
+
+#: ../src/main_window.c:687
+msgid "Large"
+msgstr "Gran"
+
+#: ../src/main_window.c:693
+msgid "Larger"
+msgstr "Força gran"
+
+#: ../src/main_window.c:699
+msgid "Very Large"
+msgstr "Molt gran"
+
+#. Create Play/Pause Slideshow actions
+#: ../src/main_window.c:853
+msgid "_Play"
+msgstr "Re_produeix"
+
+#: ../src/main_window.c:853
+msgid "Play slideshow"
+msgstr "Reprodueix la seqüència d'imatges"
+
+#: ../src/main_window.c:854
+msgid "_Pause"
+msgstr "_Pausa"
+
+#: ../src/main_window.c:854
+msgid "Pause slideshow"
+msgstr "Pausa la seqüència d'imatges"
+
+#. Create Recently used items Action
+#: ../src/main_window.c:857
+msgid "_Recently used"
+msgstr "Utilitzat _recentment"
+
+#: ../src/main_window.c:857
+msgid "Recently used"
+msgstr "Utilitzat recentment"
+
+#: ../src/main_window.c:961 ../src/main_window.c:1527
+msgid "Press open to select an image"
+msgstr "Feu clic a Obre per seleccionar una imatge"
+
+#: ../src/main_window.c:1386 ../src/main_window.c:1390
+msgid "Open With Other _Application..."
+msgstr "Obre amb una altra _aplicació..."
+
+#: ../src/main_window.c:1411 ../src/main_window.c:1417
+msgid "Empty"
+msgstr "Buit"
+
+#: ../src/main_window.c:1537
+msgid "Loading..."
+msgstr "S'està carregant..."
+
+#: ../src/main_window.c:2141
+msgid "Choose 'set wallpaper' method"
+msgstr "Trieu el mètode «Estableix el fons de l'escriptori»"
+
+#: ../src/main_window.c:2156 ../src/preferences_dialog.c:464
+msgid ""
+"Configure which system is currently managing your desktop.\n"
+"This setting determines the method <i>Ristretto</i> will use\n"
+"to configure the desktop wallpaper."
+msgstr "Configureu quin sistema gestiona el vostre escriptori.\nAquest ajust determina quin mètode utilitzarà <i>Ristretto</i>\nper configurar el fons de l'escriptori."
+
+#: ../src/main_window.c:2181 ../src/preferences_dialog.c:488
+msgid "None"
+msgstr "Cap"
+
+#: ../src/main_window.c:2185 ../src/preferences_dialog.c:492
+msgid "Xfce"
+msgstr "Xfce"
+
+#: ../src/main_window.c:2189 ../src/preferences_dialog.c:496
+msgid "GNOME"
+msgstr "GNOME"
+
+#: ../src/main_window.c:2629
+msgid "Developer:"
+msgstr "Desenvolupador:"
+
+#: ../src/main_window.c:2638 ../ristretto.appdata.xml.in.h:1
+msgid "Ristretto is an image viewer for the Xfce desktop environment."
+msgstr "Ristretto és un visualitzador d'imatges per a l'entorn d'escriptori Xfce."
+
+#: ../src/main_window.c:2646
+msgid "translator-credits"
+msgstr "Carles Muñoz Gorriz <carlesmu@internautas.org>, 2008-2010.\nHarald Servat <redcrash@gmail.com>, 2009.\nRobert Antoni Buj Gelonch <rbuj@fedoraproject.org>, 2016."
+
+#: ../src/main_window.c:2949
+msgid "Open image"
+msgstr "Obre una imatge"
+
+#: ../src/main_window.c:2968
+msgid "Images"
+msgstr "Imatges"
+
+#: ../src/main_window.c:2973
+msgid ".jp(e)g"
+msgstr ".jp(e)g"
+
+#: ../src/main_window.c:3000 ../src/main_window.c:3143
+msgid "Could not open file"
+msgstr "No s'ha pogut obrir el fitxer"
+
+#: ../src/main_window.c:3182
+msgid "Save copy"
+msgstr "Desa una còpia"
+
+#: ../src/main_window.c:3215
+msgid "Could not save file"
+msgstr "No s'ha pogut desar el fitxer"
+
+#: ../src/main_window.c:3378
+#, c-format
+msgid "Are you sure you want to send image '%s' to trash?"
+msgstr "Voleu enviar la imatge «%s» a la paperera?"
+
+#: ../src/main_window.c:3382
+#, c-format
+msgid "Are you sure you want to delete image '%s' from disk?"
+msgstr "Voleu suprimir la imatge «%s» del disc?"
+
+#: ../src/main_window.c:3393
+msgid "_Do not ask again for this session"
+msgstr "_No tornis a preguntar-ho durant aquesta sessió"
+
+#: ../src/main_window.c:3464
+#, c-format
+msgid ""
+"An error occurred when deleting image '%s' from disk.\n"
+"\n"
+"%s"
+msgstr "S'ha produït un error mentre s'estava suprimint la imatge «%s» del disc.\n\n%s"
+
+#: ../src/main_window.c:3468
+#, c-format
+msgid ""
+"An error occurred when sending image '%s' to trash.\n"
+"\n"
+"%s"
+msgstr "S'ha produït un error mentre s'estava enviant la imatge «%s» a la paperera.\n\n%s"
+
+#: ../src/main_window.c:3804
+msgid "Edit with"
+msgstr "Edita amb"
+
+#: ../src/main_window.c:3822
+#, c-format
+msgid "Open %s and other files of type %s with:"
+msgstr "Obra %s i els altres fitxers del tipus %s amb:"
+
+#: ../src/main_window.c:3827
+msgid "Use as _default for this kind of file"
+msgstr "Utilitza-ho com a pre_determinat per a aquest tipus de fitxer"
+
+#: ../src/main_window.c:3917
+msgid "Recommended Applications"
+msgstr "Aplicacions recomanades"
+
+#: ../src/main_window.c:3997
+msgid "Other Applications"
+msgstr "Altres aplicacions"
+
+#: ../src/icon_bar.c:345
+msgid "Orientation"
+msgstr "Orientació"
+
+#: ../src/icon_bar.c:346
+msgid "The orientation of the iconbar"
+msgstr "L'orientació de la barra d'icones"
+
+#: ../src/icon_bar.c:362
+msgid "File column"
+msgstr "Columna de fitxers"
+
+#: ../src/icon_bar.c:363
+msgid "Model column used to retrieve the file from"
+msgstr "Columna de model que s'utilitza per recuperar-ne el fitxer"
+
+#: ../src/icon_bar.c:375
+msgid "Icon Bar Model"
+msgstr "Model de barra d'icones"
+
+#: ../src/icon_bar.c:376
+msgid "Model for the icon bar"
+msgstr "Model per a la barra d'icones"
+
+#: ../src/icon_bar.c:392
+msgid "Active"
+msgstr "Actiu"
+
+#: ../src/icon_bar.c:393
+msgid "Active item index"
+msgstr "Índex d'elements actius"
+
+#: ../src/icon_bar.c:409 ../src/icon_bar.c:410
+msgid "Show Text"
+msgstr "Mostra el text"
+
+#: ../src/icon_bar.c:416 ../src/icon_bar.c:417
+msgid "Active item fill color"
+msgstr "Color de l'emplenament de l'element actiu"
+
+#: ../src/icon_bar.c:423 ../src/icon_bar.c:424
+msgid "Active item border color"
+msgstr "Color de la vora de l'element actiu"
+
+#: ../src/icon_bar.c:430 ../src/icon_bar.c:431
+msgid "Active item text color"
+msgstr "Color del text de l'element actiu"
+
+#: ../src/icon_bar.c:437 ../src/icon_bar.c:438
+msgid "Cursor item fill color"
+msgstr "Color de l'emplenament de l'element del cursor"
+
+#: ../src/icon_bar.c:444 ../src/icon_bar.c:445
+msgid "Cursor item border color"
+msgstr "Color de la vora de l'element del cursor"
+
+#: ../src/icon_bar.c:451 ../src/icon_bar.c:452
+msgid "Cursor item text color"
+msgstr "Color del text de l'element del cursor"
+
+#: ../src/privacy_dialog.c:152
+msgid "Time range to clear:"
+msgstr "Interval de temps a netejar:"
+
+#: ../src/privacy_dialog.c:156
+msgid "Cleanup"
+msgstr "Neteja"
+
+#: ../src/privacy_dialog.c:158
+msgid "Last Hour"
+msgstr "Última hora"
+
+#: ../src/privacy_dialog.c:159
+msgid "Last Two Hours"
+msgstr "Últimes dues hores"
+
+#: ../src/privacy_dialog.c:160
+msgid "Last Four Hours"
+msgstr "Últimes quatre hores"
+
+#: ../src/privacy_dialog.c:161
+msgid "Today"
+msgstr "Avui"
+
+#: ../src/privacy_dialog.c:162
+msgid "Everything"
+msgstr "Tot"
+
+#: ../src/privacy_dialog.c:460
+msgid "Clear private data"
+msgstr "Neteja les dades privades"
+
+#: ../src/preferences_dialog.c:276
+msgid "Display"
+msgstr "Pantalla"
+
+#: ../src/preferences_dialog.c:283
+msgid "Background color"
+msgstr "Color del fons"
+
+#: ../src/preferences_dialog.c:287
+msgid "Override background color:"
+msgstr "Força el color del fons:"
+
+#: ../src/preferences_dialog.c:314
+msgid "Quality"
+msgstr "Qualitat"
+
+#: ../src/preferences_dialog.c:318
+msgid ""
+"With this option enabled, the maximum image-quality will be limited to the "
+"screen-size."
+msgstr "Amb aquesta opció habilitada, la qualitat màxima de la imatge es limitarà a la mida de la pantalla."
+
+#: ../src/preferences_dialog.c:321
+msgid "Limit rendering quality"
+msgstr "Limita la qualitat de la representació"
+
+#: ../src/preferences_dialog.c:333
+msgid "Fullscreen"
+msgstr "Pantalla completa"
+
+#: ../src/preferences_dialog.c:338
+msgid "Thumbnails"
+msgstr "Miniatures"
+
+#: ../src/preferences_dialog.c:341
+msgid ""
+"The thumbnail bar can be automatically hidden when the window is fullscreen."
+msgstr "La barra de miniatures es pot ocultar automàticament quan la finestra ocupi tota la pantalla."
+
+#: ../src/preferences_dialog.c:344
+msgid "Hide thumbnail bar when fullscreen"
+msgstr "Oculta la barra de miniatures en pantalla completa"
+
+#: ../src/preferences_dialog.c:352
+msgid "Clock"
+msgstr "Rellotge"
+
+#: ../src/preferences_dialog.c:355
+msgid ""
+"Show an analog clock that displays the current time when the window is "
+"fullscreen"
+msgstr "Mostra un rellotge analògic que indiqui l'hora actual quan la finestra ocupi tota la pantalla."
+
+#: ../src/preferences_dialog.c:358
+msgid "Show Fullscreen Clock"
+msgstr "Mostra el rellotge de pantalla completa"
+
+#: ../src/preferences_dialog.c:375
+msgid "Slideshow"
+msgstr "Seqüència d'imatges"
+
+#: ../src/preferences_dialog.c:379
+msgid "Timeout"
+msgstr "Temps d'expiració"
+
+#: ../src/preferences_dialog.c:382
+msgid ""
+"The time period an individual image is displayed during a slideshow\n"
+"(in seconds)"
+msgstr "El període de temps que una imatge individual es mostra durant la seqüència d'imatges\n(en segons)"
+
+#: ../src/preferences_dialog.c:400
+msgid "Control"
+msgstr "Control"
+
+#: ../src/preferences_dialog.c:404
+msgid "Scroll wheel"
+msgstr "Roda de desplaçament"
+
+#: ../src/preferences_dialog.c:407
+msgid "Invert zoom direction"
+msgstr "Inverteix la direcció del zoom"
+
+#: ../src/preferences_dialog.c:421
+msgid "Behaviour"
+msgstr "Comportament"
+
+#: ../src/preferences_dialog.c:426
+msgid "Startup"
+msgstr "Inici"
+
+#: ../src/preferences_dialog.c:428
+msgid "Maximize window on startup when opening an image"
+msgstr "Maximitza la finestra a l'inici en obrir una imatge"
+
+#: ../src/preferences_dialog.c:434
+msgid "Wrap around images"
+msgstr "Ajusta al voltant de les imatges"
+
+#: ../src/preferences_dialog.c:453
+msgid "Desktop"
+msgstr "Escriptori"
+
+#: ../src/preferences_dialog.c:572
+msgid "Image Viewer Preferences"
+msgstr "Preferències del visualitzador d'imatges"
+
+#: ../src/properties_dialog.c:181
+msgid "<b>Name:</b>"
+msgstr "<b>Nom:</b>"
+
+#: ../src/properties_dialog.c:182
+msgid "<b>Kind:</b>"
+msgstr "<b>Tipus:</b>"
+
+#: ../src/properties_dialog.c:183
+msgid "<b>Modified:</b>"
+msgstr "<b>Modificació:</b>"
+
+#: ../src/properties_dialog.c:184
+msgid "<b>Accessed:</b>"
+msgstr "<b>Accés:</b>"
+
+#: ../src/properties_dialog.c:185
+msgid "<b>Size:</b>"
+msgstr "<b>Mida:</b>"
+
+#: ../src/properties_dialog.c:309
+msgid "General"
+msgstr "General"
+
+#: ../src/properties_dialog.c:313
+msgid "Image"
+msgstr "Imatge"
+
+#: ../src/properties_dialog.c:541
+#, c-format
+msgid "<b>Date taken:</b>"
+msgstr "<b>Data de captura:</b>"
+
+#: ../src/properties_dialog.c:553 ../src/properties_dialog.c:565
+#: ../src/properties_dialog.c:577
+#, c-format
+msgid "<b>%s</b>"
+msgstr "<b>%s</b>"
+
+#: ../src/properties_dialog.c:639
+#, c-format
+msgid "%s - Properties"
+msgstr "%s - Propietats"
+
+#: ../src/thumbnailer.c:467
+msgid ""
+"The thumbnailer-service can not be reached,\n"
+"for this reason, the thumbnails can not be\n"
+"created.\n"
+"\n"
+"Install <b>Tumbler</b> or another <i>thumbnailing daemon</i>\n"
+"to resolve this issue."
+msgstr "No s'ha trobat el servei de miniatures, per aquest\nmotiu no es poden crear les miniatures.\n\nInstal·leu <b>Tumbler</b> o algun altre <i>dimoni de\nminiatures</i> per resoldre el problema."
+
+#: ../src/thumbnailer.c:477
+msgid "Do _not show this message again"
+msgstr "_No tornis a mostrar aquest missatge"
+
+#: ../src/xfce_wallpaper_manager.c:379 ../src/gnome_wallpaper_manager.c:235
+msgid "Style:"
+msgstr "Estil:"
+
+#: ../src/xfce_wallpaper_manager.c:380
+msgid "Brightness:"
+msgstr "Brillantor:"
+
+#: ../src/xfce_wallpaper_manager.c:381
+msgid "Saturation:"
+msgstr "Saturació:"
+
+#: ../src/xfce_wallpaper_manager.c:397
+msgid "Apply to all workspaces"
+msgstr "Aplica a tots els espais de treball"
+
+#: ../src/xfce_wallpaper_manager.c:404 ../src/gnome_wallpaper_manager.c:246
+msgid "Set as wallpaper"
+msgstr "Estableix com a fons de l'escriptori"
+
+#: ../src/xfce_wallpaper_manager.c:557 ../src/gnome_wallpaper_manager.c:313
+msgid "Auto"
+msgstr "Automàtic"
+
+#: ../src/xfce_wallpaper_manager.c:560
+msgid "Centered"
+msgstr "Centrat"
+
+#: ../src/xfce_wallpaper_manager.c:563
+msgid "Tiled"
+msgstr "Enrajolat"
+
+#: ../src/xfce_wallpaper_manager.c:566
+msgid "Stretched"
+msgstr "Estirat"
+
+#: ../src/xfce_wallpaper_manager.c:569
+msgid "Scaled"
+msgstr "Escalat"
+
+#: ../src/xfce_wallpaper_manager.c:572
+msgid "Zoomed"
+msgstr "Ampliat"
+
+#: ../ristretto.desktop.in.h:1
+msgid "Ristretto Image Viewer"
+msgstr "Visualitzador d'imatges Ristretto"
+
+#: ../ristretto.desktop.in.h:2
+msgid "Look at your images easily"
+msgstr "Doneu fàcilment un cop d'ull a les vostres imatges"
+
+#: ../ristretto.appdata.xml.in.h:2
+msgid ""
+"The Ristretto Image Viewer is an application that can be used to view and "
+"scroll through images, run a slideshow of images, open images with other "
+"applications like an image-editor or configure an image as the desktop "
+"wallpaper."
+msgstr "El visualitzador d'imatges Ristretto és una aplicació que es pot utilitzar per a la visualització i per al desplaçament per les imatges, per a l'execució d'una presentació de diapositives, per a l'obriment de les imatges amb altres aplicacions com ara un editor o per a la configuració d'una imatge com a fons de l'escriptori."
+
+#: ../ristretto.appdata.xml.in.h:3
+msgid ""
+"This version comes with the improvements such as thumbnail usage as appicon "
+"and update to the first image in the image-list when receiving a ready-"
+"signal, required to show the thumbnail once it's generated."
+msgstr "Aquesta versió ve amb millores com ara l'ús de miniatures com a icona de l'aplicació i l'actualització a la primera imatge de la llista d'imatges quan es rep un senyal de preparat, necessaris per mostrar la imatge un cop es genera."
+
+#: ../ristretto.appdata.xml.in.h:4
+msgid ""
+"This release contains lots of translation-updates, and a crash when "
+"configuring the 'limit-quality' property."
+msgstr "Aquesta versió conté un gran nombre d'actualitzacions de les traduccions i una fallada en configurar la propietat de la limitació de la qualitat."
+
+#: ../ristretto.appdata.xml.in.h:5
+msgid ""
+"This version comes with several changes such as online documentation on "
+"docs.xfce.org, the option to limit the maximum image-quality to the screen "
+"dimensions to improve memory-usage and performance - now ristretto renders "
+"at full quality with this option disabled, only one toolbar - instead of "
+"two, a quick-launch button on the toolbar to execute an editor, the option "
+"to pick a default-editor per mime-type, an optional clock that shows up when"
+" ristretto is fullscreen, Ristretto now shows a 'Loading..' message in the "
+"statusbar to indicate when it is busy and progressive loading of directories"
+" to prevent lockup of the UI. This version is designed to work with version "
+"4.10 of Xfce."
+msgstr "Aquesta versió ve amb diversos canvis com ara la documentació en línia a docs.xfce.org, l'opció de limitar la màxima qualitat d'imatge a les dimensions de la pantalla per millorar l'ús de la memòria i el rendiment. Ara Ristretto representa les imatges amb la qualitat total amb aquesta opció desactivada, amb només un barra d'eines en lloc de dues, un botó d'inici ràpid a la barra d'eines per executar un editor, l'opció de triar un editor per defecte per tipus MIME i un rellotge opcional que apareix quan Ristretto és en pantalla completa. Ristretto ara mostra un missatge \"S'està carregant...\" a la barra d'estat per indicar quan està ocupat i executa una càrrega progressiva de directoris per evitar el bloqueig de la interfície d'usuari. Aquesta versió està dissenyada per treballar amb la versió 4.10 de Xfce."

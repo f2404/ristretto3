@@ -1,0 +1,902 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# 
+# Translators:
+# Dmitry Nikitin <luckas_fb@mail.ru>, 2008
+# Yarema aka Knedlyk <yupadmin@gmail.com>, 2015-2016
+msgid ""
+msgstr ""
+"Project-Id-Version: Xfce Apps\n"
+"Report-Msgid-Bugs-To: xfce-i18n@xfce.org\n"
+"POT-Creation-Date: 2016-07-03 18:31+0200\n"
+"PO-Revision-Date: 2016-08-01 19:36+0000\n"
+"Last-Translator: Yarema aka Knedlyk <yupadmin@gmail.com>\n"
+"Language-Team: Ukrainian (http://www.transifex.com/xfce/xfce-apps/language/uk/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: uk\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+
+#: ../src/main.c:62
+msgid "Version information"
+msgstr "Інформація про версію"
+
+#: ../src/main.c:66
+msgid "Start in fullscreen mode"
+msgstr "Запускати в повноекранному режимі"
+
+#: ../src/main.c:70
+msgid "Start a slideshow"
+msgstr "Стартувати з слайд-шоу"
+
+#: ../src/main.c:78
+msgid "Show settings dialog"
+msgstr "Показати діалог налаштувань"
+
+#: ../src/main.c:108
+#, c-format
+msgid ""
+"%s: %s\n"
+"\n"
+"Try %s --help to see a full list of\n"
+"available command line options.\n"
+msgstr "%s: %s\nСпробуйте %s --help для перегляду повного списку параметрів командної стрічки.\n"
+
+#: ../src/main_window.c:57 ../ristretto.desktop.in.h:3
+msgid "Image Viewer"
+msgstr "Переглядач зображень"
+
+#: ../src/main_window.c:367
+msgid "_File"
+msgstr "_Файл"
+
+#. Icon-name
+#: ../src/main_window.c:371
+msgid "_Open..."
+msgstr "_Відкрити..."
+
+#. Label-text
+#. Keyboard shortcut
+#: ../src/main_window.c:373
+msgid "Open an image"
+msgstr "Відкрити зображення"
+
+#. Icon-name
+#: ../src/main_window.c:377
+msgid "_Save copy..."
+msgstr "Зберегти коп_ію..."
+
+#. Label-text
+#. Keyboard shortcut
+#: ../src/main_window.c:379
+msgid "Save a copy of the image"
+msgstr "Зберегти копію малюнка"
+
+#. Icon-name
+#: ../src/main_window.c:383
+msgid "_Properties..."
+msgstr "_Властивості..."
+
+#. Label-text
+#. Keyboard shortcut
+#: ../src/main_window.c:385
+msgid "Show file properties"
+msgstr "Показати властивості файлу"
+
+#. Icon-name
+#: ../src/main_window.c:389 ../src/main_window.c:408
+msgid "_Edit"
+msgstr "_Редагувати"
+
+#. Label-text
+#. Keyboard shortcut
+#: ../src/main_window.c:391
+msgid "Edit this image"
+msgstr "Редагувати малюнок"
+
+#. Icon-name
+#: ../src/main_window.c:395
+msgid "_Close"
+msgstr "_Закрити"
+
+#. Label-text
+#. Keyboard shortcut
+#: ../src/main_window.c:397
+msgid "Close this image"
+msgstr "Закрити малюнок"
+
+#. Icon-name
+#: ../src/main_window.c:401
+msgid "_Quit"
+msgstr "Ви_йти"
+
+#. Label-text
+#. Keyboard shortcut
+#: ../src/main_window.c:403
+msgid "Quit Ristretto"
+msgstr "Вийти з Ristretto"
+
+#: ../src/main_window.c:412
+msgid "_Open with"
+msgstr "_Відкрити з"
+
+#: ../src/main_window.c:416
+msgid "_Sorting"
+msgstr "_Сортування"
+
+#. Icon-name
+#: ../src/main_window.c:420
+msgid "_Delete"
+msgstr "_Видалити"
+
+#. Label-text
+#. Keyboard shortcut
+#: ../src/main_window.c:422
+msgid "Delete this image from disk"
+msgstr "Вилучити малюнок з диску"
+
+#. Icon-name
+#: ../src/main_window.c:426
+msgid "_Clear private data..."
+msgstr "_Очистити приватні дані..."
+
+#. Icon-name
+#: ../src/main_window.c:432
+msgid "_Preferences..."
+msgstr "_Налаштування..."
+
+#: ../src/main_window.c:439
+msgid "_View"
+msgstr "_Перегляд"
+
+#. Icon-name
+#: ../src/main_window.c:443
+msgid "_Fullscreen"
+msgstr "Повний екр_ан"
+
+#. Label-text
+#. Keyboard shortcut
+#: ../src/main_window.c:445
+msgid "Switch to fullscreen"
+msgstr "Включити повноекранний режим"
+
+#. Icon-name
+#: ../src/main_window.c:449
+msgid "_Leave Fullscreen"
+msgstr "Покинути повний ек_ран"
+
+#. Label-text
+#. Keyboard shortcut
+#: ../src/main_window.c:451
+msgid "Leave Fullscreen"
+msgstr "Покинути повноекранний режим"
+
+#. Icon-name
+#: ../src/main_window.c:455
+msgid "Set as _Wallpaper..."
+msgstr "Встановити як шпа_лери..."
+
+#: ../src/main_window.c:462
+msgid "_Zoom"
+msgstr "_Масштаб"
+
+#. Icon-name
+#: ../src/main_window.c:466
+msgid "Zoom _In"
+msgstr "Збіль_шити"
+
+#. Label-text
+#. Keyboard shortcut
+#: ../src/main_window.c:468
+msgid "Zoom in"
+msgstr "Збільшити"
+
+#. Icon-name
+#: ../src/main_window.c:472
+msgid "Zoom _Out"
+msgstr "З_меншити"
+
+#. Label-text
+#. Keyboard shortcut
+#: ../src/main_window.c:474
+msgid "Zoom out"
+msgstr "Зменшити"
+
+#. Icon-name
+#: ../src/main_window.c:478
+msgid "Zoom _Fit"
+msgstr "Вмістити у вікн_о"
+
+#. Label-text
+#. Keyboard shortcut
+#: ../src/main_window.c:480
+msgid "Zoom to fit window"
+msgstr "Припасувати до розмірів вікна"
+
+#. Icon-name
+#: ../src/main_window.c:484
+msgid "_Normal Size"
+msgstr "_Нормальний розмір"
+
+#. Label-text
+#. Keyboard shortcut
+#: ../src/main_window.c:486
+msgid "Zoom to 100%"
+msgstr "Збільшити до 100%"
+
+#: ../src/main_window.c:491
+msgid "_Rotation"
+msgstr "_Обертання"
+
+#. Icon-name
+#: ../src/main_window.c:495
+msgid "Rotate _Right"
+msgstr "Повернути в_право"
+
+#. Icon-name
+#: ../src/main_window.c:501
+msgid "Rotate _Left"
+msgstr "Повернути в_ліво"
+
+#: ../src/main_window.c:508
+msgid "_Go"
+msgstr "П_ерейти"
+
+#. Icon-name
+#: ../src/main_window.c:512
+msgid "_Forward"
+msgstr "_Вперед"
+
+#. Label-text
+#. Keyboard shortcut
+#: ../src/main_window.c:514
+msgid "Next image"
+msgstr "Наступний малюнок"
+
+#. Icon-name
+#: ../src/main_window.c:518
+msgid "_Back"
+msgstr "_Назад"
+
+#. Label-text
+#. Keyboard shortcut
+#: ../src/main_window.c:520
+msgid "Previous image"
+msgstr "Попередній малюнок"
+
+#. Icon-name
+#: ../src/main_window.c:524
+msgid "F_irst"
+msgstr "_Перший"
+
+#. Label-text
+#. Keyboard shortcut
+#: ../src/main_window.c:526
+msgid "First image"
+msgstr "Перший малюнок"
+
+#. Icon-name
+#: ../src/main_window.c:530
+msgid "_Last"
+msgstr "_Останній"
+
+#. Label-text
+#. Keyboard shortcut
+#: ../src/main_window.c:532
+msgid "Last image"
+msgstr "Останній малюнок"
+
+#: ../src/main_window.c:537
+msgid "_Help"
+msgstr "Дов_ідка"
+
+#. Icon-name
+#: ../src/main_window.c:541
+msgid "_Contents"
+msgstr "_Вміст"
+
+#. Label-text
+#. Keyboard shortcut
+#: ../src/main_window.c:543
+msgid "Display ristretto user manual"
+msgstr "Показати посібник користувача ristretto"
+
+#. Icon-name
+#: ../src/main_window.c:547
+msgid "_About"
+msgstr "_Про"
+
+#. Label-text
+#. Keyboard shortcut
+#: ../src/main_window.c:549
+msgid "Display information about ristretto"
+msgstr "Показати інформацію про ristretto"
+
+#: ../src/main_window.c:554
+msgid "_Position"
+msgstr "По_зиція"
+
+#: ../src/main_window.c:558
+msgid "_Size"
+msgstr "_Розмір"
+
+#: ../src/main_window.c:562
+msgid "Thumbnail Bar _Position"
+msgstr "Позиція _панелі мініатюр"
+
+#: ../src/main_window.c:566
+msgid "Thumb_nail Size"
+msgstr "Розмір _мініатюр"
+
+#. Icon-name
+#: ../src/main_window.c:571
+msgid "Leave _Fullscreen"
+msgstr "Залишити повноекр_анний режим"
+
+#. Icon-name
+#: ../src/main_window.c:587
+msgid "_Show Toolbar"
+msgstr "Показати п_анель"
+
+#. Icon-name
+#: ../src/main_window.c:595
+msgid "Show _Thumbnail Bar"
+msgstr "Показати пан_ель мініатюр"
+
+#. Icon-name
+#: ../src/main_window.c:603
+msgid "Show Status _Bar"
+msgstr "Показати пан_ель статусу"
+
+#. Icon-name
+#: ../src/main_window.c:616
+msgid "sort by filename"
+msgstr "сортувати за назвою"
+
+#. Icon-name
+#: ../src/main_window.c:623
+msgid "sort by date"
+msgstr "сортувати за датою"
+
+#. Icon-name
+#: ../src/main_window.c:634
+msgid "Left"
+msgstr "Зліва"
+
+#: ../src/main_window.c:640
+msgid "Right"
+msgstr "Справа"
+
+#: ../src/main_window.c:646
+msgid "Top"
+msgstr "Згори"
+
+#: ../src/main_window.c:652
+msgid "Bottom"
+msgstr "Внизу"
+
+#: ../src/main_window.c:663
+msgid "Very Small"
+msgstr "Дуже малий"
+
+#: ../src/main_window.c:669
+msgid "Smaller"
+msgstr "Менший"
+
+#: ../src/main_window.c:675
+msgid "Small"
+msgstr "Малий"
+
+#: ../src/main_window.c:681
+msgid "Normal"
+msgstr "Нормальний"
+
+#: ../src/main_window.c:687
+msgid "Large"
+msgstr "Великий"
+
+#: ../src/main_window.c:693
+msgid "Larger"
+msgstr "Більший"
+
+#: ../src/main_window.c:699
+msgid "Very Large"
+msgstr "Дуже великий"
+
+#. Create Play/Pause Slideshow actions
+#: ../src/main_window.c:853
+msgid "_Play"
+msgstr "_Програвати"
+
+#: ../src/main_window.c:853
+msgid "Play slideshow"
+msgstr "Програти слайд-шоу"
+
+#: ../src/main_window.c:854
+msgid "_Pause"
+msgstr "_Пауза"
+
+#: ../src/main_window.c:854
+msgid "Pause slideshow"
+msgstr "Призупинити слайд-шоу"
+
+#. Create Recently used items Action
+#: ../src/main_window.c:857
+msgid "_Recently used"
+msgstr "_Нещодавно використані"
+
+#: ../src/main_window.c:857
+msgid "Recently used"
+msgstr "Нещодавно використані"
+
+#: ../src/main_window.c:961 ../src/main_window.c:1527
+msgid "Press open to select an image"
+msgstr "Натисніть відкрити для вибору малюнка"
+
+#: ../src/main_window.c:1386 ../src/main_window.c:1390
+msgid "Open With Other _Application..."
+msgstr "Відкрити з іншою _програмою..."
+
+#: ../src/main_window.c:1411 ../src/main_window.c:1417
+msgid "Empty"
+msgstr "Пустий"
+
+#: ../src/main_window.c:1537
+msgid "Loading..."
+msgstr "Завантаження..."
+
+#: ../src/main_window.c:2141
+msgid "Choose 'set wallpaper' method"
+msgstr "Виберіть метод для 'встановити шпалери'"
+
+#: ../src/main_window.c:2156 ../src/preferences_dialog.c:464
+msgid ""
+"Configure which system is currently managing your desktop.\n"
+"This setting determines the method <i>Ristretto</i> will use\n"
+"to configure the desktop wallpaper."
+msgstr "Налаштуйте систему, яка зараз керує Вашим робочим столом.\nЦі налаштування визначають метод, який використає <i>Ristretto</i>\nдля конфігурації шпалер робочого столу."
+
+#: ../src/main_window.c:2181 ../src/preferences_dialog.c:488
+msgid "None"
+msgstr "Нічого"
+
+#: ../src/main_window.c:2185 ../src/preferences_dialog.c:492
+msgid "Xfce"
+msgstr "Xfce"
+
+#: ../src/main_window.c:2189 ../src/preferences_dialog.c:496
+msgid "GNOME"
+msgstr "GNOME"
+
+#: ../src/main_window.c:2629
+msgid "Developer:"
+msgstr "Розробник:"
+
+#: ../src/main_window.c:2638 ../ristretto.appdata.xml.in.h:1
+msgid "Ristretto is an image viewer for the Xfce desktop environment."
+msgstr "Ristretto - переглядач зображень для робочого середовища Xfce."
+
+#: ../src/main_window.c:2646
+msgid "translator-credits"
+msgstr "Dmitry Nikitin <luckas_fb@mail.ru>/nYarema aka Knedlyk <yupadmin@gmail.com>"
+
+#: ../src/main_window.c:2949
+msgid "Open image"
+msgstr "Відкрити зображення"
+
+#: ../src/main_window.c:2968
+msgid "Images"
+msgstr "Малюнки"
+
+#: ../src/main_window.c:2973
+msgid ".jp(e)g"
+msgstr ".jp(e)g"
+
+#: ../src/main_window.c:3000 ../src/main_window.c:3143
+msgid "Could not open file"
+msgstr "Неможливо відкрити файл"
+
+#: ../src/main_window.c:3182
+msgid "Save copy"
+msgstr "Зберегти копію"
+
+#: ../src/main_window.c:3215
+msgid "Could not save file"
+msgstr "Неможливо зберегти файл"
+
+#: ../src/main_window.c:3378
+#, c-format
+msgid "Are you sure you want to send image '%s' to trash?"
+msgstr "Ви впевнені, що бажаєте викинути малюнок '%s' у смітник?"
+
+#: ../src/main_window.c:3382
+#, c-format
+msgid "Are you sure you want to delete image '%s' from disk?"
+msgstr "Ви впевнені, що бажаєте видалити малюнок '%s' з диску?"
+
+#: ../src/main_window.c:3393
+msgid "_Do not ask again for this session"
+msgstr "_Не запитувати знову про цю сесію"
+
+#: ../src/main_window.c:3464
+#, c-format
+msgid ""
+"An error occurred when deleting image '%s' from disk.\n"
+"\n"
+"%s"
+msgstr "Виникла помилка при видаленні малюнка '%s' з диску.\n\n%s"
+
+#: ../src/main_window.c:3468
+#, c-format
+msgid ""
+"An error occurred when sending image '%s' to trash.\n"
+"\n"
+"%s"
+msgstr "Виникла помилка при висиланні малюнка '%s' до смітника.\n\n%s"
+
+#: ../src/main_window.c:3804
+msgid "Edit with"
+msgstr "Редагувати з"
+
+#: ../src/main_window.c:3822
+#, c-format
+msgid "Open %s and other files of type %s with:"
+msgstr "Відкрити %s та інші файли з типом %s з:"
+
+#: ../src/main_window.c:3827
+msgid "Use as _default for this kind of file"
+msgstr "Використати як _типове для цього типу файлів"
+
+#: ../src/main_window.c:3917
+msgid "Recommended Applications"
+msgstr "Пропоновані програми"
+
+#: ../src/main_window.c:3997
+msgid "Other Applications"
+msgstr "Інші програми"
+
+#: ../src/icon_bar.c:345
+msgid "Orientation"
+msgstr "_Орієнтація"
+
+#: ../src/icon_bar.c:346
+msgid "The orientation of the iconbar"
+msgstr "Орієнтація панелі іконок"
+
+#: ../src/icon_bar.c:362
+msgid "File column"
+msgstr "Колонка файлів"
+
+#: ../src/icon_bar.c:363
+msgid "Model column used to retrieve the file from"
+msgstr "Модель колонки, використана для відновлення файлу з"
+
+#: ../src/icon_bar.c:375
+msgid "Icon Bar Model"
+msgstr "Модель панелі іконок"
+
+#: ../src/icon_bar.c:376
+msgid "Model for the icon bar"
+msgstr "Модель для панелі іконок"
+
+#: ../src/icon_bar.c:392
+msgid "Active"
+msgstr "Активне"
+
+#: ../src/icon_bar.c:393
+msgid "Active item index"
+msgstr "Активне з індексом"
+
+#: ../src/icon_bar.c:409 ../src/icon_bar.c:410
+msgid "Show Text"
+msgstr "Показати текст"
+
+#: ../src/icon_bar.c:416 ../src/icon_bar.c:417
+msgid "Active item fill color"
+msgstr "Колір заповнення для активного пункту"
+
+#: ../src/icon_bar.c:423 ../src/icon_bar.c:424
+msgid "Active item border color"
+msgstr "Колір границі активного пункту"
+
+#: ../src/icon_bar.c:430 ../src/icon_bar.c:431
+msgid "Active item text color"
+msgstr "Колір тексту активного пункту"
+
+#: ../src/icon_bar.c:437 ../src/icon_bar.c:438
+msgid "Cursor item fill color"
+msgstr "Колір заповнення активного курсору"
+
+#: ../src/icon_bar.c:444 ../src/icon_bar.c:445
+msgid "Cursor item border color"
+msgstr "Колір границі активного курсору"
+
+#: ../src/icon_bar.c:451 ../src/icon_bar.c:452
+msgid "Cursor item text color"
+msgstr "Колір тексту активного курсору"
+
+#: ../src/privacy_dialog.c:152
+msgid "Time range to clear:"
+msgstr "Часовий діапазон для очистки:"
+
+#: ../src/privacy_dialog.c:156
+msgid "Cleanup"
+msgstr "Очистка"
+
+#: ../src/privacy_dialog.c:158
+msgid "Last Hour"
+msgstr "Остання година"
+
+#: ../src/privacy_dialog.c:159
+msgid "Last Two Hours"
+msgstr "Останні дві години"
+
+#: ../src/privacy_dialog.c:160
+msgid "Last Four Hours"
+msgstr "Останні чотири години"
+
+#: ../src/privacy_dialog.c:161
+msgid "Today"
+msgstr "Сьогодні"
+
+#: ../src/privacy_dialog.c:162
+msgid "Everything"
+msgstr "Усе"
+
+#: ../src/privacy_dialog.c:460
+msgid "Clear private data"
+msgstr "Очистити приватні дані"
+
+#: ../src/preferences_dialog.c:276
+msgid "Display"
+msgstr "Відображення"
+
+#: ../src/preferences_dialog.c:283
+msgid "Background color"
+msgstr "Колір тла"
+
+#: ../src/preferences_dialog.c:287
+msgid "Override background color:"
+msgstr "Замінити колір тла:"
+
+#: ../src/preferences_dialog.c:314
+msgid "Quality"
+msgstr "Якість"
+
+#: ../src/preferences_dialog.c:318
+msgid ""
+"With this option enabled, the maximum image-quality will be limited to the "
+"screen-size."
+msgstr "Коли включений цей параметр, тоді максимальна якість малюнка буде обмежена до розмірів екрану."
+
+#: ../src/preferences_dialog.c:321
+msgid "Limit rendering quality"
+msgstr "Обмеження якості відтворення"
+
+#: ../src/preferences_dialog.c:333
+msgid "Fullscreen"
+msgstr "Повний екран"
+
+#: ../src/preferences_dialog.c:338
+msgid "Thumbnails"
+msgstr "Мініатюри"
+
+#: ../src/preferences_dialog.c:341
+msgid ""
+"The thumbnail bar can be automatically hidden when the window is fullscreen."
+msgstr "Панель мініатюр може автоматично ховатись,   \nколи переглядач зображень перебуває в повноекранному режимі."
+
+#: ../src/preferences_dialog.c:344
+msgid "Hide thumbnail bar when fullscreen"
+msgstr "Приховувати панель мініатюр в повноекранному режимі"
+
+#: ../src/preferences_dialog.c:352
+msgid "Clock"
+msgstr "Годинник"
+
+#: ../src/preferences_dialog.c:355
+msgid ""
+"Show an analog clock that displays the current time when the window is "
+"fullscreen"
+msgstr "Панель мініатюр може автоматично ховатись,   \nколи переглядач зображень перебуває в повноекранному режимі."
+
+#: ../src/preferences_dialog.c:358
+msgid "Show Fullscreen Clock"
+msgstr "Включити повноекранний режим"
+
+#: ../src/preferences_dialog.c:375
+msgid "Slideshow"
+msgstr "Слайд-шоу"
+
+#: ../src/preferences_dialog.c:379
+msgid "Timeout"
+msgstr "Затримка"
+
+#: ../src/preferences_dialog.c:382
+msgid ""
+"The time period an individual image is displayed during a slideshow\n"
+"(in seconds)"
+msgstr "Тривалість показу окремого зображення в слайд-шоу\n(в секундах)"
+
+#: ../src/preferences_dialog.c:400
+msgid "Control"
+msgstr "Контроль"
+
+#: ../src/preferences_dialog.c:404
+msgid "Scroll wheel"
+msgstr "Прокрутка"
+
+#: ../src/preferences_dialog.c:407
+msgid "Invert zoom direction"
+msgstr "Повернути напрямок збільшення"
+
+#: ../src/preferences_dialog.c:421
+msgid "Behaviour"
+msgstr "Поведінка"
+
+#: ../src/preferences_dialog.c:426
+msgid "Startup"
+msgstr "Початок"
+
+#: ../src/preferences_dialog.c:428
+msgid "Maximize window on startup when opening an image"
+msgstr "Максимізувати розмір вікна під час запуску коли відкривається малюнок"
+
+#: ../src/preferences_dialog.c:434
+msgid "Wrap around images"
+msgstr "Обернутись навколо зображень"
+
+#: ../src/preferences_dialog.c:453
+msgid "Desktop"
+msgstr "Робочий стіл"
+
+#: ../src/preferences_dialog.c:572
+msgid "Image Viewer Preferences"
+msgstr "Уподобання переглядача зображень"
+
+#: ../src/properties_dialog.c:181
+msgid "<b>Name:</b>"
+msgstr "<b>Назва:</b>"
+
+#: ../src/properties_dialog.c:182
+msgid "<b>Kind:</b>"
+msgstr "<b>Тип:</b>"
+
+#: ../src/properties_dialog.c:183
+msgid "<b>Modified:</b>"
+msgstr "<b>Змінено:</b>"
+
+#: ../src/properties_dialog.c:184
+msgid "<b>Accessed:</b>"
+msgstr "<b>Доступ:</b>"
+
+#: ../src/properties_dialog.c:185
+msgid "<b>Size:</b>"
+msgstr "<b>Розмір:</b>"
+
+#: ../src/properties_dialog.c:309
+msgid "General"
+msgstr "Загальне"
+
+#: ../src/properties_dialog.c:313
+msgid "Image"
+msgstr "Малюнок"
+
+#: ../src/properties_dialog.c:541
+#, c-format
+msgid "<b>Date taken:</b>"
+msgstr "<b>Дата зйомки:</b>"
+
+#: ../src/properties_dialog.c:553 ../src/properties_dialog.c:565
+#: ../src/properties_dialog.c:577
+#, c-format
+msgid "<b>%s</b>"
+msgstr "<b>%s</b>"
+
+#: ../src/properties_dialog.c:639
+#, c-format
+msgid "%s - Properties"
+msgstr "%s - Властивості"
+
+#: ../src/thumbnailer.c:467
+msgid ""
+"The thumbnailer-service can not be reached,\n"
+"for this reason, the thumbnails can not be\n"
+"created.\n"
+"\n"
+"Install <b>Tumbler</b> or another <i>thumbnailing daemon</i>\n"
+"to resolve this issue."
+msgstr "Сервіс мініатюр не доступний,\r\nз цієї причини мініатюри не можуть бути створені.\r\n\r\nВстановіть <b>Tumbler</b> чи інший <i>демон мініатюр</i>\r\nдля вирішення цієї проблеми."
+
+#: ../src/thumbnailer.c:477
+msgid "Do _not show this message again"
+msgstr "Не виводити це повідомлення знову"
+
+#: ../src/xfce_wallpaper_manager.c:379 ../src/gnome_wallpaper_manager.c:235
+msgid "Style:"
+msgstr "Стиль:"
+
+#: ../src/xfce_wallpaper_manager.c:380
+msgid "Brightness:"
+msgstr "Яскравість:"
+
+#: ../src/xfce_wallpaper_manager.c:381
+msgid "Saturation:"
+msgstr "Гамма:"
+
+#: ../src/xfce_wallpaper_manager.c:397
+msgid "Apply to all workspaces"
+msgstr "Застосувати до всіх робочих областей"
+
+#: ../src/xfce_wallpaper_manager.c:404 ../src/gnome_wallpaper_manager.c:246
+msgid "Set as wallpaper"
+msgstr "Встановити як шпалери"
+
+#: ../src/xfce_wallpaper_manager.c:557 ../src/gnome_wallpaper_manager.c:313
+msgid "Auto"
+msgstr "Автоматично"
+
+#: ../src/xfce_wallpaper_manager.c:560
+msgid "Centered"
+msgstr "Центрувати"
+
+#: ../src/xfce_wallpaper_manager.c:563
+msgid "Tiled"
+msgstr "Плиткою"
+
+#: ../src/xfce_wallpaper_manager.c:566
+msgid "Stretched"
+msgstr "Розмножити"
+
+#: ../src/xfce_wallpaper_manager.c:569
+msgid "Scaled"
+msgstr "Масштабувати"
+
+#: ../src/xfce_wallpaper_manager.c:572
+msgid "Zoomed"
+msgstr "Розтягнути"
+
+#: ../ristretto.desktop.in.h:1
+msgid "Ristretto Image Viewer"
+msgstr "Переглядач фотографій Ristretto"
+
+#: ../ristretto.desktop.in.h:2
+msgid "Look at your images easily"
+msgstr "Легко переглядайте Ваші фотографії"
+
+#: ../ristretto.appdata.xml.in.h:2
+msgid ""
+"The Ristretto Image Viewer is an application that can be used to view and "
+"scroll through images, run a slideshow of images, open images with other "
+"applications like an image-editor or configure an image as the desktop "
+"wallpaper."
+msgstr "Переглядач малюнків Ristretto - це програма, яку можна використовувати для перегляду малюнків, запуску слайд-шоу з малюнків, відкривання малюнків за допомогою інших програм, таких як редактор малюнків, або налаштовувати малюнок в якості шпалер стільниці."
+
+#: ../ristretto.appdata.xml.in.h:3
+msgid ""
+"This version comes with the improvements such as thumbnail usage as appicon "
+"and update to the first image in the image-list when receiving a ready-"
+"signal, required to show the thumbnail once it's generated."
+msgstr "Ця версія має кілька покращень, пов’язаних з генерацією і  показом мініатюр списку малюнків."
+
+#: ../ristretto.appdata.xml.in.h:4
+msgid ""
+"This release contains lots of translation-updates, and a crash when "
+"configuring the 'limit-quality' property."
+msgstr "Це випуск містить багато оновлень перекладів."
+
+#: ../ristretto.appdata.xml.in.h:5
+msgid ""
+"This version comes with several changes such as online documentation on "
+"docs.xfce.org, the option to limit the maximum image-quality to the screen "
+"dimensions to improve memory-usage and performance - now ristretto renders "
+"at full quality with this option disabled, only one toolbar - instead of "
+"two, a quick-launch button on the toolbar to execute an editor, the option "
+"to pick a default-editor per mime-type, an optional clock that shows up when"
+" ristretto is fullscreen, Ristretto now shows a 'Loading..' message in the "
+"statusbar to indicate when it is busy and progressive loading of directories"
+" to prevent lockup of the UI. This version is designed to work with version "
+"4.10 of Xfce."
+msgstr "Ця версія має кілька змін, серед них документація онлайн на docs.xfce.org, опція обмеження максимальної якості зображення до розмірів екрану для покращення використання пам’яті і продуктивності, тільки одна панель замість двох, кнопка швидкого запуску для запуску редактора, вибір типового редактора для різних типів mime, годинник, який показується, коли ristretto відкритий на повний екран, Ristretto тепер показує повідомлення 'Завантажую..' в панелі статусу, щоб показати завантаженість і прогрес завантаження тек, і щоб не блокувати інтерфейс користувача. Ця версія розроблена для роботи з Xfce версії 4.10."

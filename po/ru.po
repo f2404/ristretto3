@@ -1,0 +1,905 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# 
+# Translators:
+# Denis Koryavov <dkoryavov@yandex.ru>, 2010
+# Александр <ifillrok@gmail.com>, 2015
+# Igor <f2404@yandex.ru>, 2016
+# Sergey Alyoshin <alyoshin.s@gmail.com>, 2013,2015
+# Stefan Zerkalica <zerkalica@gmail.com>, 2008
+msgid ""
+msgstr ""
+"Project-Id-Version: Xfce Apps\n"
+"Report-Msgid-Bugs-To: xfce-i18n@xfce.org\n"
+"POT-Creation-Date: 2016-07-03 18:31+0200\n"
+"PO-Revision-Date: 2016-07-07 16:36+0000\n"
+"Last-Translator: Igor <f2404@yandex.ru>\n"
+"Language-Team: Russian (http://www.transifex.com/xfce/xfce-apps/language/ru/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: ru\n"
+"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n%100>=11 && n%100<=14)? 2 : 3);\n"
+
+#: ../src/main.c:62
+msgid "Version information"
+msgstr "Информация о версии"
+
+#: ../src/main.c:66
+msgid "Start in fullscreen mode"
+msgstr "Запустить в полноэкранном режиме"
+
+#: ../src/main.c:70
+msgid "Start a slideshow"
+msgstr "Начать слайд-шоу"
+
+#: ../src/main.c:78
+msgid "Show settings dialog"
+msgstr "Показать диалог настроек"
+
+#: ../src/main.c:108
+#, c-format
+msgid ""
+"%s: %s\n"
+"\n"
+"Try %s --help to see a full list of\n"
+"available command line options.\n"
+msgstr "%s: %s\nПопробуйте %s --help для просмотра полного списка параметров командной строки.\n"
+
+#: ../src/main_window.c:57 ../ristretto.desktop.in.h:3
+msgid "Image Viewer"
+msgstr "Просмотр изображений"
+
+#: ../src/main_window.c:367
+msgid "_File"
+msgstr "_Файл"
+
+#. Icon-name
+#: ../src/main_window.c:371
+msgid "_Open..."
+msgstr "_Открыть..."
+
+#. Label-text
+#. Keyboard shortcut
+#: ../src/main_window.c:373
+msgid "Open an image"
+msgstr "Открыть изображение"
+
+#. Icon-name
+#: ../src/main_window.c:377
+msgid "_Save copy..."
+msgstr "_Сохранить копию..."
+
+#. Label-text
+#. Keyboard shortcut
+#: ../src/main_window.c:379
+msgid "Save a copy of the image"
+msgstr "Сохранить копию изображения"
+
+#. Icon-name
+#: ../src/main_window.c:383
+msgid "_Properties..."
+msgstr "С_войства"
+
+#. Label-text
+#. Keyboard shortcut
+#: ../src/main_window.c:385
+msgid "Show file properties"
+msgstr "Показать свойства файла"
+
+#. Icon-name
+#: ../src/main_window.c:389 ../src/main_window.c:408
+msgid "_Edit"
+msgstr "_Правка"
+
+#. Label-text
+#. Keyboard shortcut
+#: ../src/main_window.c:391
+msgid "Edit this image"
+msgstr "Редактировать изображение"
+
+#. Icon-name
+#: ../src/main_window.c:395
+msgid "_Close"
+msgstr "_Закрыть"
+
+#. Label-text
+#. Keyboard shortcut
+#: ../src/main_window.c:397
+msgid "Close this image"
+msgstr "Закрыть изображение"
+
+#. Icon-name
+#: ../src/main_window.c:401
+msgid "_Quit"
+msgstr "_Выйти"
+
+#. Label-text
+#. Keyboard shortcut
+#: ../src/main_window.c:403
+msgid "Quit Ristretto"
+msgstr "Выйти из программы"
+
+#: ../src/main_window.c:412
+msgid "_Open with"
+msgstr "_Открыть в"
+
+#: ../src/main_window.c:416
+msgid "_Sorting"
+msgstr "_Сортировать"
+
+#. Icon-name
+#: ../src/main_window.c:420
+msgid "_Delete"
+msgstr "_Удалить"
+
+#. Label-text
+#. Keyboard shortcut
+#: ../src/main_window.c:422
+msgid "Delete this image from disk"
+msgstr "Удалить изображение с диска"
+
+#. Icon-name
+#: ../src/main_window.c:426
+msgid "_Clear private data..."
+msgstr "О_чистить личные данные..."
+
+#. Icon-name
+#: ../src/main_window.c:432
+msgid "_Preferences..."
+msgstr "_Настройки..."
+
+#: ../src/main_window.c:439
+msgid "_View"
+msgstr "Прос_мотр"
+
+#. Icon-name
+#: ../src/main_window.c:443
+msgid "_Fullscreen"
+msgstr "_Полноэкранный режим"
+
+#. Label-text
+#. Keyboard shortcut
+#: ../src/main_window.c:445
+msgid "Switch to fullscreen"
+msgstr "Во весь экран"
+
+#. Icon-name
+#: ../src/main_window.c:449
+msgid "_Leave Fullscreen"
+msgstr "_Выйти из полноэкранного режима"
+
+#. Label-text
+#. Keyboard shortcut
+#: ../src/main_window.c:451
+msgid "Leave Fullscreen"
+msgstr "Выйти из полноэкранного режима"
+
+#. Icon-name
+#: ../src/main_window.c:455
+msgid "Set as _Wallpaper..."
+msgstr "Сделать _фоном рабочего стола"
+
+#: ../src/main_window.c:462
+msgid "_Zoom"
+msgstr "_Масштаб"
+
+#. Icon-name
+#: ../src/main_window.c:466
+msgid "Zoom _In"
+msgstr "_Приблизить"
+
+#. Label-text
+#. Keyboard shortcut
+#: ../src/main_window.c:468
+msgid "Zoom in"
+msgstr "Приблизить"
+
+#. Icon-name
+#: ../src/main_window.c:472
+msgid "Zoom _Out"
+msgstr "О_тдалить"
+
+#. Label-text
+#. Keyboard shortcut
+#: ../src/main_window.c:474
+msgid "Zoom out"
+msgstr "Отдалить"
+
+#. Icon-name
+#: ../src/main_window.c:478
+msgid "Zoom _Fit"
+msgstr "Вписать в _окно"
+
+#. Label-text
+#. Keyboard shortcut
+#: ../src/main_window.c:480
+msgid "Zoom to fit window"
+msgstr "Уместить в окне"
+
+#. Icon-name
+#: ../src/main_window.c:484
+msgid "_Normal Size"
+msgstr "_Нормальный размер"
+
+#. Label-text
+#. Keyboard shortcut
+#: ../src/main_window.c:486
+msgid "Zoom to 100%"
+msgstr "Исходный размер"
+
+#: ../src/main_window.c:491
+msgid "_Rotation"
+msgstr "_Повернуть"
+
+#. Icon-name
+#: ../src/main_window.c:495
+msgid "Rotate _Right"
+msgstr "Повернуть в_право"
+
+#. Icon-name
+#: ../src/main_window.c:501
+msgid "Rotate _Left"
+msgstr "Повернуть в_лево"
+
+#: ../src/main_window.c:508
+msgid "_Go"
+msgstr "Пере_ход"
+
+#. Icon-name
+#: ../src/main_window.c:512
+msgid "_Forward"
+msgstr "_Вперёд"
+
+#. Label-text
+#. Keyboard shortcut
+#: ../src/main_window.c:514
+msgid "Next image"
+msgstr "Следующее"
+
+#. Icon-name
+#: ../src/main_window.c:518
+msgid "_Back"
+msgstr "_Назад"
+
+#. Label-text
+#. Keyboard shortcut
+#: ../src/main_window.c:520
+msgid "Previous image"
+msgstr "Предыдущее"
+
+#. Icon-name
+#: ../src/main_window.c:524
+msgid "F_irst"
+msgstr "П_ервое"
+
+#. Label-text
+#. Keyboard shortcut
+#: ../src/main_window.c:526
+msgid "First image"
+msgstr "В начало"
+
+#. Icon-name
+#: ../src/main_window.c:530
+msgid "_Last"
+msgstr "_Последнее"
+
+#. Label-text
+#. Keyboard shortcut
+#: ../src/main_window.c:532
+msgid "Last image"
+msgstr "В конец"
+
+#: ../src/main_window.c:537
+msgid "_Help"
+msgstr "_Справка"
+
+#. Icon-name
+#: ../src/main_window.c:541
+msgid "_Contents"
+msgstr "_Содержание"
+
+#. Label-text
+#. Keyboard shortcut
+#: ../src/main_window.c:543
+msgid "Display ristretto user manual"
+msgstr "Показать руководство пользователя"
+
+#. Icon-name
+#: ../src/main_window.c:547
+msgid "_About"
+msgstr "_О программе"
+
+#. Label-text
+#. Keyboard shortcut
+#: ../src/main_window.c:549
+msgid "Display information about ristretto"
+msgstr "Показать информацию о программе"
+
+#: ../src/main_window.c:554
+msgid "_Position"
+msgstr "_Позиция"
+
+#: ../src/main_window.c:558
+msgid "_Size"
+msgstr "Раз_мер"
+
+#: ../src/main_window.c:562
+msgid "Thumbnail Bar _Position"
+msgstr "По_ложение панели эскизов"
+
+#: ../src/main_window.c:566
+msgid "Thumb_nail Size"
+msgstr "Раз_мер эскизов"
+
+#. Icon-name
+#: ../src/main_window.c:571
+msgid "Leave _Fullscreen"
+msgstr "Выйти из полноэкранного режима"
+
+#. Icon-name
+#: ../src/main_window.c:587
+msgid "_Show Toolbar"
+msgstr "Панель _инструментов"
+
+#. Icon-name
+#: ../src/main_window.c:595
+msgid "Show _Thumbnail Bar"
+msgstr "Панель _эскизов"
+
+#. Icon-name
+#: ../src/main_window.c:603
+msgid "Show Status _Bar"
+msgstr "Показать строку состо_яния"
+
+#. Icon-name
+#: ../src/main_window.c:616
+msgid "sort by filename"
+msgstr "сортировать по имени файла"
+
+#. Icon-name
+#: ../src/main_window.c:623
+msgid "sort by date"
+msgstr "сортировать по дате"
+
+#. Icon-name
+#: ../src/main_window.c:634
+msgid "Left"
+msgstr "Слева"
+
+#: ../src/main_window.c:640
+msgid "Right"
+msgstr "Справа"
+
+#: ../src/main_window.c:646
+msgid "Top"
+msgstr "Вверху"
+
+#: ../src/main_window.c:652
+msgid "Bottom"
+msgstr "Внизу"
+
+#: ../src/main_window.c:663
+msgid "Very Small"
+msgstr "Очень маленькие"
+
+#: ../src/main_window.c:669
+msgid "Smaller"
+msgstr "Маленькие"
+
+#: ../src/main_window.c:675
+msgid "Small"
+msgstr "Мелкие"
+
+#: ../src/main_window.c:681
+msgid "Normal"
+msgstr "Обычные"
+
+#: ../src/main_window.c:687
+msgid "Large"
+msgstr "Крупные"
+
+#: ../src/main_window.c:693
+msgid "Larger"
+msgstr "Большие"
+
+#: ../src/main_window.c:699
+msgid "Very Large"
+msgstr "Очень большие"
+
+#. Create Play/Pause Slideshow actions
+#: ../src/main_window.c:853
+msgid "_Play"
+msgstr "Н_ачать слайд-шоу"
+
+#: ../src/main_window.c:853
+msgid "Play slideshow"
+msgstr "Начать слайд-шоу"
+
+#: ../src/main_window.c:854
+msgid "_Pause"
+msgstr "Пауза"
+
+#: ../src/main_window.c:854
+msgid "Pause slideshow"
+msgstr "Остановить слайд-шоу"
+
+#. Create Recently used items Action
+#: ../src/main_window.c:857
+msgid "_Recently used"
+msgstr "_Недавние"
+
+#: ../src/main_window.c:857
+msgid "Recently used"
+msgstr "Недавно просмотренные"
+
+#: ../src/main_window.c:961 ../src/main_window.c:1527
+msgid "Press open to select an image"
+msgstr "Нажмите открыть для выбора изображения"
+
+#: ../src/main_window.c:1386 ../src/main_window.c:1390
+msgid "Open With Other _Application..."
+msgstr "Открыть с помощью..."
+
+#: ../src/main_window.c:1411 ../src/main_window.c:1417
+msgid "Empty"
+msgstr "Пусто"
+
+#: ../src/main_window.c:1537
+msgid "Loading..."
+msgstr "Загрузка..."
+
+#: ../src/main_window.c:2141
+msgid "Choose 'set wallpaper' method"
+msgstr "Выберите способ установки обоев"
+
+#: ../src/main_window.c:2156 ../src/preferences_dialog.c:464
+msgid ""
+"Configure which system is currently managing your desktop.\n"
+"This setting determines the method <i>Ristretto</i> will use\n"
+"to configure the desktop wallpaper."
+msgstr "Выберите ваше текущее рабочее окружение.\nЭта настройка указывает способ, которым <i>Ristretto</i> будет устанавливать ваши обои рабочего стола."
+
+#: ../src/main_window.c:2181 ../src/preferences_dialog.c:488
+msgid "None"
+msgstr "Нет"
+
+#: ../src/main_window.c:2185 ../src/preferences_dialog.c:492
+msgid "Xfce"
+msgstr "Xfce"
+
+#: ../src/main_window.c:2189 ../src/preferences_dialog.c:496
+msgid "GNOME"
+msgstr "GNOME"
+
+#: ../src/main_window.c:2629
+msgid "Developer:"
+msgstr "Разработчик:"
+
+#: ../src/main_window.c:2638 ../ristretto.appdata.xml.in.h:1
+msgid "Ristretto is an image viewer for the Xfce desktop environment."
+msgstr "Ristretto — быстрая и легковесная программа просмотра изображений для рабочего окружения Xfce."
+
+#: ../src/main_window.c:2646
+msgid "translator-credits"
+msgstr "Urmas <davian818@gmail.com>, 2011"
+
+#: ../src/main_window.c:2949
+msgid "Open image"
+msgstr "Открыть изображение"
+
+#: ../src/main_window.c:2968
+msgid "Images"
+msgstr "Изображения"
+
+#: ../src/main_window.c:2973
+msgid ".jp(e)g"
+msgstr ".jp(e)g"
+
+#: ../src/main_window.c:3000 ../src/main_window.c:3143
+msgid "Could not open file"
+msgstr "Невозможно открыть файл"
+
+#: ../src/main_window.c:3182
+msgid "Save copy"
+msgstr "Сохранить копию"
+
+#: ../src/main_window.c:3215
+msgid "Could not save file"
+msgstr "Не удалось сохранить файл"
+
+#: ../src/main_window.c:3378
+#, c-format
+msgid "Are you sure you want to send image '%s' to trash?"
+msgstr "Отправить изображение «%s» в корзину?"
+
+#: ../src/main_window.c:3382
+#, c-format
+msgid "Are you sure you want to delete image '%s' from disk?"
+msgstr "Удалить изображение «%s» с диска?"
+
+#: ../src/main_window.c:3393
+msgid "_Do not ask again for this session"
+msgstr "_Больше не спрашивать до перезапуска"
+
+#: ../src/main_window.c:3464
+#, c-format
+msgid ""
+"An error occurred when deleting image '%s' from disk.\n"
+"\n"
+"%s"
+msgstr "Ошибка при удалении изображения «%s» с диска.\n\n%s"
+
+#: ../src/main_window.c:3468
+#, c-format
+msgid ""
+"An error occurred when sending image '%s' to trash.\n"
+"\n"
+"%s"
+msgstr "Ошибка при перемещении изображения «%s» в корзину.\n\n%s"
+
+#: ../src/main_window.c:3804
+msgid "Edit with"
+msgstr "Редактировать с помощью"
+
+#: ../src/main_window.c:3822
+#, c-format
+msgid "Open %s and other files of type %s with:"
+msgstr "Открывать %s и другие файлы типа %s с помощью:"
+
+#: ../src/main_window.c:3827
+msgid "Use as _default for this kind of file"
+msgstr "Использовать по _умолчанию для файлов данного типа"
+
+#: ../src/main_window.c:3917
+msgid "Recommended Applications"
+msgstr "Рекомендованные приложения"
+
+#: ../src/main_window.c:3997
+msgid "Other Applications"
+msgstr "Другие приложения"
+
+#: ../src/icon_bar.c:345
+msgid "Orientation"
+msgstr "Ориентация"
+
+#: ../src/icon_bar.c:346
+msgid "The orientation of the iconbar"
+msgstr "Ориентация панели иконок"
+
+#: ../src/icon_bar.c:362
+msgid "File column"
+msgstr "Столбец файла"
+
+#: ../src/icon_bar.c:363
+msgid "Model column used to retrieve the file from"
+msgstr "Столбец модели для извлечения файла"
+
+#: ../src/icon_bar.c:375
+msgid "Icon Bar Model"
+msgstr "Тип панели иконок"
+
+#: ../src/icon_bar.c:376
+msgid "Model for the icon bar"
+msgstr "Модель для панели иконок"
+
+#: ../src/icon_bar.c:392
+msgid "Active"
+msgstr "Активно"
+
+#: ../src/icon_bar.c:393
+msgid "Active item index"
+msgstr "Индекс активного элемента"
+
+#: ../src/icon_bar.c:409 ../src/icon_bar.c:410
+msgid "Show Text"
+msgstr "Показать текст"
+
+#: ../src/icon_bar.c:416 ../src/icon_bar.c:417
+msgid "Active item fill color"
+msgstr "Цвет заполнения активного элемента"
+
+#: ../src/icon_bar.c:423 ../src/icon_bar.c:424
+msgid "Active item border color"
+msgstr "Цвет границ активного элемента"
+
+#: ../src/icon_bar.c:430 ../src/icon_bar.c:431
+msgid "Active item text color"
+msgstr "Цвет текста активного элемента"
+
+#: ../src/icon_bar.c:437 ../src/icon_bar.c:438
+msgid "Cursor item fill color"
+msgstr "Цвет заполнения курсора активного элемента"
+
+#: ../src/icon_bar.c:444 ../src/icon_bar.c:445
+msgid "Cursor item border color"
+msgstr "Цвет границ курсора активного элемента"
+
+#: ../src/icon_bar.c:451 ../src/icon_bar.c:452
+msgid "Cursor item text color"
+msgstr "Цвет курсора активного элемента"
+
+#: ../src/privacy_dialog.c:152
+msgid "Time range to clear:"
+msgstr "Период для очистки:"
+
+#: ../src/privacy_dialog.c:156
+msgid "Cleanup"
+msgstr "Очистка"
+
+#: ../src/privacy_dialog.c:158
+msgid "Last Hour"
+msgstr "Последний час"
+
+#: ../src/privacy_dialog.c:159
+msgid "Last Two Hours"
+msgstr "Последние два часа"
+
+#: ../src/privacy_dialog.c:160
+msgid "Last Four Hours"
+msgstr "Последние четыре часа"
+
+#: ../src/privacy_dialog.c:161
+msgid "Today"
+msgstr "Сегодня"
+
+#: ../src/privacy_dialog.c:162
+msgid "Everything"
+msgstr "Всё время"
+
+#: ../src/privacy_dialog.c:460
+msgid "Clear private data"
+msgstr "Очистка личных данных"
+
+#: ../src/preferences_dialog.c:276
+msgid "Display"
+msgstr "Отображение"
+
+#: ../src/preferences_dialog.c:283
+msgid "Background color"
+msgstr "Цвет фона"
+
+#: ../src/preferences_dialog.c:287
+msgid "Override background color:"
+msgstr "Установить цвет фона:"
+
+#: ../src/preferences_dialog.c:314
+msgid "Quality"
+msgstr "Качество"
+
+#: ../src/preferences_dialog.c:318
+msgid ""
+"With this option enabled, the maximum image-quality will be limited to the "
+"screen-size."
+msgstr "С этой опцией, максимальное качество изображения будет ограничено размером экрана."
+
+#: ../src/preferences_dialog.c:321
+msgid "Limit rendering quality"
+msgstr "Ограничить качество отображения"
+
+#: ../src/preferences_dialog.c:333
+msgid "Fullscreen"
+msgstr "Полноэкранный режим"
+
+#: ../src/preferences_dialog.c:338
+msgid "Thumbnails"
+msgstr "Эскизы"
+
+#: ../src/preferences_dialog.c:341
+msgid ""
+"The thumbnail bar can be automatically hidden when the window is fullscreen."
+msgstr "Панель эскизов будет скрыта при переходе в полноэкранный режим."
+
+#: ../src/preferences_dialog.c:344
+msgid "Hide thumbnail bar when fullscreen"
+msgstr "Скрыть панель эскизов в полноэкранном режиме"
+
+#: ../src/preferences_dialog.c:352
+msgid "Clock"
+msgstr "Часы"
+
+#: ../src/preferences_dialog.c:355
+msgid ""
+"Show an analog clock that displays the current time when the window is "
+"fullscreen"
+msgstr "Показывать часы, отображающие текущее время, при просмотре в полноэкранном режиме."
+
+#: ../src/preferences_dialog.c:358
+msgid "Show Fullscreen Clock"
+msgstr "Отображать часы в полноэкранном режиме"
+
+#: ../src/preferences_dialog.c:375
+msgid "Slideshow"
+msgstr "Слайд-шоу"
+
+#: ../src/preferences_dialog.c:379
+msgid "Timeout"
+msgstr "Задержка"
+
+#: ../src/preferences_dialog.c:382
+msgid ""
+"The time period an individual image is displayed during a slideshow\n"
+"(in seconds)"
+msgstr "Время показа изображений в режиме слайд-шоу \n(в секундах)"
+
+#: ../src/preferences_dialog.c:400
+msgid "Control"
+msgstr "Управление"
+
+#: ../src/preferences_dialog.c:404
+msgid "Scroll wheel"
+msgstr "Колёсико мыши"
+
+#: ../src/preferences_dialog.c:407
+msgid "Invert zoom direction"
+msgstr "Изменить направление масштабирования"
+
+#: ../src/preferences_dialog.c:421
+msgid "Behaviour"
+msgstr "Поведение"
+
+#: ../src/preferences_dialog.c:426
+msgid "Startup"
+msgstr "Запуск"
+
+#: ../src/preferences_dialog.c:428
+msgid "Maximize window on startup when opening an image"
+msgstr "При открытии изображения развёртывать окно во весь экран"
+
+#: ../src/preferences_dialog.c:434
+msgid "Wrap around images"
+msgstr "Циклический просмотр изображений"
+
+#: ../src/preferences_dialog.c:453
+msgid "Desktop"
+msgstr "Рабочий стол"
+
+#: ../src/preferences_dialog.c:572
+msgid "Image Viewer Preferences"
+msgstr "Настройки программы"
+
+#: ../src/properties_dialog.c:181
+msgid "<b>Name:</b>"
+msgstr "<b>Имя:</b>"
+
+#: ../src/properties_dialog.c:182
+msgid "<b>Kind:</b>"
+msgstr "<b>Тип:</b>"
+
+#: ../src/properties_dialog.c:183
+msgid "<b>Modified:</b>"
+msgstr "<b>Изменён:</b>"
+
+#: ../src/properties_dialog.c:184
+msgid "<b>Accessed:</b>"
+msgstr "<b>Доступ:</b>"
+
+#: ../src/properties_dialog.c:185
+msgid "<b>Size:</b>"
+msgstr "<b>Размер:</b>"
+
+#: ../src/properties_dialog.c:309
+msgid "General"
+msgstr "Общие"
+
+#: ../src/properties_dialog.c:313
+msgid "Image"
+msgstr "Изображение"
+
+#: ../src/properties_dialog.c:541
+#, c-format
+msgid "<b>Date taken:</b>"
+msgstr "<b>Дата съёмки:</b>"
+
+#: ../src/properties_dialog.c:553 ../src/properties_dialog.c:565
+#: ../src/properties_dialog.c:577
+#, c-format
+msgid "<b>%s</b>"
+msgstr "<b>%s</b>"
+
+#: ../src/properties_dialog.c:639
+#, c-format
+msgid "%s - Properties"
+msgstr "Свойства: %s"
+
+#: ../src/thumbnailer.c:467
+msgid ""
+"The thumbnailer-service can not be reached,\n"
+"for this reason, the thumbnails can not be\n"
+"created.\n"
+"\n"
+"Install <b>Tumbler</b> or another <i>thumbnailing daemon</i>\n"
+"to resolve this issue."
+msgstr "Не удалось установить соединение со службой создания эскизов.\nЭскизы для изображений создаваться не будут.\n\nУстановите <b>Tumbler</b> или иную <i>службу эскизов (миниатюр)</i>,\nчтобы это исправить."
+
+#: ../src/thumbnailer.c:477
+msgid "Do _not show this message again"
+msgstr "Больше _не показывать это сообщение"
+
+#: ../src/xfce_wallpaper_manager.c:379 ../src/gnome_wallpaper_manager.c:235
+msgid "Style:"
+msgstr "Стиль:"
+
+#: ../src/xfce_wallpaper_manager.c:380
+msgid "Brightness:"
+msgstr "Яркость:"
+
+#: ../src/xfce_wallpaper_manager.c:381
+msgid "Saturation:"
+msgstr "Контраст:"
+
+#: ../src/xfce_wallpaper_manager.c:397
+msgid "Apply to all workspaces"
+msgstr "Применить для всех рабочих мест"
+
+#: ../src/xfce_wallpaper_manager.c:404 ../src/gnome_wallpaper_manager.c:246
+msgid "Set as wallpaper"
+msgstr "Установить как обои"
+
+#: ../src/xfce_wallpaper_manager.c:557 ../src/gnome_wallpaper_manager.c:313
+msgid "Auto"
+msgstr "Автоматически"
+
+#: ../src/xfce_wallpaper_manager.c:560
+msgid "Centered"
+msgstr "Центровать"
+
+#: ../src/xfce_wallpaper_manager.c:563
+msgid "Tiled"
+msgstr "Сжать"
+
+#: ../src/xfce_wallpaper_manager.c:566
+msgid "Stretched"
+msgstr "Замостить"
+
+#: ../src/xfce_wallpaper_manager.c:569
+msgid "Scaled"
+msgstr "Растянуть"
+
+#: ../src/xfce_wallpaper_manager.c:572
+msgid "Zoomed"
+msgstr "Приближено"
+
+#: ../ristretto.desktop.in.h:1
+msgid "Ristretto Image Viewer"
+msgstr "Просмотр изображений Ristretto"
+
+#: ../ristretto.desktop.in.h:2
+msgid "Look at your images easily"
+msgstr "Просмотр фотографий — это просто"
+
+#: ../ristretto.appdata.xml.in.h:2
+msgid ""
+"The Ristretto Image Viewer is an application that can be used to view and "
+"scroll through images, run a slideshow of images, open images with other "
+"applications like an image-editor or configure an image as the desktop "
+"wallpaper."
+msgstr "Программа просмотра изображений Ristretto может быть использована для показа и смены изображений, демонстрации слайд-шоу из изображений, открытия изображений в других программах, например в редакторах, и замены обоев на рабочем столе."
+
+#: ../ristretto.appdata.xml.in.h:3
+msgid ""
+"This version comes with the improvements such as thumbnail usage as appicon "
+"and update to the first image in the image-list when receiving a ready-"
+"signal, required to show the thumbnail once it's generated."
+msgstr "Данный выпуск содержит такие улучшения, как использование эскизов как значков приложений и обновление до первого изображения в списке при получении сигнала готовности, требуемого для показа эскиза после его создания. "
+
+#: ../ristretto.appdata.xml.in.h:4
+msgid ""
+"This release contains lots of translation-updates, and a crash when "
+"configuring the 'limit-quality' property."
+msgstr "В данном выпуске обновлены переводы на многие языки. При настройке параметра ограничения качества происходит аварийное завершение программы."
+
+#: ../ristretto.appdata.xml.in.h:5
+msgid ""
+"This version comes with several changes such as online documentation on "
+"docs.xfce.org, the option to limit the maximum image-quality to the screen "
+"dimensions to improve memory-usage and performance - now ristretto renders "
+"at full quality with this option disabled, only one toolbar - instead of "
+"two, a quick-launch button on the toolbar to execute an editor, the option "
+"to pick a default-editor per mime-type, an optional clock that shows up when"
+" ristretto is fullscreen, Ristretto now shows a 'Loading..' message in the "
+"statusbar to indicate when it is busy and progressive loading of directories"
+" to prevent lockup of the UI. This version is designed to work with version "
+"4.10 of Xfce."
+msgstr "Данная версия содержит несколько изменений, таких как онлайн документация на docs.xfce.org, опцию ограничения максимального качества изображения размерами экрана для уменьшения используемой памяти и улучшения производительности. Теперь при отключении этой опции Ristretto формирует изображение наибольшего качества. Также из изменений: только одна инструментальная панель вместо двух, кнопка быстрого запуска редактора, опция выбора редактора по умолчанию для mime-типа, возможность отображения часов в полноэкранном режиме. Теперь Ristretto отображает сообщение «Загрузка...» в строке статуса при занятости и загрузке каталогов для предотвращения блокировки интерфейса пользователя. Данная версия рассчитана на работу с Xfce версии 4.10."
