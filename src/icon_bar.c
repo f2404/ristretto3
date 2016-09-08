@@ -516,7 +516,7 @@ rstto_icon_bar_init (RsttoIconBar *icon_bar)
     pango_layout_set_ellipsize (icon_bar->priv->layout,
             PANGO_ELLIPSIZE_END);
 
-    GTK_WIDGET_UNSET_FLAGS (icon_bar, GTK_CAN_FOCUS);
+    gtk_widget_set_can_focus (GTK_WIDGET (icon_bar), FALSE);
 
     rstto_icon_bar_set_adjustments (icon_bar, NULL, NULL);
 
@@ -642,7 +642,7 @@ rstto_icon_bar_style_set (
 
     (*GTK_WIDGET_CLASS (rstto_icon_bar_parent_class)->style_set) (widget, previous_style);
 
-    if (GTK_WIDGET_REALIZED (widget))
+    if (gtk_widget_get_realized (widget))
     {
         gdk_window_set_background (icon_bar->priv->bin_window,
                 &(gtk_widget_get_style (widget)->base[widget->state]));
@@ -661,7 +661,7 @@ rstto_icon_bar_realize (GtkWidget *widget)
     GdkWindow    *window;
     GtkStyle     *style;
 
-    GTK_WIDGET_SET_FLAGS (widget, GTK_REALIZED);
+    gtk_widget_set_realized (widget, TRUE);
 
     gtk_widget_get_allocation (widget, &allocation);
 
@@ -785,7 +785,7 @@ rstto_icon_bar_size_allocate (
     if (!icon_bar->priv->active_item)
         g_warning ("thumbnail bar shown when no images are available");
 
-    if (GTK_WIDGET_REALIZED (widget))
+    if (gtk_widget_get_realized (widget))
     {
         gdk_window_move_resize (gtk_widget_get_window (widget),
                 allocation->x,
@@ -1051,7 +1051,7 @@ rstto_icon_bar_button_press (
 
     icon_bar = RSTTO_ICON_BAR (widget);
 
-    if (G_UNLIKELY (!GTK_WIDGET_HAS_FOCUS (widget)))
+    if (G_UNLIKELY (!gtk_widget_has_focus (widget)))
         gtk_widget_grab_focus (widget);
 
     if (event->button == 1 && event->type == GDK_BUTTON_PRESS)
@@ -1147,7 +1147,7 @@ cb_rstto_icon_bar_adjustment_value_changed (
         GtkAdjustment *adjustment,
         RsttoIconBar  *icon_bar)
 {
-    if (GTK_WIDGET_REALIZED (icon_bar))
+    if (gtk_widget_get_realized (GTK_WIDGET (icon_bar)))
     {
         /* Set auto_center to false, this should be the default behaviour
          * in case a user changes the value of the adjustments.
@@ -1202,7 +1202,7 @@ rstto_icon_bar_queue_draw_item (
 {
     GdkRectangle area;
 
-    if (GTK_WIDGET_REALIZED (icon_bar))
+    if (gtk_widget_get_realized (GTK_WIDGET (icon_bar)))
     {
         if (icon_bar->priv->orientation == GTK_ORIENTATION_VERTICAL)
         {
