@@ -850,8 +850,8 @@ rstto_main_window_init (RsttoMainWindow *window)
 
 
     /* Create Play/Pause Slideshow actions */
-    window->priv->play_action = gtk_action_new ("play", _("_Play"), _("Play slideshow"), "media-playback-start");
-    window->priv->pause_action = gtk_action_new ("pause", _("_Pause"), _("Pause slideshow"), "media-playback-pause");
+    window->priv->play_action = gtk_action_new ("play", _("_Play"), _("Play slideshow"), "gtk-media-play");
+    window->priv->pause_action = gtk_action_new ("pause", _("_Pause"), _("Pause slideshow"), "gtk-media-pause");
 
     /* Create Recently used items Action */
     window->priv->recent_action = gtk_recent_action_new_for_manager ("document-open-recent", _("_Recently used"), _("Recently used"), 0, GTK_RECENT_MANAGER(window->priv->recent_manager));
