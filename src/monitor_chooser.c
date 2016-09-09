@@ -258,25 +258,16 @@ rstto_monitor_chooser_paint(GtkWidget *widget)
     RsttoMonitorChooser *chooser = RSTTO_MONITOR_CHOOSER (widget);
     cairo_t *ctx = gdk_cairo_create (gtk_widget_get_window (widget));
     Monitor *monitor;
-    GtkAllocation allocation;
 
     gdouble width, height;
     gchar *label = NULL;
     gint row_width = 0;
     gint id = 0;
+    gdouble alloc_width = (gdouble)gtk_widget_get_allocated_width (widget);
+    gdouble alloc_height = (gdouble)gtk_widget_get_allocated_height (widget);
+    GtkStyleContext *context = gtk_widget_get_style_context (widget);
 
-    gtk_widget_get_allocation (widget, &allocation);
-
-    gdk_cairo_set_source_color (
-            ctx,
-            &(gtk_widget_get_style (widget)->bg[GTK_STATE_NORMAL]));
-    cairo_rectangle (
-            ctx,
-            0.0,
-            0.0,
-            (gdouble)allocation.width,
-            (gdouble)allocation.height);
-    cairo_fill (ctx);
+    gtk_render_background (context, ctx, 0, 0, alloc_width, alloc_height);
 
     if (chooser->priv->n_monitors > 1)
     {
@@ -289,12 +280,12 @@ rstto_monitor_chooser_paint(GtkWidget *widget)
             {
                 if (monitor->width > monitor->height)
                 {
-                    width = allocation.width*0.4;
+                    width = alloc_width*0.4;
                     height = width;
                 } 
                 else
                 {
-                    height = allocation.width*0.4;
+                    height = alloc_width*0.4;
                     width = height;
                 }
                 label = g_strdup_printf("%d", id+1);
@@ -302,8 +293,8 @@ rstto_monitor_chooser_paint(GtkWidget *widget)
                 paint_monitor (
                         widget,
                         ctx,
-                        ((gdouble)allocation.width/4) - (width/2.0),
-                        ((gdouble)allocation.height - height)/2.0,
+                        (alloc_width/4) - (width/2.0),
+                        (alloc_height - height)/2.0,
                         width,
                         height,
                         label,
@@ -318,12 +309,12 @@ rstto_monitor_chooser_paint(GtkWidget *widget)
 
                 if (monitor->width > monitor->height)
                 {
-                    width = allocation.width*(0.4/((gdouble)row_width+1));
+                    width = alloc_width*(0.4/((gdouble)row_width+1));
                     height = width;
                 } 
                 else
                 {
-                    height = allocation.width*(0.4/chooser->priv->n_monitors);
+                    height = alloc_width*(0.4/chooser->priv->n_monitors);
                     width = height;
                 }
             
@@ -335,11 +326,11 @@ rstto_monitor_chooser_paint(GtkWidget *widget)
                     paint_monitor (
                             widget,
                             ctx,
-                            ((gdouble)allocation.width/2)+
-                                (((gdouble)allocation.width/2)/
+                            (alloc_width/2)+
+                                ((alloc_width/2)/
                                 (row_width+1))*(id%(row_width)+1)-
                                 (width/2.0),
-                            ((gdouble)allocation.height/
+                            (alloc_height/
                                 (row_width+2)*(id/row_width+1))-
                                 (height/2.0),
                             width,
@@ -353,11 +344,11 @@ rstto_monitor_chooser_paint(GtkWidget *widget)
                     paint_monitor (
                             widget,
                             ctx,
-                            ((gdouble)allocation.width/2)+
-                                (((gdouble)allocation.width/2)/
+                            (alloc_width/2)+
+                                ((alloc_width/2)/
                                 (row_width+1))*((id-1)%(row_width)+1)-
                                 (width/2.0),
-                            ((gdouble)allocation.height/
+                            (alloc_height/
                                 (row_width+2)*((id-1)/row_width+1))-
                                 (height/2.0),
                             width,
@@ -390,8 +381,8 @@ rstto_monitor_chooser_paint(GtkWidget *widget)
             paint_monitor (
                     widget,
                     ctx,
-                    ((gdouble)allocation.width - width)/2.0,
-                    ((gdouble)allocation.height - height)/2.0,
+                    (alloc_width - width)/2.0,
+                    (alloc_height - height)/2.0,
                     width,
                     height,
                     "1",

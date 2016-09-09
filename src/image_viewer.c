@@ -2786,7 +2786,7 @@ cb_rstto_bgcolor_changed (GObject *settings, GParamSpec *pspec, gpointer user_da
     }
     else
     {
-        viewer->priv->bg_color = &(gtk_widget_get_style (widget)->bg[GTK_STATE_NORMAL]);
+        viewer->priv->bg_color = NULL;
     }
     viewer->priv->bg_color_fs = g_value_get_boxed (&val_bg_color_fs);
 
