@@ -64,6 +64,12 @@ enum
     PROP_MODEL,
     PROP_ACTIVE,
     PROP_SHOW_TEXT,
+
+    /* For scrollable interface */
+    PROP_HADJUSTMENT,
+    PROP_VADJUSTMENT,
+    PROP_HSCROLL_POLICY,
+    PROP_VSCROLL_POLICY
 };
 
 enum
@@ -125,9 +131,9 @@ rstto_icon_bar_size_allocate (
         GtkAllocation *allocation);
 
 static gboolean
-rstto_icon_bar_expose (
-        GtkWidget      *widget,
-        GdkEventExpose *expose);
+rstto_icon_bar_draw (
+        GtkWidget *widget,
+        cairo_t   *ctx);
 
 static gboolean
 rstto_icon_bar_leave (
@@ -306,7 +312,11 @@ struct _RsttoIconBarPrivate
 
 static guint icon_bar_signals[LAST_SIGNAL];
 
-G_DEFINE_TYPE (RsttoIconBar, rstto_icon_bar, GTK_TYPE_CONTAINER)
+G_DEFINE_TYPE_WITH_CODE (
+        RsttoIconBar,
+        rstto_icon_bar,
+        GTK_TYPE_CONTAINER,
+        G_IMPLEMENT_INTERFACE (GTK_TYPE_SCROLLABLE, NULL))
 
 
 static void
@@ -329,7 +339,7 @@ rstto_icon_bar_class_init (RsttoIconBarClass *klass)
     gtkwidget_class->get_preferred_width = rstto_icon_bar_get_preferred_width;
     gtkwidget_class->get_preferred_height = rstto_icon_bar_get_preferred_height;
     gtkwidget_class->size_allocate = rstto_icon_bar_size_allocate;
-    //gtkwidget_class->expose_event = rstto_icon_bar_expose;
+    gtkwidget_class->draw = rstto_icon_bar_draw;
     gtkwidget_class->leave_notify_event = rstto_icon_bar_leave;
     gtkwidget_class->motion_notify_event = rstto_icon_bar_motion;
     gtkwidget_class->scroll_event = rstto_icon_bar_scroll;
@@ -418,6 +428,20 @@ rstto_icon_bar_class_init (RsttoIconBarClass *klass)
                 TRUE,
                 G_PARAM_READWRITE));
 
+    /* Scrollable interface properties */
+    g_object_class_override_property (gobject_class,
+            PROP_HADJUSTMENT,
+            "hadjustment");
+    g_object_class_override_property (gobject_class,
+            PROP_VADJUSTMENT,
+            "vadjustment");
+    g_object_class_override_property (gobject_class,
+            PROP_HSCROLL_POLICY,
+            "hscroll-policy");
+    g_object_class_override_property (gobject_class,
+            PROP_VSCROLL_POLICY,
+            "vscroll-policy");
+
     gtk_widget_class_install_style_property (gtkwidget_class,
             g_param_spec_boxed ("active-item-fill-color",
                 _("Active item fill color"),
@@ -459,26 +483,6 @@ rstto_icon_bar_class_init (RsttoIconBarClass *klass)
                 _("Cursor item text color"),
                 GDK_TYPE_COLOR,
                 G_PARAM_READABLE));
-
-    /**
-     * RsttoIconBar::set-scroll-adjustments:
-     * @icon_bar    : The #RsttoIconBar.
-     * @hadjustment : The horizontal adjustment.
-     * @vadjustment : The vertical adjustment.
-     *
-     * Used internally to make the #RsttoIconBar scrollable.
-     **/
-    // TODO: comment out for now
-    /*gtkwidget_class->set_scroll_adjustments_signal =
-        g_signal_new ("set-scroll-adjustments",
-                G_TYPE_FROM_CLASS (gobject_class),
-                G_SIGNAL_RUN_LAST,
-                G_STRUCT_OFFSET (RsttoIconBarClass, set_scroll_adjustments),
-                NULL, NULL,
-                _rstto_marshal_VOID__OBJECT_OBJECT,
-                G_TYPE_NONE, 2,
-                GTK_TYPE_ADJUSTMENT,
-                GTK_TYPE_ADJUSTMENT);*/
 
     /**
      * RsttoIconBar::selection-changed:
@@ -595,6 +599,12 @@ rstto_icon_bar_get_property (
             g_value_set_boolean (value, rstto_icon_bar_get_show_text (icon_bar));
             break;
 
+        case PROP_HADJUSTMENT:
+        case PROP_VADJUSTMENT:
+        case PROP_HSCROLL_POLICY:
+        case PROP_VSCROLL_POLICY:
+          break;
+
         default:
             G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
             break;
@@ -632,6 +642,12 @@ rstto_icon_bar_set_property (
 
         case PROP_SHOW_TEXT:
             rstto_icon_bar_set_show_text (icon_bar, g_value_get_boolean (value));
+            break;
+
+        case PROP_HADJUSTMENT:
+        case PROP_VADJUSTMENT:
+        case PROP_HSCROLL_POLICY:
+        case PROP_VSCROLL_POLICY:
             break;
 
         default:
@@ -680,10 +696,13 @@ rstto_icon_bar_realize (GtkWidget *widget)
     attributes.width = allocation.width;
     attributes.height = allocation.height;
     attributes.wclass = GDK_INPUT_OUTPUT;
+    attributes.window_type = GDK_WINDOW_CHILD;
     attributes.visual = gtk_widget_get_visual (widget);
     // TODO: comment out for now
     //attributes.colormap = gtk_widget_get_colormap (widget);
-    attributes.event_mask = GDK_VISIBILITY_NOTIFY_MASK;
+    attributes.event_mask = gtk_widget_get_events (widget)
+            | GDK_EXPOSURE_MASK
+            | GDK_VISIBILITY_NOTIFY_MASK;
     // TODO: comment out for now
     attributes_mask = GDK_WA_X | GDK_WA_Y | GDK_WA_VISUAL /*| GDK_WA_COLORMAP*/;
 
@@ -725,9 +744,12 @@ rstto_icon_bar_unrealize (GtkWidget *widget)
 {
     RsttoIconBar *icon_bar = RSTTO_ICON_BAR (widget);
 
-    gdk_window_set_user_data (icon_bar->priv->bin_window, NULL);
-    gdk_window_destroy (icon_bar->priv->bin_window);
-    icon_bar->priv->bin_window = NULL;
+    if (icon_bar->priv->bin_window)
+    {
+        gdk_window_set_user_data (icon_bar->priv->bin_window, NULL);
+        gdk_window_destroy (icon_bar->priv->bin_window);
+        icon_bar->priv->bin_window = NULL;
+    }
 
     /* GtkWidget::unrealize destroys children and widget->window */
     (*GTK_WIDGET_CLASS (rstto_icon_bar_parent_class)->unrealize) (widget);
@@ -915,10 +937,33 @@ rstto_icon_bar_size_allocate (
 
 
 static gboolean
-rstto_icon_bar_expose (
-        GtkWidget      *widget,
-        GdkEventExpose *expose)
+rstto_icon_bar_draw (
+        GtkWidget *widget,
+        cairo_t   *ctx)
 {
+    GtkAllocation    allocation;
+    GtkStyleContext *context;
+
+    gtk_widget_get_allocation (widget, &allocation);
+
+    context = gtk_widget_get_style_context (widget);
+
+    gtk_style_context_save (context);
+    gtk_style_context_add_class (context, GTK_STYLE_CLASS_VIEW);
+
+    gtk_render_background (
+            context,
+            ctx,
+            0.0,
+            0.0,
+            (gdouble)allocation.width,
+            (gdouble)allocation.height);
+
+    gtk_style_context_restore (context);
+
+    return FALSE;
+
+#if 0
     RsttoIconBarItem *item;
     GdkRectangle    area;
     RsttoIconBar     *icon_bar = RSTTO_ICON_BAR (widget);
@@ -929,7 +974,7 @@ rstto_icon_bar_expose (
     if (expose->window != icon_bar->priv->bin_window)
         return FALSE;
 
-    /*for (lp = icon_bar->priv->items; lp != NULL; lp = lp->next)
+    for (lp = icon_bar->priv->items; lp != NULL; lp = lp->next)
     {
         item = lp->data;
 
@@ -961,7 +1006,8 @@ rstto_icon_bar_expose (
             rstto_thumbnailer_dequeue_file (icon_bar->priv->thumbnailer, file);
             g_object_unref (file);
         }
-    }*/
+    }
+#endif
 
     return TRUE;
 }
