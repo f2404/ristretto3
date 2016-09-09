@@ -108,6 +108,16 @@ static void
 rstto_icon_bar_size_request (
         GtkWidget      *widget,
         GtkRequisition *requisition);
+static void
+rstto_icon_bar_get_preferred_width (
+        GtkWidget *widget,
+        gint *minimal_width,
+        gint *natural_width);
+static void
+rstto_icon_bar_get_preferred_height (
+        GtkWidget *widget,
+        gint *minimal_height,
+        gint *natural_height);
 
 static void
 rstto_icon_bar_size_allocate (
@@ -316,9 +326,10 @@ rstto_icon_bar_class_init (RsttoIconBarClass *klass)
     gtkwidget_class->style_set = rstto_icon_bar_style_set;
     gtkwidget_class->realize = rstto_icon_bar_realize;
     gtkwidget_class->unrealize = rstto_icon_bar_unrealize;
-    gtkwidget_class->size_request = rstto_icon_bar_size_request;
+    gtkwidget_class->get_preferred_width = rstto_icon_bar_get_preferred_width;
+    gtkwidget_class->get_preferred_height = rstto_icon_bar_get_preferred_height;
     gtkwidget_class->size_allocate = rstto_icon_bar_size_allocate;
-    gtkwidget_class->expose_event = rstto_icon_bar_expose;
+    //gtkwidget_class->expose_event = rstto_icon_bar_expose;
     gtkwidget_class->leave_notify_event = rstto_icon_bar_leave;
     gtkwidget_class->motion_notify_event = rstto_icon_bar_motion;
     gtkwidget_class->scroll_event = rstto_icon_bar_scroll;
@@ -457,7 +468,8 @@ rstto_icon_bar_class_init (RsttoIconBarClass *klass)
      *
      * Used internally to make the #RsttoIconBar scrollable.
      **/
-    gtkwidget_class->set_scroll_adjustments_signal =
+    // TODO: comment out for now
+    /*gtkwidget_class->set_scroll_adjustments_signal =
         g_signal_new ("set-scroll-adjustments",
                 G_TYPE_FROM_CLASS (gobject_class),
                 G_SIGNAL_RUN_LAST,
@@ -466,7 +478,7 @@ rstto_icon_bar_class_init (RsttoIconBarClass *klass)
                 _rstto_marshal_VOID__OBJECT_OBJECT,
                 G_TYPE_NONE, 2,
                 GTK_TYPE_ADJUSTMENT,
-                GTK_TYPE_ADJUSTMENT);
+                GTK_TYPE_ADJUSTMENT);*/
 
     /**
      * RsttoIconBar::selection-changed:
@@ -669,9 +681,11 @@ rstto_icon_bar_realize (GtkWidget *widget)
     attributes.height = allocation.height;
     attributes.wclass = GDK_INPUT_OUTPUT;
     attributes.visual = gtk_widget_get_visual (widget);
-    attributes.colormap = gtk_widget_get_colormap (widget);
+    // TODO: comment out for now
+    //attributes.colormap = gtk_widget_get_colormap (widget);
     attributes.event_mask = GDK_VISIBILITY_NOTIFY_MASK;
-    attributes_mask = GDK_WA_X | GDK_WA_Y | GDK_WA_VISUAL | GDK_WA_COLORMAP;
+    // TODO: comment out for now
+    attributes_mask = GDK_WA_X | GDK_WA_Y | GDK_WA_VISUAL /*| GDK_WA_COLORMAP*/;
 
     window = gdk_window_new (gtk_widget_get_parent_window (widget),
             &attributes, attributes_mask);
@@ -691,7 +705,8 @@ rstto_icon_bar_realize (GtkWidget *widget)
             | GDK_KEY_PRESS_MASK
             | GDK_KEY_RELEASE_MASK)
             | gtk_widget_get_events (widget);
-    attributes_mask = GDK_WA_X | GDK_WA_Y | GDK_WA_VISUAL | GDK_WA_COLORMAP;
+    // TODO: comment out for now
+    attributes_mask = GDK_WA_X | GDK_WA_Y | GDK_WA_VISUAL /*| GDK_WA_COLORMAP*/;
 
     icon_bar->priv->bin_window = gdk_window_new (window, &attributes, attributes_mask);
     gdk_window_set_user_data (icon_bar->priv->bin_window, widget);
@@ -764,6 +779,22 @@ rstto_icon_bar_size_request (
         icon_bar->priv->width = requisition->width = icon_bar->priv->item_width * n;
         icon_bar->priv->height = requisition->height = icon_bar->priv->item_height;
     }
+}
+static void
+rstto_icon_bar_get_preferred_width (GtkWidget *widget, gint *minimal_width, gint *natural_width)
+{
+    GtkRequisition requisition;
+
+    rstto_icon_bar_size_request (widget, &requisition);
+    *minimal_width = *natural_width = requisition.width;
+}
+static void
+rstto_icon_bar_get_preferred_height (GtkWidget *widget, gint *minimal_height, gint *natural_height)
+{
+    GtkRequisition requisition;
+
+    rstto_icon_bar_size_request (widget, &requisition);
+    *minimal_height = *natural_height = requisition.height;
 }
 
 
@@ -898,7 +929,7 @@ rstto_icon_bar_expose (
     if (expose->window != icon_bar->priv->bin_window)
         return FALSE;
 
-    for (lp = icon_bar->priv->items; lp != NULL; lp = lp->next)
+    /*for (lp = icon_bar->priv->items; lp != NULL; lp = lp->next)
     {
         item = lp->data;
 
@@ -930,7 +961,7 @@ rstto_icon_bar_expose (
             rstto_thumbnailer_dequeue_file (icon_bar->priv->thumbnailer, file);
             g_object_unref (file);
         }
-    }
+    }*/
 
     return TRUE;
 }
@@ -1227,7 +1258,7 @@ rstto_icon_bar_paint_item (
     const GdkPixbuf *pixbuf = NULL;
     GdkColor        *border_color;
     GdkColor        *fill_color;
-    GdkGC           *gc;
+    //GdkGC           *gc;
     gint             focus_width;
     gint             focus_pad;
     gint             x, y;
@@ -1301,7 +1332,7 @@ rstto_icon_bar_paint_item (
             gdk_color_parse ("#316ac5", border_color);
         }
 
-        gc = gdk_gc_new (icon_bar->priv->bin_window);
+        /*gc = gdk_gc_new (icon_bar->priv->bin_window);
         gdk_gc_set_clip_rectangle (gc, area);
         gdk_gc_set_rgb_fg_color (gc, fill_color);
         gdk_draw_rectangle (icon_bar->priv->bin_window, gc, TRUE,
@@ -1318,7 +1349,7 @@ rstto_icon_bar_paint_item (
                 icon_bar->priv->item_height - (2 * focus_pad + focus_width));
         gdk_color_free (border_color);
         gdk_color_free (fill_color);
-        g_object_unref (gc);
+        g_object_unref (gc);*/
     }
     else if (icon_bar->priv->cursor_item == item)
     {
@@ -1339,7 +1370,7 @@ rstto_icon_bar_paint_item (
             gdk_color_parse ("#98b4e2", border_color);
         }
 
-        gc = gdk_gc_new (icon_bar->priv->bin_window);
+        /*gc = gdk_gc_new (icon_bar->priv->bin_window);
         gdk_gc_set_clip_rectangle (gc, area);
         gdk_gc_set_rgb_fg_color (gc, fill_color);
         gdk_draw_rectangle (icon_bar->priv->bin_window, gc, TRUE,
@@ -1356,17 +1387,17 @@ rstto_icon_bar_paint_item (
                 icon_bar->priv->item_height - (2 * focus_pad + focus_width));
         gdk_color_free (border_color);
         gdk_color_free (fill_color);
-        g_object_unref (gc);
+        g_object_unref (gc);*/
     }
 
 
     if (NULL != pixbuf)
     {
-        gdk_draw_pixbuf (icon_bar->priv->bin_window, NULL, pixbuf, 0, 0,
+        /*gdk_draw_pixbuf (icon_bar->priv->bin_window, NULL, pixbuf, 0, 0,
                 px, py, 
                 pixbuf_width, pixbuf_height,
                 GDK_RGB_DITHER_NORMAL,
-                pixbuf_width, pixbuf_height);
+                pixbuf_width, pixbuf_height);*/
     }
 }
 
