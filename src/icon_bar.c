@@ -961,6 +961,47 @@ rstto_icon_bar_draw (
 
     gtk_style_context_restore (context);
 
+    RsttoIconBarItem *item;
+    GdkRectangle    area;
+    RsttoIconBar     *icon_bar = RSTTO_ICON_BAR (widget);
+    GList          *lp;
+    RsttoFile      *file;
+    GtkTreeIter     iter;
+
+    for (lp = icon_bar->priv->items; lp != NULL; lp = lp->next)
+    {
+        item = lp->data;
+
+        if (icon_bar->priv->orientation == GTK_ORIENTATION_VERTICAL)
+        {
+            area.x = 0;
+            area.y = item->index * icon_bar->priv->item_height;
+        }
+        else
+        {
+            area.x = item->index * icon_bar->priv->item_width;
+            area.y = 0;
+        }
+
+        area.width = icon_bar->priv->item_width;
+        area.height = icon_bar->priv->item_height;
+
+
+        //if (gdk_region_rect_in (expose->region, &area) != GDK_OVERLAP_RECTANGLE_OUT)
+        //{
+            rstto_icon_bar_paint_item (icon_bar, item, &area);
+        //}
+        /*else
+        {
+            iter = item->iter;
+            gtk_tree_model_get (icon_bar->priv->model, &iter,
+                    icon_bar->priv->file_column, &file,
+                    -1);
+            rstto_thumbnailer_dequeue_file (icon_bar->priv->thumbnailer, file);
+            g_object_unref (file);
+        }*/
+    }
+
     return FALSE;
 
 #if 0
@@ -1378,6 +1419,13 @@ rstto_icon_bar_paint_item (
             gdk_color_parse ("#316ac5", border_color);
         }
 
+        //cairo_format_t format = gdk_pixbuf_get_has_alpha (pixbuf) ? CAIRO_FORMAT_ARGB32 : CAIRO_FORMAT_RGB24;
+        //cairo_surface_t *surface = cairo_image_surface_create (format, pixbuf_width, pixbuf_height);
+        //cairo_t *cr = cairo_create (surface);
+        //gdk_cairo_set_source_pixbuf (cr, pixbuf, 0, 0);
+        //cairo_paint (cr);
+        //cairo_destroy (cr);
+
         /*gc = gdk_gc_new (icon_bar->priv->bin_window);
         gdk_gc_set_clip_rectangle (gc, area);
         gdk_gc_set_rgb_fg_color (gc, fill_color);
@@ -1444,6 +1492,10 @@ rstto_icon_bar_paint_item (
                 pixbuf_width, pixbuf_height,
                 GDK_RGB_DITHER_NORMAL,
                 pixbuf_width, pixbuf_height);*/
+        cairo_t *cr = gdk_cairo_create (icon_bar->priv->bin_window);
+        gdk_cairo_set_source_pixbuf (cr, pixbuf, px, py);
+        cairo_paint (cr);
+        cairo_destroy (cr);
     }
 }
 
