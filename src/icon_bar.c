@@ -87,6 +87,9 @@ static void
 rstto_icon_bar_finalize (GObject *object);
 
 static void
+cb_rstto_icon_bar_value_changed (GtkAdjustment *, RsttoIconBar *);
+
+static void
 rstto_icon_bar_get_property (
         GObject    *object,
         guint       prop_id,
@@ -292,6 +295,9 @@ struct _RsttoIconBarPrivate
     GtkAdjustment  *hadjustment;
     GtkAdjustment  *vadjustment;
 
+    guint           hscroll_policy : 1;
+    guint           vscroll_policy : 1;
+
     RsttoSettings  *settings;
     RsttoThumbnailer *thumbnailer;
 
@@ -306,6 +312,10 @@ struct _RsttoIconBarPrivate
     PangoLayout    *layout;
 
     gboolean        show_text;
+
+    /* CALLBACKS */
+    /*************/
+    void (*cb_value_changed)(GtkAdjustment *, RsttoIconBar *);
 };
 
 
@@ -508,6 +518,7 @@ rstto_icon_bar_init (RsttoIconBar *icon_bar)
 {
     icon_bar->priv = RSTTO_ICON_BAR_GET_PRIVATE (icon_bar);
 
+    icon_bar->priv->cb_value_changed = cb_rstto_icon_bar_value_changed;
     icon_bar->priv->orientation = GTK_ORIENTATION_VERTICAL;
     icon_bar->priv->pixbuf_column = -1;
     icon_bar->priv->file_column = -1;
@@ -568,6 +579,22 @@ rstto_icon_bar_finalize (GObject *object)
 
 
 
+/************************/
+/** CALLBACK FUNCTIONS **/
+/************************/
+
+static void
+cb_rstto_icon_bar_value_changed (GtkAdjustment *adjustment, RsttoIconBar *icon_bar)
+{
+    GtkWidget *widget = GTK_WIDGET (icon_bar);
+    gdk_window_invalidate_rect (
+            gtk_widget_get_window (widget),
+            NULL,
+            FALSE);
+}
+
+
+
 static void
 rstto_icon_bar_get_property (
         GObject    *object,
@@ -599,11 +626,24 @@ rstto_icon_bar_get_property (
             g_value_set_boolean (value, rstto_icon_bar_get_show_text (icon_bar));
             break;
 
-        case PROP_HADJUSTMENT:
+        /*case PROP_HADJUSTMENT:
         case PROP_VADJUSTMENT:
         case PROP_HSCROLL_POLICY:
         case PROP_VSCROLL_POLICY:
-          break;
+          break;*/
+
+        case PROP_HADJUSTMENT:
+            g_value_set_object (value, icon_bar->priv->hadjustment);
+            break;
+        case PROP_VADJUSTMENT:
+            g_value_set_object (value, icon_bar->priv->vadjustment);
+            break;
+        case PROP_HSCROLL_POLICY:
+            g_value_set_enum (value, icon_bar->priv->hscroll_policy);
+            break;
+        case PROP_VSCROLL_POLICY:
+            g_value_set_enum (value, icon_bar->priv->vscroll_policy);
+            break;
 
         default:
             G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
@@ -644,10 +684,53 @@ rstto_icon_bar_set_property (
             rstto_icon_bar_set_show_text (icon_bar, g_value_get_boolean (value));
             break;
 
-        case PROP_HADJUSTMENT:
+        /*case PROP_HADJUSTMENT:
         case PROP_VADJUSTMENT:
         case PROP_HSCROLL_POLICY:
         case PROP_VSCROLL_POLICY:
+            break;*/
+
+        case PROP_HADJUSTMENT:
+            if(icon_bar->priv->hadjustment)
+            {
+                g_signal_handlers_disconnect_by_func(icon_bar->priv->hadjustment, icon_bar->priv->cb_value_changed, icon_bar);
+                g_object_unref(icon_bar->priv->hadjustment);
+            }
+            icon_bar->priv->hadjustment = g_value_get_object (value);
+
+            if(icon_bar->priv->hadjustment)
+            {
+                gtk_adjustment_set_lower (icon_bar->priv->hadjustment, 0);
+                gtk_adjustment_set_upper (icon_bar->priv->hadjustment, 0);
+
+                g_signal_connect(G_OBJECT(icon_bar->priv->hadjustment), "value-changed", (GCallback)icon_bar->priv->cb_value_changed, icon_bar);
+                g_object_ref(icon_bar->priv->hadjustment);
+            }
+            break;
+        case PROP_VADJUSTMENT:
+            if(icon_bar->priv->vadjustment)
+            {
+                g_signal_handlers_disconnect_by_func(icon_bar->priv->vadjustment, icon_bar->priv->cb_value_changed, icon_bar);
+                g_object_unref(icon_bar->priv->vadjustment);
+            }
+            icon_bar->priv->vadjustment = g_value_get_object (value);
+
+            if(icon_bar->priv->vadjustment)
+            {
+                gtk_adjustment_set_lower (icon_bar->priv->vadjustment, 0);
+                gtk_adjustment_set_upper (icon_bar->priv->vadjustment, 0);
+
+                g_signal_connect(G_OBJECT(icon_bar->priv->vadjustment), "value-changed", (GCallback)icon_bar->priv->cb_value_changed, icon_bar);
+                g_object_ref(icon_bar->priv->vadjustment);
+            }
+            break;
+        case PROP_HSCROLL_POLICY:
+            icon_bar->priv->hscroll_policy = g_value_get_enum (value);
+            gtk_widget_queue_resize (GTK_WIDGET (object));
+            break;
+        case PROP_VSCROLL_POLICY:
+            icon_bar->priv->vscroll_policy = g_value_get_enum (value);
+            gtk_widget_queue_resize (GTK_WIDGET (object));
             break;
 
         default:
