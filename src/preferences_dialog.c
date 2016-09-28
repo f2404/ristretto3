@@ -279,7 +279,7 @@ rstto_preferences_dialog_init ( RsttoPreferencesDialog *dialog )
     /**
      * Bg-color frame
      */
-    dialog->priv->display_tab.bgcolor_vbox = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
+    dialog->priv->display_tab.bgcolor_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
     dialog->priv->display_tab.bgcolor_frame = xfce_gtk_frame_box_new_with_content(_("Background color"),
                                                                                  dialog->priv->display_tab.bgcolor_vbox);
     gtk_box_pack_start (GTK_BOX (display_main_vbox), dialog->priv->display_tab.bgcolor_frame, FALSE, FALSE, 0);
