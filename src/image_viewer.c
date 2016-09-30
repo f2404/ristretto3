@@ -365,13 +365,12 @@ rstto_image_viewer_init (RsttoImageViewer *viewer)
                            GDK_BUTTON_RELEASE_MASK |
                            GDK_BUTTON1_MOTION_MASK |
                            GDK_ENTER_NOTIFY_MASK |
-                           GDK_POINTER_MOTION_MASK);
-
+                           GDK_POINTER_MOTION_MASK |
+                           GDK_SCROLL_MASK);
 
     gtk_drag_dest_set(GTK_WIDGET(viewer), GTK_DEST_DEFAULT_ALL, NULL, 0,
                       GDK_ACTION_COPY | GDK_ACTION_LINK | GDK_ACTION_MOVE | GDK_ACTION_PRIVATE);
     gtk_drag_dest_add_uri_targets (GTK_WIDGET(viewer));
-
 }
 
 /**
