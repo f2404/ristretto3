@@ -586,11 +586,9 @@ rstto_icon_bar_finalize (GObject *object)
 static void
 cb_rstto_icon_bar_value_changed (GtkAdjustment *adjustment, RsttoIconBar *icon_bar)
 {
-    GtkWidget *widget = GTK_WIDGET (icon_bar);
-    gdk_window_invalidate_rect (
-            gtk_widget_get_window (widget),
-            NULL,
-            FALSE);
+    GdkWindow *window = gtk_widget_get_window (GTK_WIDGET (icon_bar));
+    if (GDK_IS_WINDOW (window))
+        gdk_window_invalidate_rect (window, NULL, FALSE);
 }
 
 
@@ -933,12 +931,12 @@ rstto_icon_bar_size_allocate (
     if (icon_bar->priv->orientation == GTK_ORIENTATION_VERTICAL)
     {
         value = gtk_adjustment_get_value (icon_bar->priv->vadjustment);
-        value /= gtk_adjustment_get_upper (icon_bar->priv->vadjustment) * MAX (allocation->height, icon_bar->priv->height);
+        value = value / gtk_adjustment_get_upper (icon_bar->priv->vadjustment) * MAX (allocation->height, icon_bar->priv->height);
     }
     else
     {
         value = gtk_adjustment_get_value (icon_bar->priv->hadjustment);
-        value /= gtk_adjustment_get_upper (icon_bar->priv->hadjustment) * MAX (allocation->width, icon_bar->priv->width);
+        value = value / gtk_adjustment_get_upper (icon_bar->priv->hadjustment) * MAX (allocation->width, icon_bar->priv->width);
     }
 
     gtk_adjustment_set_page_size (icon_bar->priv->hadjustment, allocation->width);
@@ -996,7 +994,8 @@ rstto_icon_bar_size_allocate (
         /* If auto-center is true, center the selected item */
         if (icon_bar->priv->auto_center == TRUE)
         {
-            value = icon_bar->priv->active_item->index * icon_bar->priv->item_width - ((page_size-icon_bar->priv->item_width)/2);
+            if (icon_bar->priv->active_item)
+                value = icon_bar->priv->active_item->index * icon_bar->priv->item_width - ((page_size-icon_bar->priv->item_width)/2);
 
             if (value > (gtk_adjustment_get_upper (icon_bar->priv->hadjustment) - page_size))
                 value = (gtk_adjustment_get_upper (icon_bar->priv->hadjustment) - page_size);
@@ -1197,7 +1196,7 @@ rstto_icon_bar_scroll (
         GtkWidget      *widget,
         GdkEventScroll *event)
 {
-    RsttoIconBar    *icon_bar   = RSTTO_ICON_BAR (widget);
+    RsttoIconBar  *icon_bar   = RSTTO_ICON_BAR (widget);
     GtkAdjustment *adjustment = NULL;
     gdouble        val        = 0;
     gdouble        step_size  = 0;
@@ -1433,7 +1432,7 @@ rstto_icon_bar_paint_item (
     gint             focus_pad;
     gint             x, y;
     gint             px, py;
-    gint             pixbuf_height, pixbuf_width;
+    gint             pixbuf_height = 0, pixbuf_width = 0;
     RsttoFile       *file;
     GtkTreeIter      iter;
 
