@@ -20,6 +20,8 @@
 #ifndef __RISTRETTO_UTIL_H__
 #define __RISTRETTO_UTIL_H__
 
+#include <glib.h>
+
 G_BEGIN_DECLS
 
 typedef enum
@@ -44,6 +46,7 @@ typedef enum {
 
 typedef enum {
     SORT_TYPE_NAME = 0,
+    SORT_TYPE_TYPE,
     SORT_TYPE_DATE,
     SORT_TYPE_COUNT,
 } RsttoSortType;

@@ -19,15 +19,10 @@
 
 #include <config.h>
 
-#include <glib.h>
 #include <gio/gio.h>
-#include <gtk/gtk.h>
-
-#include <libexif/exif-data.h>
 
 #include <libxfce4util/libxfce4util.h>
 
-#include "util.h"
 #include "file.h"
 #include "thumbnailer.h"
 
@@ -371,17 +366,24 @@ rstto_file_get_collate_key ( RsttoFile *r_file )
         gchar *basename = g_file_get_basename (rstto_file_get_file (r_file));
         if ( NULL != basename )
         {
-            /* If we can use casefold for case insenstivie sorting, then
-             * do so */
-            gchar *casefold = g_utf8_casefold (basename, -1);
-            if ( NULL != casefold )
+            if ( g_utf8_validate (basename, -1, NULL) )
             {
-                r_file->priv->collate_key = g_utf8_collate_key_for_filename (casefold, -1);
-                g_free (casefold);
+                /* If we can use casefold for case insenstivie sorting, then
+                 * do so */
+                gchar *casefold = g_utf8_casefold (basename, -1);
+                if ( NULL != casefold )
+                {
+                    r_file->priv->collate_key = g_utf8_collate_key_for_filename (casefold, -1);
+                    g_free (casefold);
+                }
+                else
+                {
+                    r_file->priv->collate_key = g_utf8_collate_key_for_filename (basename, -1);
+                }
             }
             else
             {
-                r_file->priv->collate_key = g_utf8_collate_key_for_filename (basename, -1);
+                r_file->priv->collate_key = g_strdup (basename);
             }
             g_free (basename);
         }
@@ -551,14 +553,14 @@ rstto_file_get_thumbnail (
 
     thumbnail_path = rstto_file_get_thumbnail_path (r_file);
 
-    thumbnailer = rstto_thumbnailer_new();
-    rstto_thumbnailer_queue_file (thumbnailer, r_file);
-
     if (NULL == thumbnail_path)
     {
         /* No thumbnail to return at this time */
         return NULL;
     }
+
+    thumbnailer = rstto_thumbnailer_new();
+    rstto_thumbnailer_queue_file (thumbnailer, r_file);
 
     /* FIXME:
      *

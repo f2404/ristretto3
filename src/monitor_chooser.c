@@ -18,7 +18,6 @@
  */
 
 #include <config.h>
-#include <gtk/gtk.h>
 #include <string.h>
 #include <math.h>
 
@@ -408,6 +407,8 @@ paint_monitor ( GtkWidget *widget,
                 Monitor *monitor,
                 gboolean active)
 {
+    g_return_if_fail (NULL != monitor);
+
     /* Do we want the border_padding to be a percentage of the width
      * parmeter?
      */
@@ -442,8 +443,6 @@ paint_monitor ( GtkWidget *widget,
     PangoLayout *layout;
     PangoFontDescription *font_description;
 
-    g_return_if_fail (NULL != monitor);
-    
     /*
      * Set path for monitor outline and background-color.
      */

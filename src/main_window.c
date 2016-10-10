@@ -18,7 +18,6 @@
  */
 
 #include <config.h>
-#include <gtk/gtk.h>
 #include <gdk/gdkkeysyms.h>
 #include <X11/Xlib.h>
 #include <string.h>
@@ -39,7 +38,6 @@
 #include "file.h"
 #include "icon_bar.h"
 #include "thumbnailer.h"
-#include "image_list.h"
 #include "image_viewer.h"
 #include "main_window.h"
 #include "main_window_ui.h"
@@ -610,20 +608,24 @@ static const GtkToggleActionEntry toggle_action_entries[] =
 /** Image sorting options*/
 static const GtkRadioActionEntry radio_action_sort_entries[] = 
 {
-    /* Sort by Filename */
     {"sort-filename",
             NULL, /* Icon-name */
             N_("sort by filename"), /* Label-text */
             NULL, /* Keyboard shortcut */
             NULL, /* Tooltip text */
-            0},
-    /* Sort by Date*/
+            SORT_TYPE_NAME},
+    {"sort-filetype",
+            NULL, /* Icon-name */
+            N_("sort by filetype"), /* Label-text */
+            NULL, /* Keyboard shortcut */
+            NULL, /* Tooltip text */
+            SORT_TYPE_TYPE},
     {"sort-date",
             NULL, /* Icon-name */
             N_("sort by date"), /* Label-text */
             NULL, /* Keyboard shortcut */
             NULL, /* Tooltip text */
-            1},
+            SORT_TYPE_DATE},
 };
 
 /** Navigationbar+Thumbnailbar positioning options*/
@@ -1083,6 +1085,14 @@ rstto_main_window_init (RsttoMainWindow *window)
                             gtk_ui_manager_get_widget (
                                     window->priv->ui_manager,
                                     "/main-menu/edit-menu/sorting-menu/sort-filename")),
+                    TRUE);
+            break;
+        case SORT_TYPE_TYPE:
+            gtk_check_menu_item_set_active (
+                    GTK_CHECK_MENU_ITEM (
+                            gtk_ui_manager_get_widget (
+                                    window->priv->ui_manager,
+                                    "/main-menu/edit-menu/sorting-menu/sort-filetype")),
                     TRUE);
             break;
         case SORT_TYPE_DATE:
@@ -2066,7 +2076,7 @@ cb_rstto_main_window_sorting_function_changed (GtkRadioAction *action, GtkRadioA
 {
     switch (gtk_radio_action_get_current_value (current))
     {
-        case 0:  /* Sort by filename */
+        case SORT_TYPE_NAME:
         default:
             if (window->priv->image_list != NULL)
             {
@@ -2074,7 +2084,14 @@ cb_rstto_main_window_sorting_function_changed (GtkRadioAction *action, GtkRadioA
                 rstto_settings_set_uint_property (window->priv->settings_manager, "sort-type", SORT_TYPE_NAME);
             }
             break;
-        case 1: /* Sort by date */
+        case SORT_TYPE_TYPE:
+            if (window->priv->image_list != NULL)
+            {
+                rstto_image_list_set_sort_by_type (window->priv->image_list);
+                rstto_settings_set_uint_property (window->priv->settings_manager, "sort-type", SORT_TYPE_TYPE);
+            }
+            break;
+        case SORT_TYPE_DATE:
             if (window->priv->image_list != NULL)
             {
                 rstto_image_list_set_sort_by_date (window->priv->image_list);
@@ -2625,7 +2642,7 @@ cb_rstto_main_window_about (GtkWidget *widget, RsttoMainWindow *window)
     gtk_about_dialog_set_comments((GtkAboutDialog *)about_dialog,
         _("Ristretto is an image viewer for the Xfce desktop environment."));
     gtk_about_dialog_set_website((GtkAboutDialog *)about_dialog,
-        "http://goodies.xfce.org/projects/applications/ristretto");
+        "http://docs.xfce.org/apps/ristretto/start");
     gtk_about_dialog_set_logo_icon_name((GtkAboutDialog *)about_dialog,
         "ristretto");
     gtk_about_dialog_set_authors((GtkAboutDialog *)about_dialog,
@@ -3414,13 +3431,18 @@ cb_rstto_main_window_delete (
         RsttoMainWindow *window )
 {
     RsttoFile *file = rstto_image_list_iter_get_file (window->priv->iter);
-    const gchar *file_basename = rstto_file_get_display_name(file);
+    const gchar *file_basename;
     GtkWidget *dialog;
     GdkModifierType state;
     gboolean delete_file = FALSE;
     gboolean success = FALSE;
     gchar *prompt = NULL;
     GError *error = NULL;
+
+    if (file == NULL)
+    {
+        return;
+    }
 
     g_return_if_fail (rstto_image_list_get_n_images (window->priv->image_list) > 0);
 
@@ -3451,6 +3473,7 @@ cb_rstto_main_window_delete (
         }
         else
         {
+            file_basename = rstto_file_get_display_name(file);
             if ( delete_file )
             {
                 prompt = g_strdup_printf( _("An error occurred when deleting image '%s' from disk.\n\n%s"), file_basename, error->message );

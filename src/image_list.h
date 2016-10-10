@@ -20,6 +20,10 @@
 #ifndef __RISTRETTO_IMAGE_LIST_H__
 #define __RISTRETTO_IMAGE_LIST_H__
 
+#include <gtk/gtk.h>
+
+#include "file.h"
+
 G_BEGIN_DECLS
 
 #define RSTTO_TYPE_IMAGE_LIST rstto_image_list_get_type()
@@ -131,6 +135,10 @@ rstto_image_list_set_compare_func (
 /** Built-in Sorting Functions */
 void
 rstto_image_list_set_sort_by_name (
+        RsttoImageList *image_list);
+
+void
+rstto_image_list_set_sort_by_type (
         RsttoImageList *image_list);
 
 void

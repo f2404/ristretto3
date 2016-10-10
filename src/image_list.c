@@ -22,15 +22,12 @@
 
 #include <config.h>
 
-#include <gtk/gtk.h>
-
 #include <stdlib.h>
 #include <string.h>
 
 #include <libexif/exif-data.h>
 
 #include "util.h"
-#include "file.h"
 #include "image_list.h"
 #include "thumbnailer.h"
 #include "settings.h"
@@ -174,6 +171,8 @@ static RsttoImageListIter * rstto_image_list_iter_new ();
 
 static gint
 cb_rstto_image_list_image_name_compare_func (RsttoFile *a, RsttoFile *b);
+static gint
+cb_rstto_image_list_image_type_compare_func (RsttoFile *a, RsttoFile *b);
 static gint
 cb_rstto_image_list_exif_date_compare_func (RsttoFile *a, RsttoFile *b);
 
@@ -1351,6 +1350,12 @@ rstto_image_list_set_sort_by_name (RsttoImageList *image_list)
 }
 
 void
+rstto_image_list_set_sort_by_type (RsttoImageList *image_list)
+{
+    rstto_image_list_set_compare_func (image_list, (GCompareFunc)cb_rstto_image_list_image_type_compare_func);
+}
+
+void
 rstto_image_list_set_sort_by_date (RsttoImageList *image_list)
 {
     rstto_image_list_set_compare_func (image_list, (GCompareFunc)cb_rstto_image_list_exif_date_compare_func);
@@ -1371,6 +1376,23 @@ cb_rstto_image_list_image_name_compare_func (RsttoFile *a, RsttoFile *b)
     const gchar *b_collate_key = rstto_file_get_collate_key (b);
 
     return g_strcmp0(a_collate_key, b_collate_key);
+}
+
+/**
+ * cb_rstto_image_list_image_type_compare_func:
+ * @a:
+ * @b:
+ *
+ *
+ * Return value: (see strcmp)
+ */
+static gint
+cb_rstto_image_list_image_type_compare_func (RsttoFile *a, RsttoFile *b)
+{
+    const gchar *a_content_type = rstto_file_get_content_type (a);
+    const gchar *b_content_type = rstto_file_get_content_type (b);
+
+    return g_strcmp0(a_content_type, b_content_type);
 }
 
 /**
