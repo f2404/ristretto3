@@ -23,6 +23,10 @@
 
 #include <libxfce4util/libxfce4util.h>
 
+#if HAVE_MAGIC_H
+#include <magic.h>
+#endif
+
 #include "file.h"
 #include "thumbnailer.h"
 
@@ -394,25 +398,43 @@ rstto_file_get_collate_key ( RsttoFile *r_file )
 const gchar *
 rstto_file_get_content_type ( RsttoFile *r_file )
 {
-    GFileInfo *file_info = NULL;
-    const gchar *content_type;
+    const gchar *content_type = NULL;
 
     if ( NULL == r_file->priv->content_type )
     {
-        file_info = g_file_query_info (
-                r_file->priv->file,
-                "standard::content-type",
-                0,
-                NULL,
-                NULL );
-        if ( NULL != file_info )
+#if HAVE_MAGIC_H
+        magic_t magic = magic_open(MAGIC_MIME_TYPE);
+        if ( magic != NULL )
         {
-            content_type = g_file_info_get_content_type (file_info);
-            if ( NULL != content_type )
+            if ( magic_load(magic, NULL) == 0 )
             {
-                r_file->priv->content_type = g_strdup (content_type);
+                content_type = magic_file(magic, rstto_file_get_path(r_file));
+                if ( NULL != content_type )
+                {
+                    r_file->priv->content_type = g_strdup (content_type);
+                }
             }
-            g_object_unref (file_info);
+            magic_close(magic);
+        }
+#endif
+
+        if ( NULL == content_type )
+        {
+            GFileInfo *file_info = g_file_query_info (
+                    r_file->priv->file,
+                    "standard::content-type",
+                    0,
+                    NULL,
+                    NULL );
+            if ( NULL != file_info )
+            {
+                content_type = g_file_info_get_content_type (file_info);
+                if ( NULL != content_type )
+                {
+                    r_file->priv->content_type = g_strdup (content_type);
+                }
+                g_object_unref (file_info);
+            }
         }
     }
 
