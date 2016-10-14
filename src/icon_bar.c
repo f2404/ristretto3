@@ -739,14 +739,18 @@ rstto_icon_bar_style_set (
         GtkWidget *widget,
         GtkStyle  *previous_style)
 {
-    RsttoIconBar *icon_bar = RSTTO_ICON_BAR (widget);
+    RsttoIconBar    *icon_bar = RSTTO_ICON_BAR (widget);
+    GtkStyleContext *context;
+    GdkRGBA          bg;
 
     (*GTK_WIDGET_CLASS (rstto_icon_bar_parent_class)->style_set) (widget, previous_style);
 
     if (gtk_widget_get_realized (widget))
     {
-        gdk_window_set_background (icon_bar->priv->bin_window,
-                &(gtk_widget_get_style (widget)->base[gtk_widget_get_state (widget)]));
+        context = gtk_widget_get_style_context (gtk_widget_get_toplevel (widget));
+        gtk_style_context_get (context, gtk_widget_get_state_flags (widget),
+                GTK_STYLE_PROPERTY_BACKGROUND_COLOR, &bg, NULL);
+        gdk_window_set_background_rgba (icon_bar->priv->bin_window, &bg);
     }
 }
 
@@ -755,18 +759,18 @@ rstto_icon_bar_style_set (
 static void
 rstto_icon_bar_realize (GtkWidget *widget)
 {
-    GdkWindowAttr attributes;
-    RsttoIconBar   *icon_bar = RSTTO_ICON_BAR (widget);
-    gint          attributes_mask;
-    GtkAllocation allocation;
-    GdkWindow    *window;
-    GtkStyle     *style;
+    GdkWindowAttr    attributes;
+    RsttoIconBar    *icon_bar = RSTTO_ICON_BAR (widget);
+    gint             attributes_mask;
+    GtkAllocation    allocation;
+    GdkWindow       *window;
+    GtkStyleContext *context;
+    GdkRGBA         *bg;
 
     gtk_widget_set_realized (widget, TRUE);
 
     gtk_widget_get_allocation (widget, &allocation);
 
-    attributes.window_type = GDK_WINDOW_CHILD;
     attributes.x = allocation.x;
     attributes.y = allocation.y;
     attributes.width = allocation.width;
@@ -806,10 +810,12 @@ rstto_icon_bar_realize (GtkWidget *widget)
     icon_bar->priv->bin_window = gdk_window_new (window, &attributes, attributes_mask);
     gdk_window_set_user_data (icon_bar->priv->bin_window, widget);
 
-    style = gtk_style_attach (gtk_widget_get_style (widget), window);
-    gtk_widget_set_style (widget, style);
-    gdk_window_set_background (window, &(gtk_widget_get_style (widget)->base[gtk_widget_get_state (widget)]));
-    gdk_window_set_background (icon_bar->priv->bin_window, &(gtk_widget_get_style (widget)->base[gtk_widget_get_state (widget)]));
+    context = gtk_widget_get_style_context (gtk_widget_get_toplevel (widget));
+    gtk_style_context_get (context, gtk_widget_get_state_flags (widget),
+            GTK_STYLE_PROPERTY_BACKGROUND_COLOR, &bg, NULL);
+    gdk_window_set_background_rgba (window, bg);
+    gdk_window_set_background_rgba (icon_bar->priv->bin_window, bg);
+    gdk_rgba_free (bg);
     gdk_window_show (icon_bar->priv->bin_window);
 }
 
@@ -1026,7 +1032,6 @@ rstto_icon_bar_draw (
     context = gtk_widget_get_style_context (widget);
 
     gtk_style_context_save (context);
-    gtk_style_context_add_class (context, GTK_STYLE_CLASS_VIEW);
 
     gtk_render_background (
             context,
