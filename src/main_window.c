@@ -2309,7 +2309,7 @@ cb_rstto_main_window_state_event(GtkWidget *widget, GdkEventWindowState *event, 
                 }
                 if (rstto_image_list_get_n_images (window->priv->image_list) != 0)
                 {
-                    window->priv->show_fs_toolbar_timeout_id = g_timeout_add (500, (GSourceFunc)cb_rstto_main_window_show_fs_toolbar_timeout, window);
+                    window->priv->show_fs_toolbar_timeout_id = gdk_threads_add_timeout (500, (GSourceFunc)cb_rstto_main_window_show_fs_toolbar_timeout, window);
                 }
             }
 
@@ -2470,7 +2470,7 @@ cb_rstto_main_window_image_viewer_enter_notify_event (GtkWidget *widget,
                 g_source_remove (window->priv->show_fs_toolbar_timeout_id);
                 window->priv->show_fs_toolbar_timeout_id = 0;
             }
-            window->priv->show_fs_toolbar_timeout_id = g_timeout_add (500, (GSourceFunc)cb_rstto_main_window_show_fs_toolbar_timeout, window);
+            window->priv->show_fs_toolbar_timeout_id = gdk_threads_add_timeout (500, (GSourceFunc)cb_rstto_main_window_show_fs_toolbar_timeout, window);
         }
     }
 
@@ -2713,7 +2713,7 @@ cb_rstto_main_window_configure_event (GtkWidget *widget, GdkEventConfigure *even
         if (gtk_widget_get_visible (GTK_WIDGET (window)))
         {
             /* save the geometry one second after the last configure event */
-            window->priv->window_save_geometry_timer_id = g_timeout_add (
+            window->priv->window_save_geometry_timer_id = gdk_threads_add_timeout (
                     1000, rstto_window_save_geometry_timer,
                     widget);
         }
@@ -3016,7 +3016,7 @@ cb_rstto_main_window_open_image (GtkWidget *widget, RsttoMainWindow *window)
                              * sourcefunc and will be unref-ed by it.
                              */
                             g_object_ref (file);
-                            g_idle_add_full(G_PRIORITY_LOW, (GSourceFunc) rstto_main_window_add_file_to_recent_files, file, NULL);
+                            gdk_threads_add_idle_full(G_PRIORITY_LOW, (GSourceFunc) rstto_main_window_add_file_to_recent_files, file, NULL);
                         }
                         g_object_unref (G_OBJECT (r_file));
                         r_file = NULL;
@@ -3059,7 +3059,7 @@ cb_rstto_main_window_open_image (GtkWidget *widget, RsttoMainWindow *window)
                      * sourcefunc and will be unref-ed by it.
                      */
                     g_object_ref (files->data);
-                    g_idle_add_full(G_PRIORITY_LOW, (GSourceFunc) rstto_main_window_add_file_to_recent_files, files->data, NULL);
+                    gdk_threads_add_idle_full(G_PRIORITY_LOW, (GSourceFunc) rstto_main_window_add_file_to_recent_files, files->data, NULL);
 
                     /* Point the main iterator to the
                      * correct file
@@ -4284,7 +4284,7 @@ rstto_main_window_play_slideshow (RsttoMainWindow *window)
             &timeout);
 
     window->priv->playing = TRUE;
-    window->priv->play_timeout_id = g_timeout_add (
+    window->priv->play_timeout_id = gdk_threads_add_timeout (
             g_value_get_uint (&timeout)*1000,
             (GSourceFunc)cb_rstto_main_window_play_slideshow,
             window);

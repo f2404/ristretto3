@@ -2043,7 +2043,7 @@ cb_rstto_image_loader_area_prepared (GdkPixbufLoader *loader, RsttoImageViewerTr
 
         if (timeout > 0)
         {
-            viewer->priv->animation_timeout_id = g_timeout_add(timeout, (GSourceFunc)cb_rstto_image_viewer_update_pixbuf, viewer);
+            viewer->priv->animation_timeout_id = gdk_threads_add_timeout(timeout, (GSourceFunc)cb_rstto_image_viewer_update_pixbuf, viewer);
         }   
         else
         {
@@ -2192,7 +2192,7 @@ cb_rstto_image_viewer_update_pixbuf (RsttoImageViewer *viewer)
 
         if (timeout > 0)
         {
-            viewer->priv->animation_timeout_id = g_timeout_add(timeout, (GSourceFunc)cb_rstto_image_viewer_update_pixbuf, viewer);
+            viewer->priv->animation_timeout_id = gdk_threads_add_timeout(timeout, (GSourceFunc)cb_rstto_image_viewer_update_pixbuf, viewer);
         }
 
         gdk_window_invalidate_rect (
@@ -2947,7 +2947,7 @@ rstto_image_viewer_set_show_clock (RsttoImageViewer *viewer, gboolean value)
     viewer->priv->props.show_clock = value;
     if (viewer->priv->props.show_clock)
     {
-        viewer->priv->refresh_timeout_id = g_timeout_add (
+        viewer->priv->refresh_timeout_id = gdk_threads_add_timeout (
                 15000,
                 (GSourceFunc)cb_rstto_image_viewer_refresh, viewer);
     }
