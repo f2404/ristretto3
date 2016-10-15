@@ -216,8 +216,11 @@ rstto_xfce_wallpaper_manager_set (RsttoWallpaperManager *self, RsttoFile *file)
     gchar *saturation_prop;
 
     display = gdk_display_get_default ();
-    gdk_screen = gdk_display_get_screen (display,
-            manager->priv->screen);
+#if GTK_CHECK_VERSION (3, 20, 0)
+    gdk_screen = gdk_display_get_default_screen (display);
+#else
+    gdk_screen = gdk_display_get_screen (display, manager->priv->screen);
+#endif
 
     workspace_nr = rstto_get_active_workspace_number (gdk_screen);
 
