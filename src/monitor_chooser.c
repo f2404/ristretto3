@@ -128,8 +128,6 @@ rstto_monitor_chooser_init(RsttoMonitorChooser *chooser)
     chooser->priv->selected = -1;
     chooser->priv->monitors = g_new0 (Monitor *, 1);
 
-    gtk_widget_set_double_buffered (GTK_WIDGET(chooser), TRUE);
-
     g_signal_connect(G_OBJECT(chooser), "button-press-event", G_CALLBACK(cb_rstto_button_press_event), NULL);
 
     gtk_widget_set_redraw_on_allocate(GTK_WIDGET(chooser), TRUE);
