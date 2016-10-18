@@ -315,7 +315,8 @@ rstto_preferences_dialog_init ( RsttoPreferencesDialog *dialog )
     dialog->priv->display_tab.quality_label = gtk_label_new (
             _("With this option enabled, the maximum image-quality will be limited to the screen-size."));
     gtk_label_set_line_wrap (GTK_LABEL (dialog->priv->display_tab.quality_label), TRUE);
-    gtk_misc_set_alignment(GTK_MISC(dialog->priv->display_tab.quality_label), 0, 0.5);
+    gtk_label_set_xalign (GTK_LABEL (dialog->priv->display_tab.quality_label), 0.0);
+    gtk_label_set_yalign (GTK_LABEL (dialog->priv->display_tab.quality_label), 0.5);
     dialog->priv->display_tab.quality_button = gtk_check_button_new_with_label (_("Limit rendering quality"));
     gtk_container_add (GTK_CONTAINER (dialog->priv->display_tab.quality_vbox), dialog->priv->display_tab.quality_label);
     gtk_container_add (GTK_CONTAINER (dialog->priv->display_tab.quality_vbox), dialog->priv->display_tab.quality_button);
@@ -338,7 +339,8 @@ rstto_preferences_dialog_init ( RsttoPreferencesDialog *dialog )
 
     dialog->priv->fullscreen_tab.hide_thumbnails_fullscreen_lbl = gtk_label_new(_("The thumbnail bar can be automatically hidden when the window is fullscreen."));
     gtk_label_set_line_wrap (GTK_LABEL (dialog->priv->fullscreen_tab.hide_thumbnails_fullscreen_lbl), TRUE);
-    gtk_misc_set_alignment(GTK_MISC(dialog->priv->fullscreen_tab.hide_thumbnails_fullscreen_lbl), 0, 0.5);
+    gtk_label_set_xalign (GTK_LABEL (dialog->priv->fullscreen_tab.hide_thumbnails_fullscreen_lbl), 0.0);
+    gtk_label_set_yalign (GTK_LABEL (dialog->priv->fullscreen_tab.hide_thumbnails_fullscreen_lbl), 0.5);
     dialog->priv->fullscreen_tab.hide_thumbnails_fullscreen_check_button = gtk_check_button_new_with_label (_("Hide thumbnail bar when fullscreen"));
     gtk_box_pack_start (GTK_BOX (dialog->priv->fullscreen_tab.thumbnail_vbox), dialog->priv->fullscreen_tab.hide_thumbnails_fullscreen_lbl, FALSE, FALSE, 0);
     gtk_box_pack_start (GTK_BOX (dialog->priv->fullscreen_tab.thumbnail_vbox), dialog->priv->fullscreen_tab.hide_thumbnails_fullscreen_check_button, FALSE, FALSE, 0);
@@ -352,7 +354,8 @@ rstto_preferences_dialog_init ( RsttoPreferencesDialog *dialog )
 
     dialog->priv->fullscreen_tab.clock_label = gtk_label_new ( _("Show an analog clock that displays the current time when the window is fullscreen"));
     gtk_label_set_line_wrap (GTK_LABEL (dialog->priv->fullscreen_tab.clock_label), TRUE);
-    gtk_misc_set_alignment(GTK_MISC(dialog->priv->fullscreen_tab.clock_label), 0, 0.5);
+    gtk_label_set_xalign (GTK_LABEL (dialog->priv->fullscreen_tab.clock_label), 0.0);
+    gtk_label_set_yalign (GTK_LABEL (dialog->priv->fullscreen_tab.clock_label), 0.5);
     dialog->priv->fullscreen_tab.clock_button = gtk_check_button_new_with_label (_("Show Fullscreen Clock"));
     gtk_container_add (GTK_CONTAINER (dialog->priv->fullscreen_tab.clock_vbox), dialog->priv->fullscreen_tab.clock_label);
     gtk_container_add (GTK_CONTAINER (dialog->priv->fullscreen_tab.clock_vbox), dialog->priv->fullscreen_tab.clock_button);
@@ -379,8 +382,8 @@ rstto_preferences_dialog_init ( RsttoPreferencesDialog *dialog )
 
     timeout_lbl = gtk_label_new(_("The time period an individual image is displayed during a slideshow\n(in seconds)"));
     timeout_hscale = gtk_scale_new_with_range(GTK_ORIENTATION_HORIZONTAL, 1, 60, 1);
-    gtk_misc_set_alignment(GTK_MISC(timeout_lbl), 0, 0.5);
-    gtk_misc_set_padding(GTK_MISC(timeout_lbl), 2, 2);
+    gtk_label_set_xalign (GTK_LABEL (timeout_lbl), 0.0);
+    gtk_label_set_yalign (GTK_LABEL (timeout_lbl), 0.5);
 
     gtk_box_pack_start(GTK_BOX(dialog->priv->slideshow_tab.timeout_vbox), timeout_lbl, TRUE, TRUE, 0);
     gtk_box_pack_start(GTK_BOX(dialog->priv->slideshow_tab.timeout_vbox), timeout_hscale, FALSE, TRUE, 0);
@@ -462,9 +465,11 @@ rstto_preferences_dialog_init ( RsttoPreferencesDialog *dialog )
             _("Configure which system is currently managing your desktop.\n"
               "This setting determines the method <i>Ristretto</i> will use\n"
               "to configure the desktop wallpaper."));
-    gtk_misc_set_alignment(
-            GTK_MISC(behaviour_desktop_lbl),
-            0,
+    gtk_label_set_xalign (
+            GTK_LABEL (behaviour_desktop_lbl),
+            0.0);
+    gtk_label_set_yalign (
+            GTK_LABEL (behaviour_desktop_lbl),
             0.5);
     gtk_box_pack_start (
             GTK_BOX (dialog->priv->behaviour_tab.desktop_vbox),

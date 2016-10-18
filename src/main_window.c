@@ -2160,9 +2160,11 @@ cb_rstto_main_window_set_as_wallpaper (GtkWidget *widget, RsttoMainWindow *windo
                 _("Configure which system is currently managing your desktop.\n"
                   "This setting determines the method <i>Ristretto</i> will use\n"
                   "to configure the desktop wallpaper."));
-        gtk_misc_set_alignment(
-                GTK_MISC(behaviour_desktop_lbl),
-                0,
+        gtk_label_set_xalign (
+                GTK_LABEL (behaviour_desktop_lbl),
+                0.0);
+        gtk_label_set_yalign (
+                GTK_LABEL (behaviour_desktop_lbl),
                 0.5);
         gtk_box_pack_start (
                 GTK_BOX (content_area),
