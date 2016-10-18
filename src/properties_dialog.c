@@ -145,22 +145,14 @@ rstto_properties_dialog_init (RsttoPropertiesDialog *dialog)
     dialog->priv->accessed_content_label = gtk_label_new(NULL);
     dialog->priv->size_content_label = gtk_label_new(NULL);
 
-    gtk_misc_set_alignment (
-            GTK_MISC (dialog->priv->mime_content_label),
-            0.0,
-            0.5);
-    gtk_misc_set_alignment (
-            GTK_MISC (dialog->priv->modified_content_label),
-            0.0,
-            0.5);
-    gtk_misc_set_alignment (
-            GTK_MISC (dialog->priv->accessed_content_label),
-            0.0,
-            0.5);
-    gtk_misc_set_alignment (
-            GTK_MISC (dialog->priv->size_content_label),
-            0.0,
-            0.5);
+    gtk_label_set_xalign (GTK_LABEL (dialog->priv->mime_content_label), 0.0);
+    gtk_label_set_yalign (GTK_LABEL (dialog->priv->mime_content_label), 0.5);
+    gtk_label_set_xalign (GTK_LABEL (dialog->priv->modified_content_label), 0.0);
+    gtk_label_set_yalign (GTK_LABEL (dialog->priv->modified_content_label), 0.5);
+    gtk_label_set_xalign (GTK_LABEL (dialog->priv->accessed_content_label), 0.0);
+    gtk_label_set_yalign (GTK_LABEL (dialog->priv->accessed_content_label), 0.5);
+    gtk_label_set_xalign (GTK_LABEL (dialog->priv->size_content_label), 0.0);
+    gtk_label_set_yalign (GTK_LABEL (dialog->priv->size_content_label), 0.5);
 
     vbox = gtk_dialog_get_content_area (
             GTK_DIALOG (dialog));
@@ -183,11 +175,16 @@ rstto_properties_dialog_init (RsttoPropertiesDialog *dialog)
     gtk_label_set_markup (GTK_LABEL (accessed_label), _("<b>Accessed:</b>"));
     gtk_label_set_markup (GTK_LABEL (size_label), _("<b>Size:</b>"));
 
-    gtk_misc_set_alignment (GTK_MISC (name_label), 1.0, 0.5);
-    gtk_misc_set_alignment (GTK_MISC (mime_label), 1.0, 0.5);
-    gtk_misc_set_alignment (GTK_MISC (modified_label), 1.0, 0.5);
-    gtk_misc_set_alignment (GTK_MISC (accessed_label), 1.0, 0.5);
-    gtk_misc_set_alignment (GTK_MISC (size_label), 1.0, 0.5);
+    gtk_label_set_xalign (GTK_LABEL (name_label), 1.0);
+    gtk_label_set_yalign (GTK_LABEL (name_label), 0.5);
+    gtk_label_set_xalign (GTK_LABEL (mime_label), 1.0);
+    gtk_label_set_yalign (GTK_LABEL (mime_label), 0.5);
+    gtk_label_set_xalign (GTK_LABEL (modified_label), 1.0);
+    gtk_label_set_yalign (GTK_LABEL (modified_label), 0.5);
+    gtk_label_set_xalign (GTK_LABEL (accessed_label), 1.0);
+    gtk_label_set_yalign (GTK_LABEL (accessed_label), 0.5);
+    gtk_label_set_xalign (GTK_LABEL (size_label), 1.0);
+    gtk_label_set_yalign (GTK_LABEL (size_label), 0.5);
 
     gtk_grid_attach (GTK_GRID (grid), name_hbox,                            0, 0, 1, 1);
     gtk_grid_attach (GTK_GRID (grid), dialog->priv->name_entry,             1, 0, 1, 1);
@@ -487,9 +484,11 @@ properties_dialog_set_file (
                 gtk_label_set_markup (
                         GTK_LABEL (exif_label),
                         label_string);
-                gtk_misc_set_alignment (
-                        GTK_MISC (exif_label),
-                        1.0,
+                gtk_label_set_xalign (
+                        GTK_LABEL (exif_label),
+                        1.0);
+                gtk_label_set_yalign (
+                        GTK_LABEL (exif_label),
                         0.5);
                 gtk_label_set_text (
                         GTK_LABEL (exif_content_label),
