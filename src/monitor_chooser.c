@@ -183,7 +183,6 @@ rstto_monitor_chooser_realize(GtkWidget *widget)
     gint attributes_mask;
     GtkAllocation allocation;
     GdkWindow *window;
-    GtkStyle *style;
 
     g_return_if_fail (widget != NULL);
     g_return_if_fail (RSTTO_IS_MONITOR_CHOOSER (widget));
@@ -207,14 +206,8 @@ rstto_monitor_chooser_realize(GtkWidget *widget)
     attributes_mask = GDK_WA_X | GDK_WA_Y | GDK_WA_VISUAL /*| GDK_WA_COLORMAP*/;
     window = gdk_window_new (gtk_widget_get_parent_window (widget), &attributes, attributes_mask);
     gtk_widget_set_window (widget, window);
-
-    style = gtk_style_attach (gtk_widget_get_style (widget), window);
-    gtk_widget_set_style (widget, style);
     gdk_window_set_user_data (window, widget);
-
-    gtk_style_set_background (gtk_widget_get_style (widget), window, GTK_STATE_ACTIVE);
 }
-
 
 static void
 rstto_monitor_chooser_get_preferred_width(GtkWidget *widget, gint *minimal_width, gint *natural_width)

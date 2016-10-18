@@ -485,7 +485,6 @@ rstto_image_viewer_realize(GtkWidget *widget)
     GtkAllocation allocation;
     GdkWindowAttr attributes;
     GdkWindow *window;
-    GtkStyle *style;
     gint attributes_mask;
 
     g_return_if_fail (widget != NULL);
@@ -515,14 +514,8 @@ rstto_image_viewer_realize(GtkWidget *widget)
     attributes_mask = GDK_WA_X | GDK_WA_Y | GDK_WA_VISUAL /*| GDK_WA_COLORMAP*/;
     window = gdk_window_new (gtk_widget_get_parent_window(widget), &attributes, attributes_mask);
     gtk_widget_set_window (widget, window);
-
-    style = gtk_style_attach (gtk_widget_get_style (widget), window);
-    gtk_widget_set_style (widget, style);
     gdk_window_set_user_data (window, widget);
-
     g_object_ref (window);
-
-    gtk_style_set_background (gtk_widget_get_style (widget), window, GTK_STATE_ACTIVE);
 
     g_object_get_property (
             G_OBJECT(viewer->priv->settings),
