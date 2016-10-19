@@ -383,8 +383,7 @@ rstto_xfce_wallpaper_manager_init (GObject *object)
     GtkWidget *saturation_label = gtk_label_new( _("Saturation:"));
     GtkWidget *brightness_slider;
     GtkWidget *saturation_slider;
-    GtkWidget *image_prop_table = gtk_table_new (4, 2, FALSE);
-
+    GtkWidget *image_prop_grid = gtk_grid_new ();
 
     manager->priv = g_new0(RsttoXfceWallpaperManagerPriv, 1);
     manager->priv->channel = xfconf_channel_new ("xfce4-desktop");
@@ -447,8 +446,6 @@ rstto_xfce_wallpaper_manager_init (GObject *object)
     manager->priv->monitor_chooser = rstto_monitor_chooser_new ();
     manager->priv->style_combo = gtk_combo_box_text_new ();
 
-    gtk_table_set_row_spacing (GTK_TABLE(image_prop_table), 1, 4);
-
     for (i = 0; i < n_monitors; ++i)
     {
         gdk_screen_get_monitor_geometry (
@@ -469,7 +466,7 @@ rstto_xfce_wallpaper_manager_init (GObject *object)
             0);
     gtk_box_pack_start (
             GTK_BOX (vbox),
-            image_prop_table,
+            image_prop_grid,
             FALSE,
             FALSE,
             0);
@@ -487,73 +484,50 @@ rstto_xfce_wallpaper_manager_init (GObject *object)
     gtk_scale_set_digits (
             GTK_SCALE (saturation_slider),
             1);
-    gtk_table_attach (
-            GTK_TABLE (image_prop_table),
+    gtk_grid_attach (
+            GTK_GRID (image_prop_grid),
             brightness_label,
             0,
-            1,
             0,
             1,
-            0,
-            0,
-            0,
-            0);
-    gtk_table_attach (
-            GTK_TABLE (image_prop_table),
+            1);
+    gtk_grid_attach (
+            GTK_GRID (image_prop_grid),
             brightness_slider,
             1,
-            2,
             0,
             1,
-            GTK_EXPAND|GTK_FILL,
-            0,
-            0,
-            0);
-    gtk_table_attach (
-            GTK_TABLE (image_prop_table),
+            1);
+    gtk_grid_attach (
+            GTK_GRID (image_prop_grid),
             saturation_label,
             0,
             1,
             1,
-            2,
-            0,
-            0,
-            0,
-            0);
-    gtk_table_attach (
-            GTK_TABLE (image_prop_table),
+            1);
+    gtk_grid_attach (
+            GTK_GRID (image_prop_grid),
             saturation_slider,
             1,
-            2,
             1,
-            2,
-            GTK_EXPAND|GTK_FILL,
-            0,
-            0,
-            0);
-    gtk_table_attach (
-            GTK_TABLE (image_prop_table),
+            1,
+            1);
+    gtk_grid_attach (
+            GTK_GRID (image_prop_grid),
             style_label,
             0,
-            1,
             2,
-            3,
-            0,
-            0,
-            0,
-            0);
-    gtk_table_attach (
-            GTK_TABLE (image_prop_table),
+            1,
+            1);
+    gtk_grid_attach (
+            GTK_GRID (image_prop_grid),
             manager->priv->style_combo,
             1,
             2,
-            2,
-            3,
-            GTK_EXPAND|GTK_FILL,
-            0,
-            0,
-            0);
+            1,
+            1);
 
+    gtk_widget_set_hexpand (manager->priv->style_combo, TRUE);
     gtk_combo_box_text_append_text (
             GTK_COMBO_BOX_TEXT (manager->priv->style_combo),
             _("Auto"));
@@ -595,17 +569,13 @@ rstto_xfce_wallpaper_manager_init (GObject *object)
     gtk_toggle_button_set_active (
             GTK_TOGGLE_BUTTON (manager->priv->check_button),
             manager->priv->workspace_mode);
-    gtk_table_attach (
-            GTK_TABLE (image_prop_table),
+    gtk_grid_attach (
+            GTK_GRID (image_prop_grid),
             manager->priv->check_button,
             0,
-            2,
             3,
-            4,
-            GTK_EXPAND|GTK_FILL,
-            0,
-            0,
-            0);
+            2,
+            1);
     g_signal_connect (manager->priv->check_button,
             "toggled",
             G_CALLBACK (cb_workspace_mode_changed),
