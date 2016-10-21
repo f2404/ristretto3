@@ -228,7 +228,7 @@ rstto_preferences_dialog_init ( RsttoPreferencesDialog *dialog )
     gboolean   bool_limit_quality;
     gchar     *str_desktop_type = NULL;
 
-    GdkColor  *bgcolor;
+    GdkRGBA   *bgcolor;
     GtkWidget *timeout_lbl, *timeout_hscale;
     GtkWidget *display_main_vbox;
     GtkWidget *display_main_lbl;
@@ -294,7 +294,7 @@ rstto_preferences_dialog_init ( RsttoPreferencesDialog *dialog )
                         dialog->priv->display_tab.bgcolor_hbox, FALSE, FALSE, 0);
 
     /* set current value */
-    gtk_color_button_set_color (GTK_COLOR_BUTTON (dialog->priv->display_tab.bgcolor_color_button),
+    gtk_color_chooser_set_rgba (GTK_COLOR_CHOOSER (dialog->priv->display_tab.bgcolor_color_button),
                                 bgcolor);
 
     gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (dialog->priv->display_tab.bgcolor_override_check_button),
@@ -673,11 +673,11 @@ cb_bgcolor_color_set (
 
     /* Code Section */
 
-    g_value_init (&bgcolor_val, GDK_TYPE_COLOR);
+    g_value_init (&bgcolor_val, GDK_TYPE_RGBA);
 
     g_object_get_property (
             G_OBJECT(button),
-            "color",
+            "rgba",
             &bgcolor_val);
     g_object_set_property (
             G_OBJECT(dialog->priv->settings),

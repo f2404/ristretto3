@@ -81,8 +81,8 @@ struct _RsttoImageViewerPriv
     GtkIconTheme                *icon_theme;
     GdkPixbuf                   *missing_icon;
     GdkPixbuf                   *bg_icon;
-    GdkColor                    *bg_color;
-    GdkColor                    *bg_color_fs;
+    GdkRGBA                     *bg_color;
+    GdkRGBA                     *bg_color_fs;
 
     gboolean                     limit_quality;
 
@@ -492,8 +492,8 @@ rstto_image_viewer_realize(GtkWidget *widget)
 
     gtk_widget_set_realized (widget, TRUE);
 
-    g_value_init (&val_bg_color, GDK_TYPE_COLOR);
-    g_value_init (&val_bg_color_fs, GDK_TYPE_COLOR);
+    g_value_init (&val_bg_color, GDK_TYPE_RGBA);
+    g_value_init (&val_bg_color_fs, GDK_TYPE_RGBA);
     g_value_init (&val_bg_color_override, G_TYPE_BOOLEAN);
     g_value_init (&val_limit_quality, G_TYPE_BOOLEAN);
     g_value_init (&val_invert_zoom, G_TYPE_BOOLEAN);
@@ -547,7 +547,7 @@ rstto_image_viewer_realize(GtkWidget *widget)
     }
     else
     {
-        viewer->priv->bg_color = &(gtk_widget_get_style (widget)->bg[GTK_STATE_NORMAL]);
+        viewer->priv->bg_color = NULL;
     }
 
     viewer->priv->bg_color_fs = g_value_get_boxed (&val_bg_color_fs);
@@ -858,7 +858,7 @@ static void
 paint_background (GtkWidget *widget, cairo_t *ctx)
 {
     RsttoImageViewer *viewer = RSTTO_IMAGE_VIEWER (widget);
-    GdkColor *bg_color = NULL;
+    GdkRGBA *bg_color = NULL;
     GdkWindow *window = gtk_widget_get_window (widget);
     GtkAllocation allocation;
     GtkStyleContext *context = gtk_widget_get_style_context (widget);
@@ -881,7 +881,7 @@ paint_background (GtkWidget *widget, cairo_t *ctx)
     /******************************/
     if ( NULL != bg_color )
     {
-        gdk_cairo_set_source_color ( ctx, bg_color );
+        gdk_cairo_set_source_rgba (ctx, bg_color);
         cairo_paint (ctx);
     }
     else
@@ -2752,8 +2752,8 @@ cb_rstto_bgcolor_changed (GObject *settings, GParamSpec *pspec, gpointer user_da
     GValue val_bg_color_override = {0, };
     GValue val_bg_color_fs = {0, };
 
-    g_value_init (&val_bg_color, GDK_TYPE_COLOR);
-    g_value_init (&val_bg_color_fs, GDK_TYPE_COLOR);
+    g_value_init (&val_bg_color, GDK_TYPE_RGBA);
+    g_value_init (&val_bg_color_fs, GDK_TYPE_RGBA);
     g_value_init (&val_bg_color_override, G_TYPE_BOOLEAN);
 
     g_object_get_property (
