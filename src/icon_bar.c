@@ -451,42 +451,28 @@ rstto_icon_bar_class_init (RsttoIconBarClass *klass)
             g_param_spec_boxed ("active-item-fill-color",
                 _("Active item fill color"),
                 _("Active item fill color"),
-                GDK_TYPE_COLOR,
+                GDK_TYPE_RGBA,
                 G_PARAM_READABLE));
 
     gtk_widget_class_install_style_property (gtkwidget_class,
             g_param_spec_boxed ("active-item-border-color",
                 _("Active item border color"),
                 _("Active item border color"),
-                GDK_TYPE_COLOR,
-                G_PARAM_READABLE));
-
-    gtk_widget_class_install_style_property (gtkwidget_class,
-            g_param_spec_boxed ("active-item-text-color",
-                _("Active item text color"),
-                _("Active item text color"),
-                GDK_TYPE_COLOR,
+                GDK_TYPE_RGBA,
                 G_PARAM_READABLE));
 
     gtk_widget_class_install_style_property (gtkwidget_class,
             g_param_spec_boxed ("cursor-item-fill-color",
                 _("Cursor item fill color"),
                 _("Cursor item fill color"),
-                GDK_TYPE_COLOR,
+                GDK_TYPE_RGBA,
                 G_PARAM_READABLE));
 
     gtk_widget_class_install_style_property (gtkwidget_class,
             g_param_spec_boxed ("cursor-item-border-color",
                 _("Cursor item border color"),
                 _("Cursor item border color"),
-                GDK_TYPE_COLOR,
-                G_PARAM_READABLE));
-
-    gtk_widget_class_install_style_property (gtkwidget_class,
-            g_param_spec_boxed ("cursor-item-text-color",
-                _("Cursor item text color"),
-                _("Cursor item text color"),
-                GDK_TYPE_COLOR,
+                GDK_TYPE_RGBA,
                 G_PARAM_READABLE));
 
     /**
@@ -1425,8 +1411,9 @@ rstto_icon_bar_paint_item (
         GdkRectangle     *area)
 {
     const GdkPixbuf *pixbuf = NULL;
-    GdkColor        *border_color;
-    GdkColor        *fill_color;
+    GdkRGBA         *border_color;
+    GdkRGBA         *fill_color;
+    GdkRGBA          tmp_color;
     cairo_t         *cr;
     gint             focus_width;
     gint             focus_pad;
@@ -1491,25 +1478,25 @@ rstto_icon_bar_paint_item (
 
         if (fill_color == NULL)
         {
-            fill_color = gdk_color_copy (&(gtk_widget_get_style (GTK_WIDGET (icon_bar))->base[GTK_STATE_SELECTED]));
-            gdk_color_parse ("#c1d2ee", fill_color);
+            gdk_rgba_parse (&tmp_color, "#c1d2ee");
+            fill_color = gdk_rgba_copy (&tmp_color);
         }
 
         if (border_color == NULL)
         {
-            border_color = gdk_color_copy (&(gtk_widget_get_style (GTK_WIDGET (icon_bar))->base[GTK_STATE_SELECTED]));
-            gdk_color_parse ("#316ac5", border_color);
+            gdk_rgba_parse (&tmp_color, "#316ac5");
+            border_color = gdk_rgba_copy (&tmp_color);
         }
 
         cr = gdk_cairo_create (icon_bar->priv->bin_window);
         gdk_cairo_rectangle (cr, area);
         cairo_clip (cr);
-        cairo_set_source_rgb (cr, fill_color->red/65535., fill_color->green/65535., fill_color->blue/65535.);
+        cairo_set_source_rgb (cr, fill_color->red, fill_color->green, fill_color->blue);
         cairo_rectangle (cr, x + focus_pad + focus_width, y + focus_pad + focus_width,
                          icon_bar->priv->item_width - 2 * (focus_width + focus_pad),
                          icon_bar->priv->item_height - 2 * (focus_width + focus_pad));
         cairo_fill (cr);
-        cairo_set_source_rgb (cr, border_color->red/65535., border_color->green/65535., border_color->blue/65535.);
+        cairo_set_source_rgb (cr, border_color->red, border_color->green, border_color->blue);
         cairo_set_line_width (cr, focus_width);
         cairo_set_line_cap (cr, CAIRO_LINE_CAP_BUTT);
         cairo_set_line_join (cr, CAIRO_LINE_JOIN_MITER);
@@ -1519,8 +1506,8 @@ rstto_icon_bar_paint_item (
         cairo_stroke (cr);
         cairo_destroy (cr);
 
-        gdk_color_free (border_color);
-        gdk_color_free (fill_color);
+        gdk_rgba_free (border_color);
+        gdk_rgba_free (fill_color);
     }
     else if (icon_bar->priv->cursor_item == item)
     {
@@ -1531,25 +1518,25 @@ rstto_icon_bar_paint_item (
 
         if (fill_color == NULL)
         {
-            fill_color = gdk_color_copy (&(gtk_widget_get_style (GTK_WIDGET (icon_bar))->base[GTK_STATE_SELECTED]));
-            gdk_color_parse ("#e0e8f6", fill_color);
+            gdk_rgba_parse (&tmp_color, "#e0e8f6");
+            fill_color = gdk_rgba_copy (&tmp_color);
         }
 
         if (border_color == NULL)
         {
-            border_color = gdk_color_copy (&(gtk_widget_get_style (GTK_WIDGET (icon_bar))->base[GTK_STATE_SELECTED]));
-            gdk_color_parse ("#98b4e2", border_color);
+            gdk_rgba_parse (&tmp_color, "#98b4e2");
+            border_color = gdk_rgba_copy (&tmp_color);
         }
 
         cr = gdk_cairo_create (icon_bar->priv->bin_window);
         gdk_cairo_rectangle (cr, area);
         cairo_clip (cr);
-        cairo_set_source_rgb (cr, fill_color->red/65535., fill_color->green/65535., fill_color->blue/65535.);
+        cairo_set_source_rgb (cr, fill_color->red, fill_color->green, fill_color->blue);
         cairo_rectangle (cr, x + focus_pad + focus_width, y + focus_pad + focus_width,
                          icon_bar->priv->item_width - 2 * (focus_width + focus_pad),
                          icon_bar->priv->item_height - 2 * (focus_width + focus_pad));
         cairo_fill (cr);
-        cairo_set_source_rgb (cr, border_color->red/65535., border_color->green/65535., border_color->blue/65535.);
+        cairo_set_source_rgb (cr, border_color->red, border_color->green, border_color->blue);
         cairo_set_line_width (cr, focus_width);
         cairo_set_line_cap (cr, CAIRO_LINE_CAP_BUTT);
         cairo_set_line_join (cr, CAIRO_LINE_JOIN_MITER);
@@ -1559,10 +1546,9 @@ rstto_icon_bar_paint_item (
         cairo_stroke (cr);
         cairo_destroy (cr);
 
-        gdk_color_free (border_color);
-        gdk_color_free (fill_color);
+        gdk_rgba_free (border_color);
+        gdk_rgba_free (fill_color);
     }
-
 
     if (NULL != pixbuf)
     {
