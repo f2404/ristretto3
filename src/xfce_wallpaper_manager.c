@@ -216,11 +216,7 @@ rstto_xfce_wallpaper_manager_set (RsttoWallpaperManager *self, RsttoFile *file)
     gchar *saturation_prop;
 
     display = gdk_display_get_default ();
-#if GTK_CHECK_VERSION (3, 20, 0)
     gdk_screen = gdk_display_get_default_screen (display);
-#else
-    gdk_screen = gdk_display_get_screen (display, manager->priv->screen);
-#endif
 
     workspace_nr = rstto_get_active_workspace_number (gdk_screen);
 
@@ -712,12 +708,7 @@ rstto_get_active_workspace_number (GdkScreen *screen)
         XFree (prop_ret);
     }
 
-#if GTK_CHECK_VERSION (3, 0, 0)
     gdk_error_trap_pop_ignored ();
-#else
-    if (gdk_error_trap_pop () != 0)
-        return 0;
-#endif
 
     return ws_num;
 }
