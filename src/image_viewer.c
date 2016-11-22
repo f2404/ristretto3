@@ -2533,6 +2533,9 @@ rstto_button_press_event (GtkWidget *widget, GdkEventButton *event)
         if (viewer->priv->menu)
         {
             gtk_widget_show_all(GTK_WIDGET(viewer->priv->menu));
+#if GTK_CHECK_VERSION (3, 22, 0)
+            gtk_menu_popup_at_pointer(viewer->priv->menu, NULL);
+#else
             gtk_menu_popup (
                     viewer->priv->menu,
                     NULL,
@@ -2541,6 +2544,7 @@ rstto_button_press_event (GtkWidget *widget, GdkEventButton *event)
                     NULL,
                     3,
                     event->time);
+#endif
         }
         return TRUE;
     }
@@ -2800,9 +2804,13 @@ rstto_popup_menu (GtkWidget *widget)
     if (viewer->priv->menu)
     {
         gtk_widget_show_all (GTK_WIDGET (viewer->priv->menu));
+#if GTK_CHECK_VERSION (3, 22, 0)
+        gtk_menu_popup_at_pointer (viewer->priv->menu, NULL);
+#else
         gtk_menu_popup (viewer->priv->menu,
                         NULL, NULL, NULL, NULL, 0,
                         gtk_get_current_event_time());
+#endif
         return TRUE;
     }
     return FALSE;
