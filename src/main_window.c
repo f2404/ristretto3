@@ -28,8 +28,6 @@
 #include <libxfce4ui/libxfce4ui.h>
 #include <libexif/exif-data.h>
 
-#include <dbus/dbus-glib.h>
-
 #include <cairo/cairo.h>
 
 #include "settings.h"
@@ -78,12 +76,11 @@ struct _RsttoMainWindowPriv
 
     RsttoMimeDB           *db;
 
-    DBusGConnection       *connection;
-    DBusGProxy            *filemanager_proxy;
+    GDBusProxy            *filemanager_proxy;
 
     guint                  show_fs_toolbar_timeout_id;
     gint                   window_save_geometry_timer_id;
-    
+
     gboolean               fs_toolbar_sticky;
 
     RsttoImageListIter    *iter;
@@ -170,7 +167,9 @@ cb_rstto_thumbnailer_ready(
         gpointer user_data);
 
 static gboolean
-rstto_window_save_geometry_timer (gpointer user_data);
+rstto_main_window_save_geometry_timer (gpointer user_data);
+static void
+rstto_main_window_save_geometry_timer_destroy (gpointer user_data);
 
 static void
 rstto_main_window_image_list_iter_changed (RsttoMainWindow *window);
@@ -185,6 +184,8 @@ static void
 cb_rstto_main_window_state_event(GtkWidget *widget, GdkEventWindowState *event, gpointer user_data);
 static gboolean
 cb_rstto_main_window_show_fs_toolbar_timeout (RsttoMainWindow *window);
+static void
+cb_rstto_main_window_show_fs_toolbar_timeout_destroy (gpointer user_data);
 static void
 cb_rstto_main_window_image_list_iter_changed (RsttoImageListIter *iter, RsttoMainWindow *window);
 static void
@@ -203,6 +204,11 @@ static void
 cb_rstto_main_window_rotate_cw (GtkWidget *widget, RsttoMainWindow *window);
 static void
 cb_rstto_main_window_rotate_ccw (GtkWidget *widget, RsttoMainWindow *window);
+
+static void
+cb_rstto_main_window_flip_hz (GtkWidget *widget, RsttoMainWindow *window);
+static void
+cb_rstto_main_window_flip_vt (GtkWidget *widget, RsttoMainWindow *window);
 
 static void
 cb_rstto_main_window_next_image (GtkWidget *widget, RsttoMainWindow *window);
@@ -388,6 +394,8 @@ static GtkActionEntry action_entries[] =
   { "file-menu",
             NULL,
             N_ ("_File"),
+            NULL,
+            NULL,
             NULL, },
   { "open",
             "document-open", /* Icon-name */
@@ -429,14 +437,20 @@ static GtkActionEntry action_entries[] =
   { "edit-menu",
             NULL,
             N_ ("_Edit"),
+            NULL,
+            NULL,
             NULL, },
   { "open-with-menu",
             NULL,
             N_ ("_Open with"),
+            NULL,
+            NULL,
             NULL, },
   { "sorting-menu",
             NULL,
             N_ ("_Sorting"),
+            NULL,
+            NULL,
             NULL, },
   { "delete",
             "edit-delete", /* Icon-name */
@@ -460,6 +474,8 @@ static GtkActionEntry action_entries[] =
   { "view-menu",
             NULL,
             N_ ("_View"),
+            NULL,
+            NULL,
             NULL, },
   { "fullscreen",
             "view-fullscreen", /* Icon-name */
@@ -483,6 +499,8 @@ static GtkActionEntry action_entries[] =
   { "zoom-menu",
             NULL,
             N_ ("_Zoom"),
+            NULL,
+            NULL,
             NULL, },
   { "zoom-in",
             "zoom-in", /* Icon-name */
@@ -512,6 +530,8 @@ static GtkActionEntry action_entries[] =
   { "rotation-menu",
             NULL,
             N_ ("_Rotation"),
+            NULL,
+            NULL,
             NULL, },
   { "rotate-cw",
             "object-rotate-right", /* Icon-name */
@@ -525,10 +545,31 @@ static GtkActionEntry action_entries[] =
             "<control>bracketleft", /* Keyboard shortcut */
             NULL, /* Tooltip text */
             G_CALLBACK (cb_rstto_main_window_rotate_ccw), },
+/* Flip submenu */
+  { "flip-menu",
+            NULL,
+            N_ ("_Flip"),
+            NULL,
+            NULL,
+            NULL, },
+  { "flip-horizontally",
+            "object-flip-horizontal",
+            N_ ("Flip _Horizontally"), /* Label-text */
+            "<control>braceright", /* Keyboard shortcut */
+            NULL, /* Tooltip text */
+            G_CALLBACK (cb_rstto_main_window_flip_hz), },
+  { "flip-vertically",
+            "object-flip-vertical",
+            N_ ("Flip _Vertically"), /* Label-text */
+            "<control>braceleft", /* Keyboard shortcut */
+            NULL, /* Tooltip text */
+            G_CALLBACK (cb_rstto_main_window_flip_vt), },
 /* Go Menu */
   { "go-menu",
             NULL,
             N_ ("_Go"),
+            NULL,
+            NULL,
             NULL, },
   { "forward",
             "go-next", /* Icon-name */
@@ -558,6 +599,8 @@ static GtkActionEntry action_entries[] =
   { "help-menu",
             NULL,
             N_ ("_Help"),
+            NULL,
+            NULL,
             NULL, },
   { "contents",
             "help-browser", /* Icon-name */
@@ -575,18 +618,26 @@ static GtkActionEntry action_entries[] =
   { "position-menu",
             NULL,
             N_ ("_Position"),
+            NULL,
+            NULL,
             NULL, },
   { "size-menu",
             NULL,
             N_ ("_Size"),
+            NULL,
+            NULL,
             NULL, },
   { "thumbnailbar-position-menu",
             NULL,
             N_ ("Thumbnail Bar _Position"),
+            NULL,
+            NULL,
             NULL, },
   { "thumbnailbar-size-menu",
             NULL,
             N_ ("Thumb_nail Size"),
+            NULL,
+            NULL,
             NULL, },
 /* Misc */
   { "leave-fullscreen",
@@ -596,6 +647,8 @@ static GtkActionEntry action_entries[] =
             NULL, /* Tooltip text */
             G_CALLBACK (cb_rstto_main_window_fullscreen), },
   { "tb-menu",
+	        NULL,
+	        NULL,
             NULL,
             NULL,
             NULL, }
@@ -808,19 +861,20 @@ rstto_main_window_init (RsttoMainWindow *window)
     window->priv->filter = gtk_file_filter_new ();
     g_object_ref_sink (window->priv->filter);
     gtk_file_filter_add_pixbuf_formats (window->priv->filter);
+    /* see https://bugs.launchpad.net/ubuntu/+source/ristretto/+bug/1778695 */
+    gtk_file_filter_add_mime_type (window->priv->filter, "image/x-canon-cr2");
 
     /* D-Bus stuff */
 
-    window->priv->connection = dbus_g_bus_get(DBUS_BUS_SESSION, NULL);
-    if (window->priv->connection)
-    {
-        window->priv->filemanager_proxy =
-                dbus_g_proxy_new_for_name(
-                        window->priv->connection,
-                        "org.xfce.FileManager",
-                        "/org/xfce/FileManager",
-                        "org.xfce.FileManager");
-    }
+    window->priv->filemanager_proxy =
+            g_dbus_proxy_new_for_bus_sync (G_BUS_TYPE_SESSION,
+                                           G_DBUS_PROXY_FLAGS_NONE,
+                                           NULL,
+                                           "org.xfce.FileManager",
+                                           "/org/xfce/FileManager",
+                                           "org.xfce.FileManager",
+                                           NULL,
+                                           NULL);
 
     desktop_type = rstto_settings_get_string_property (window->priv->settings_manager, "desktop-type");
     if (desktop_type)
@@ -1247,6 +1301,8 @@ rstto_main_window_dispose(GObject *object)
             window->priv->action_group = NULL;
         }
 
+        g_clear_object (&window->priv->filemanager_proxy);
+
         g_free (window->priv);
         window->priv = NULL;
     }
@@ -1277,6 +1333,9 @@ rstto_main_window_new (RsttoImageList *image_list, gboolean fullscreen)
         case SORT_TYPE_NAME:
             rstto_image_list_set_sort_by_name (window->priv->image_list);
             break;
+        case SORT_TYPE_TYPE:
+            rstto_image_list_set_sort_by_type (window->priv->image_list);
+            break;
         case SORT_TYPE_DATE:
             rstto_image_list_set_sort_by_date (window->priv->image_list);
             break;
@@ -1284,7 +1343,6 @@ rstto_main_window_new (RsttoImageList *image_list, gboolean fullscreen)
             g_warning("Sort type unsupported");
             break;
     }
-
 
     window->priv->iter = rstto_image_list_get_iter (window->priv->image_list);
     g_signal_connect (
@@ -1413,8 +1471,7 @@ rstto_main_window_image_list_iter_changed (RsttoMainWindow *window)
                 menu_item = gtk_separator_menu_item_new ();
                 gtk_menu_shell_append (GTK_MENU_SHELL (open_with_menu), menu_item);
 
-                g_list_foreach (app_list, (GFunc)g_object_unref, NULL);
-                g_list_free (app_list);
+                g_list_free_full (app_list, (GDestroyNotify) g_object_unref);
             }
             else
             {
@@ -1517,43 +1574,53 @@ rstto_main_window_update_statusbar (RsttoMainWindow *window)
                 {
                     /* Extend the status-message with exif-info */
                     /********************************************/
-                    exif_entry = rstto_file_get_exif (
-                            cur_file,
-                            EXIF_TAG_FNUMBER);
+                    exif_entry = rstto_file_get_exif (cur_file, EXIF_TAG_FNUMBER);
                     if (exif_entry)
                     {
-                        exif_entry_get_value (exif_entry, exif_data, 20);
-
+                        exif_entry_get_value (exif_entry, exif_data, sizeof (exif_data));
                         tmp_status = g_strdup_printf ("%s\t%s", status, exif_data);
-
                         g_free (status);
                         status = tmp_status;
-
-                        /*exif_entry_free (exif_entry);*/
                     }
-                    exif_entry = rstto_file_get_exif (
-                            cur_file,
-                            EXIF_TAG_EXPOSURE_TIME);
+
+                    exif_entry = rstto_file_get_exif (cur_file, EXIF_TAG_EXPOSURE_TIME);
                     if (exif_entry)
                     {
-                        exif_entry_get_value (exif_entry, exif_data, 20);
-
+                        exif_entry_get_value (exif_entry, exif_data, sizeof (exif_data));
                         tmp_status = g_strdup_printf ("%s\t%s", status, exif_data);
-
                         g_free (status);
                         status = tmp_status;
+                    }
 
-                        /*exif_entry_free (exif_entry);*/
+                    exif_entry = rstto_file_get_exif (cur_file, EXIF_TAG_FOCAL_LENGTH);
+                    if (exif_entry)
+                    {
+                        exif_entry_get_value (exif_entry, exif_data, sizeof (exif_data));
+                        tmp_status = g_strdup_printf ("%s\t%s", status, exif_data);
+                        g_free (status);
+                        status = tmp_status;
+                    }
+
+                    exif_entry = rstto_file_get_exif (cur_file, EXIF_TAG_ISO_SPEED_RATINGS);
+                    if (exif_entry)
+                    {
+                        exif_entry_get_value (exif_entry, exif_data, sizeof (exif_data));
+                        tmp_status = g_strdup_printf ("%s\tISO %s", status, exif_data);
+                        g_free (status);
+                        status = tmp_status;
                     }
                 }
 
-                if(rstto_image_viewer_get_width(viewer) != 0 && rstto_image_viewer_get_height(viewer) != 0)
+                if (rstto_image_viewer_get_width (viewer) != 0 && rstto_image_viewer_get_height (viewer) != 0)
                 {
-                    tmp_status = g_strdup_printf ("%s\t%d x %d\t%.1f%%", status,
-                                                rstto_image_viewer_get_width(viewer),
-                                                rstto_image_viewer_get_height(viewer),
-                                                (100 * rstto_image_viewer_get_scale(viewer)));
-
+                    gchar *size_string = g_format_size (rstto_file_get_size (cur_file));
+                    tmp_status = g_strdup_printf ("%s\t%d x %d\t%s\t%.1f%%", status,
+                                                  rstto_image_viewer_get_width(viewer),
+                                                  rstto_image_viewer_get_height(viewer),
+                                                  size_string,
+                                                  (100 * rstto_image_viewer_get_scale(viewer)));
+ 
+                    g_free (size_string);
                     g_free (status);
                     status = tmp_status;
                 }
@@ -1924,7 +1991,7 @@ rstto_main_window_update_buttons (RsttoMainWindow *window)
 }
 
 static gboolean
-rstto_window_save_geometry_timer (gpointer user_data)
+rstto_main_window_save_geometry_timer (gpointer user_data)
 {
     GtkWindow *window = GTK_WINDOW(user_data);
     gint width = 0;
@@ -1951,6 +2018,11 @@ rstto_window_save_geometry_timer (gpointer user_data)
     return FALSE;
 }
 
+static void
+rstto_main_window_save_geometry_timer_destroy (gpointer user_data)
+{
+    RSTTO_MAIN_WINDOW (user_data)->priv->window_save_geometry_timer_id = 0;
+}
 
 static void
 rstto_main_window_set_thumbnail_size (
@@ -2286,7 +2358,10 @@ cb_rstto_main_window_state_event(GtkWidget *widget, GdkEventWindowState *event, 
                 }
                 if (rstto_image_list_get_n_images (window->priv->image_list) != 0)
                 {
-                    window->priv->show_fs_toolbar_timeout_id = gdk_threads_add_timeout (500, (GSourceFunc)cb_rstto_main_window_show_fs_toolbar_timeout, window);
+                    window->priv->show_fs_toolbar_timeout_id =
+                            g_timeout_add_full (G_PRIORITY_DEFAULT, 500,
+                                                (GSourceFunc) cb_rstto_main_window_show_fs_toolbar_timeout, window,
+                                                cb_rstto_main_window_show_fs_toolbar_timeout_destroy);
                 }
             }
 
@@ -2447,7 +2522,10 @@ cb_rstto_main_window_image_viewer_enter_notify_event (GtkWidget *widget,
                 g_source_remove (window->priv->show_fs_toolbar_timeout_id);
                 window->priv->show_fs_toolbar_timeout_id = 0;
             }
-            window->priv->show_fs_toolbar_timeout_id = gdk_threads_add_timeout (500, (GSourceFunc)cb_rstto_main_window_show_fs_toolbar_timeout, window);
+            window->priv->show_fs_toolbar_timeout_id =
+                    g_timeout_add_full (G_PRIORITY_DEFAULT, 500,
+                                        (GSourceFunc) cb_rstto_main_window_show_fs_toolbar_timeout, window,
+                                        cb_rstto_main_window_show_fs_toolbar_timeout_destroy);
         }
     }
 
@@ -2459,6 +2537,12 @@ cb_rstto_main_window_show_fs_toolbar_timeout (RsttoMainWindow *window)
 {
     gtk_widget_hide (window->priv->toolbar);
     return FALSE;
+}
+
+static void
+cb_rstto_main_window_show_fs_toolbar_timeout_destroy (gpointer user_data)
+{
+    RSTTO_MAIN_WINDOW (user_data)->priv->show_fs_toolbar_timeout_id = 0;
 }
 
 /**
@@ -2619,7 +2703,7 @@ cb_rstto_main_window_about (GtkWidget *widget, RsttoMainWindow *window)
     gtk_about_dialog_set_comments((GtkAboutDialog *)about_dialog,
         _("Ristretto is an image viewer for the Xfce desktop environment."));
     gtk_about_dialog_set_website((GtkAboutDialog *)about_dialog,
-        "http://docs.xfce.org/apps/ristretto/start");
+        "https://docs.xfce.org/apps/ristretto/start");
     gtk_about_dialog_set_logo_icon_name((GtkAboutDialog *)about_dialog,
         "ristretto");
     gtk_about_dialog_set_authors((GtkAboutDialog *)about_dialog,
@@ -2629,7 +2713,8 @@ cb_rstto_main_window_about (GtkWidget *widget, RsttoMainWindow *window)
     gtk_about_dialog_set_license((GtkAboutDialog *)about_dialog,
         xfce_get_license_text(XFCE_LICENSE_TEXT_GPL));
     gtk_about_dialog_set_copyright((GtkAboutDialog *)about_dialog,
-        "Copyright \302\251 2006-2012 Stephan Arts");
+        "Copyright \302\251 2006-2012 Stephan Arts\n"
+        "Copyright \302\251 2013-2019 Xfce Developers");
 
     gtk_dialog_run(GTK_DIALOG(about_dialog));
 
@@ -2684,15 +2769,14 @@ cb_rstto_main_window_configure_event (GtkWidget *widget, GdkEventConfigure *even
         {
             g_source_remove (window->priv->window_save_geometry_timer_id);
         }
-        window->priv->window_save_geometry_timer_id = 0;
 
         /* check if we should schedule another save timer */
         if (gtk_widget_get_visible (GTK_WIDGET (window)))
         {
             /* save the geometry one second after the last configure event */
-            window->priv->window_save_geometry_timer_id = gdk_threads_add_timeout (
-                    1000, rstto_window_save_geometry_timer,
-                    widget);
+            window->priv->window_save_geometry_timer_id = g_timeout_add_seconds_full (
+                    G_PRIORITY_DEFAULT, 1, rstto_main_window_save_geometry_timer,
+                    widget, rstto_main_window_save_geometry_timer_destroy);
         }
     }
 
@@ -2794,6 +2878,18 @@ cb_rstto_main_window_rotate_cw (GtkWidget *widget, RsttoMainWindow *window)
         case RSTTO_IMAGE_ORIENT_270:
             rstto_image_viewer_set_orientation (viewer, RSTTO_IMAGE_ORIENT_NONE);
             break;
+        case RSTTO_IMAGE_ORIENT_FLIP_HORIZONTAL:
+            rstto_image_viewer_set_orientation (viewer, RSTTO_IMAGE_ORIENT_FLIP_TRANSVERSE);
+            break;
+        case RSTTO_IMAGE_ORIENT_FLIP_VERTICAL:
+            rstto_image_viewer_set_orientation (viewer, RSTTO_IMAGE_ORIENT_FLIP_TRANSPOSE);
+            break;
+        case RSTTO_IMAGE_ORIENT_FLIP_TRANSPOSE:
+            rstto_image_viewer_set_orientation (viewer, RSTTO_IMAGE_ORIENT_FLIP_HORIZONTAL);
+            break;
+        case RSTTO_IMAGE_ORIENT_FLIP_TRANSVERSE:
+            rstto_image_viewer_set_orientation (viewer, RSTTO_IMAGE_ORIENT_FLIP_VERTICAL);
+            break;
     }
     rstto_main_window_update_statusbar(window);
 }
@@ -2823,6 +2919,106 @@ cb_rstto_main_window_rotate_ccw (GtkWidget *widget, RsttoMainWindow *window)
             break;
         case RSTTO_IMAGE_ORIENT_270:
             rstto_image_viewer_set_orientation (viewer, RSTTO_IMAGE_ORIENT_180);
+            break;
+        case RSTTO_IMAGE_ORIENT_FLIP_HORIZONTAL:
+            rstto_image_viewer_set_orientation (viewer, RSTTO_IMAGE_ORIENT_FLIP_TRANSPOSE);
+            break;
+        case RSTTO_IMAGE_ORIENT_FLIP_VERTICAL:
+            rstto_image_viewer_set_orientation (viewer, RSTTO_IMAGE_ORIENT_FLIP_TRANSVERSE);
+            break;
+        case RSTTO_IMAGE_ORIENT_FLIP_TRANSPOSE:
+            rstto_image_viewer_set_orientation (viewer, RSTTO_IMAGE_ORIENT_FLIP_VERTICAL);
+            break;
+        case RSTTO_IMAGE_ORIENT_FLIP_TRANSVERSE:
+            rstto_image_viewer_set_orientation (viewer, RSTTO_IMAGE_ORIENT_FLIP_HORIZONTAL);
+            break;
+    }
+    rstto_main_window_update_statusbar(window);
+}
+
+/**********************/
+/* FLIP CALLBACKS */
+/**********************/
+
+/**
+ * cb_rstto_main_window_flip_hz:
+ * @widget:
+ * @window:
+ *
+ *
+ */
+static void
+cb_rstto_main_window_flip_hz (GtkWidget *widget, RsttoMainWindow *window)
+{
+    RsttoImageViewer *viewer = RSTTO_IMAGE_VIEWER(window->priv->image_viewer);
+    switch (rstto_image_viewer_get_orientation (viewer))
+    {
+        default:
+        case RSTTO_IMAGE_ORIENT_NONE:
+            rstto_image_viewer_set_orientation (viewer, RSTTO_IMAGE_ORIENT_FLIP_HORIZONTAL);
+            break;
+        case RSTTO_IMAGE_ORIENT_90:
+            rstto_image_viewer_set_orientation (viewer, RSTTO_IMAGE_ORIENT_FLIP_TRANSPOSE);
+            break;
+        case RSTTO_IMAGE_ORIENT_180:
+            rstto_image_viewer_set_orientation (viewer, RSTTO_IMAGE_ORIENT_FLIP_VERTICAL);
+            break;
+        case RSTTO_IMAGE_ORIENT_270:
+            rstto_image_viewer_set_orientation (viewer, RSTTO_IMAGE_ORIENT_FLIP_TRANSVERSE);
+            break;
+        case RSTTO_IMAGE_ORIENT_FLIP_HORIZONTAL:
+            rstto_image_viewer_set_orientation (viewer, RSTTO_IMAGE_ORIENT_NONE);
+            break;
+        case RSTTO_IMAGE_ORIENT_FLIP_VERTICAL:
+            rstto_image_viewer_set_orientation (viewer, RSTTO_IMAGE_ORIENT_180);
+            break;
+        case RSTTO_IMAGE_ORIENT_FLIP_TRANSPOSE:
+            rstto_image_viewer_set_orientation (viewer, RSTTO_IMAGE_ORIENT_90);
+            break;
+        case RSTTO_IMAGE_ORIENT_FLIP_TRANSVERSE:
+            rstto_image_viewer_set_orientation (viewer, RSTTO_IMAGE_ORIENT_270);
+            break;
+    }
+    rstto_main_window_update_statusbar(window);
+}
+
+/**
+ * cb_rstto_main_window_flip_vt:
+ * @widget:
+ * @window:
+ *
+ *
+ */
+static void
+cb_rstto_main_window_flip_vt (GtkWidget *widget, RsttoMainWindow *window)
+{
+    RsttoImageViewer *viewer = RSTTO_IMAGE_VIEWER(window->priv->image_viewer);
+    switch (rstto_image_viewer_get_orientation (viewer))
+    {
+        default:
+        case RSTTO_IMAGE_ORIENT_NONE:
+            rstto_image_viewer_set_orientation (viewer, RSTTO_IMAGE_ORIENT_FLIP_VERTICAL);
+            break;
+        case RSTTO_IMAGE_ORIENT_90:
+            rstto_image_viewer_set_orientation (viewer, RSTTO_IMAGE_ORIENT_FLIP_TRANSVERSE);
+            break;
+        case RSTTO_IMAGE_ORIENT_180:
+            rstto_image_viewer_set_orientation (viewer, RSTTO_IMAGE_ORIENT_FLIP_HORIZONTAL);
+            break;
+        case RSTTO_IMAGE_ORIENT_270:
+            rstto_image_viewer_set_orientation (viewer, RSTTO_IMAGE_ORIENT_FLIP_TRANSPOSE);
+            break;
+        case RSTTO_IMAGE_ORIENT_FLIP_HORIZONTAL:
+            rstto_image_viewer_set_orientation (viewer, RSTTO_IMAGE_ORIENT_180);
+            break;
+        case RSTTO_IMAGE_ORIENT_FLIP_VERTICAL:
+            rstto_image_viewer_set_orientation (viewer, RSTTO_IMAGE_ORIENT_NONE);
+            break;
+        case RSTTO_IMAGE_ORIENT_FLIP_TRANSPOSE:
+            rstto_image_viewer_set_orientation (viewer, RSTTO_IMAGE_ORIENT_270);
+            break;
+        case RSTTO_IMAGE_ORIENT_FLIP_TRANSVERSE:
+            rstto_image_viewer_set_orientation (viewer, RSTTO_IMAGE_ORIENT_90);
             break;
     }
     rstto_main_window_update_statusbar(window);
@@ -2951,6 +3147,8 @@ cb_rstto_main_window_open_image (GtkWidget *widget, RsttoMainWindow *window)
     }
 
     gtk_file_filter_add_pixbuf_formats (filter);
+    /* see https://bugs.launchpad.net/ubuntu/+source/ristretto/+bug/1778695 */
+    gtk_file_filter_add_mime_type (filter, "image/x-canon-cr2");
     gtk_file_filter_set_name (filter, _("Images"));
     gtk_file_chooser_add_filter (GTK_FILE_CHOOSER (dialog), filter);
 
@@ -3063,8 +3261,7 @@ cb_rstto_main_window_open_image (GtkWidget *widget, RsttoMainWindow *window)
 
     if (files)
     {
-        g_slist_foreach (files, (GFunc)g_object_unref, NULL);
-        g_slist_free (files);
+		g_slist_free_full (files, (GDestroyNotify) g_object_unref);
     }
 }
 
@@ -3232,6 +3429,8 @@ cb_rstto_main_window_properties (GtkWidget *widget, RsttoMainWindow *window)
          */
         if ( TRUE == use_thunar_properties )
         {
+			GVariant *unused = NULL;
+
             /* Get the file-uri */
             uri = rstto_file_get_uri(file);
 
@@ -3239,14 +3438,17 @@ cb_rstto_main_window_properties (GtkWidget *widget, RsttoMainWindow *window)
              * interface. If it fails, fall back to the
              * internal properties-dialog.
              */
-            if(dbus_g_proxy_call(window->priv->filemanager_proxy,
-                                 "DisplayFileProperties",
-                                 &error,
-                                 G_TYPE_STRING, uri,
-                                 G_TYPE_STRING, gdk_display_get_name(display),
-                                 G_TYPE_STRING, "",
-                                 G_TYPE_INVALID,
-                                 G_TYPE_INVALID) == FALSE)
+            unused = g_dbus_proxy_call_sync (window->priv->filemanager_proxy,
+                                             "DisplayFileProperties",
+                                              g_variant_new ("(sss)",
+                                                             uri,
+                                                             gdk_display_get_name(display),
+                                                             ""),
+                                             G_DBUS_CALL_FLAGS_NONE,
+                                             -1,
+                                             NULL,
+                                             &error);
+            if (error != NULL)
             {
                 g_warning("DBUS CALL FAILED: '%s'", error->message);
 
@@ -3259,6 +3461,8 @@ cb_rstto_main_window_properties (GtkWidget *widget, RsttoMainWindow *window)
 
                 /* Cleanup the file-properties dialog */
                 gtk_widget_destroy(dialog);
+            } else {
+                g_variant_unref (unused);
             }
         }
         else
@@ -3815,6 +4019,7 @@ rstto_main_window_launch_editor_chooser (
             rstto_file_get_display_name (r_file),
             content_type);
     label = gtk_label_new (label_text);
+    g_free (label_text);
 
     check_button = gtk_check_button_new_with_mnemonic(_("Use as _default for this kind of file"));
 
@@ -4095,11 +4300,8 @@ rstto_main_window_launch_editor_chooser (
 
     gtk_widget_destroy (dialog);
 
-    g_list_foreach (app_infos_recommended, (GFunc)g_object_unref, NULL);
-    g_list_foreach (app_infos_all, (GFunc)g_object_unref, NULL);
-    
-    g_list_free (app_infos_recommended);
-    g_list_free (app_infos_all);
+    g_list_free_full (app_infos_recommended, (GDestroyNotify) g_object_unref);
+    g_list_free_full (app_infos_all, (GDestroyNotify) g_object_unref);
     g_list_free (files);
 }
 

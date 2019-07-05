@@ -297,6 +297,12 @@ rstto_privacy_dialog_dispose (GObject *object)
             dialog->priv->settings = NULL;
         }
 
+        if (dialog->priv->filters)
+        {
+            g_slist_free (dialog->priv->filters);
+            dialog->priv->filters = NULL;
+        }
+
         g_free (dialog->priv);
         dialog->priv = NULL;
     }
@@ -394,8 +400,7 @@ rstto_recent_chooser_get_items (
         all_items_iter = g_list_next (all_items_iter);
     }
 
-    g_list_foreach (all_items, (GFunc)gtk_recent_info_unref, NULL);
-    g_list_free (all_items);
+    g_list_free_full (all_items, (GDestroyNotify) gtk_recent_info_unref);
 
     return items;
 }

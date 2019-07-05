@@ -15,9 +15,6 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
  *  02110-1301, USA.
- *
- *  The adjust-brightness code is written by
- *  Brian Tarricone <bjt23@cornell.edu>, originally written for xfdesktop.
  */
 
 #include <config.h>
@@ -79,10 +76,10 @@ static void
 configure_monitor_chooser_pixbuf (
     RsttoXfceWallpaperManager *manager );
 
-static GdkPixbuf *
-adjust_brightness (
-        GdkPixbuf *src,
-        gint amount );
+static gchar *
+get_human_monitor_name (const gchar *prop_name);
+static gchar *
+retrieve_monitor_name (gint monitor_id);
 
 static void
 cb_style_combo_changed (
@@ -92,14 +89,6 @@ static void
 cb_monitor_chooser_changed (
         RsttoMonitorChooser *monitor_chooser,
         RsttoXfceWallpaperManager *manager);
-static void
-cb_brightness_adjustment_value_changed (
-        GtkAdjustment *adjustment,
-        RsttoXfceWallpaperManager *man);
-static void
-cb_saturation_adjustment_value_changed (
-        GtkAdjustment *adjustment,
-        RsttoXfceWallpaperManager *man);
 static void
 cb_workspace_mode_changed (
         GtkCheckButton *check_button,
@@ -115,8 +104,6 @@ struct _RsttoXfceWallpaperManagerPriv
     gint    screen;
     gint    monitor;
     enum MonitorStyle style;
-    gdouble saturation;
-    gint    brightness;
     RsttoColor *color1;
     RsttoColor *color2;
     gboolean workspace_mode;
@@ -127,8 +114,6 @@ struct _RsttoXfceWallpaperManagerPriv
     GtkWidget *monitor_chooser;
     GtkWidget *style_combo;
     GtkWidget *check_button;
-    GtkAdjustment *saturation_adjustment;
-    GtkAdjustment *brightness_adjustment;
 
     GtkWidget *dialog;
 };
@@ -138,6 +123,88 @@ enum
 {
     PROP_0,
 };
+
+static gchar *
+get_human_monitor_name (const gchar *prop_name)
+{
+    GRegex *regex;
+    GMatchInfo *info;
+    gchar *res = NULL;
+
+    regex = g_regex_new ("/(?P<monitor>monitor\\D+-\\d+)/", 0, 0, NULL);
+    if (regex != NULL)
+    {
+        if (g_regex_match (regex, prop_name, 0, &info))
+            res = g_match_info_fetch_named (info, "monitor");
+
+        g_match_info_free (info);
+        g_regex_unref (regex);
+    }
+
+    return res;
+}
+
+static gchar *
+retrieve_monitor_name (gint monitor_id)
+{
+    GDBusProxy *proxy;
+    GError *err = NULL;
+    GVariant *variant;
+    GVariantIter *iter;
+    gchar *key, *monitor_name = NULL, *result;
+
+    proxy = g_dbus_proxy_new_for_bus_sync (G_BUS_TYPE_SESSION,
+                                           G_DBUS_PROXY_FLAGS_NONE,
+                                           NULL,
+                                           "org.xfce.Xfconf",
+                                           "/org/xfce/Xfconf",
+                                           "org.xfce.Xfconf",
+                                           NULL, &err);
+    if (proxy == NULL)
+    {
+        g_warning ("Could not get access to the D-Bus interface: %s",
+                   err->message);
+        g_error_free (err);
+    }
+    else
+    {
+        variant = g_dbus_proxy_call_sync (proxy, "GetAllProperties",
+                                          g_variant_new ("(ss)",
+                                                         "xfce4-desktop",
+                                                         "/"),
+                                          G_DBUS_CALL_FLAGS_NONE,
+                                          -1, NULL, &err);
+        if (variant == NULL)
+        {
+            g_warning ("Method failed: %s", err->message);
+            g_error_free (err);
+        }
+        else
+        {
+            g_variant_get (variant, "(a{sv})", &iter);
+            /* Only keys are interesting */
+            while (g_variant_iter_loop (iter, "{&sv}", &key))
+            {
+                monitor_name = get_human_monitor_name (key);
+                if (monitor_name)
+                    break;
+            }
+            g_variant_iter_free (iter);
+            g_variant_unref (variant);
+        }
+        g_object_unref (proxy);
+    }
+
+    if (monitor_name)
+    {
+        result = g_strdup (monitor_name);
+        g_free (monitor_name);
+    }
+    else
+        result = g_strdup_printf ("monitor%d", monitor_id);
+
+    return result;
+}
 
 static gint 
 rstto_xfce_wallpaper_manager_configure_dialog_run (
@@ -167,10 +234,6 @@ rstto_xfce_wallpaper_manager_configure_dialog_run (
     {
         manager->priv->style = gtk_combo_box_get_active (
                 GTK_COMBO_BOX (manager->priv->style_combo));
-        manager->priv->saturation = gtk_adjustment_get_value (
-                manager->priv->saturation_adjustment);
-        manager->priv->brightness = (gint)gtk_adjustment_get_value (
-                manager->priv->brightness_adjustment);
         manager->priv->monitor = rstto_monitor_chooser_get_selected (
                 RSTTO_MONITOR_CHOOSER(manager->priv->monitor_chooser));
         manager->priv->workspace_mode = gtk_toggle_button_get_active (
@@ -212,8 +275,6 @@ rstto_xfce_wallpaper_manager_set (RsttoWallpaperManager *self, RsttoFile *file)
     gchar *monitor_name;
     gchar *image_path_prop;
     gchar *image_style_prop;
-    gchar *brightness_prop;
-    gchar *saturation_prop;
 
     display = gdk_display_get_default ();
     gdk_screen = gdk_display_get_default_screen (display);
@@ -237,45 +298,25 @@ rstto_xfce_wallpaper_manager_set (RsttoWallpaperManager *self, RsttoFile *file)
                 manager->priv->screen,
                 monitor_name,
                 workspace_nr);
-
-        brightness_prop = g_strdup_printf (
-                "/backdrop/screen%d/monitor%s/workspace%d/brightness",
-                manager->priv->screen,
-                monitor_name,
-                workspace_nr);
-
-        saturation_prop = g_strdup_printf (
-                "/backdrop/screen%d/monitor%s/workspace%d/saturation",
-                manager->priv->screen,
-                monitor_name,
-                workspace_nr);
     }
     else
     {
         /* gdk_screen_get_monitor_plug_name can return NULL */
+        monitor_name = retrieve_monitor_name (manager->priv->monitor);
+
         image_path_prop = g_strdup_printf (
-                "/backdrop/screen%d/monitor%d/workspace%d/last-image",
+                "/backdrop/screen%d/%s/workspace%d/last-image",
                 manager->priv->screen,
-                manager->priv->monitor,
+                monitor_name,
                 workspace_nr);
 
         image_style_prop = g_strdup_printf (
-                "/backdrop/screen%d/monitor%d/workspace%d/image-style",
+                "/backdrop/screen%d/%s/workspace%d/image-style",
                 manager->priv->screen,
-                manager->priv->monitor,
+                monitor_name,
                 workspace_nr);
 
-        brightness_prop = g_strdup_printf (
-                "/backdrop/screen%d/monitor%d/workspace%d/brightness",
-                manager->priv->screen,
-                manager->priv->monitor,
-                workspace_nr);
-
-        saturation_prop = g_strdup_printf (
-                "/backdrop/screen%d/monitor%d/workspace%d/saturation",
-                manager->priv->screen,
-                manager->priv->monitor,
-                workspace_nr);
+        g_free (monitor_name);
     }
 
     xfconf_channel_set_string (
@@ -296,19 +337,8 @@ rstto_xfce_wallpaper_manager_set (RsttoWallpaperManager *self, RsttoFile *file)
             image_style_prop,
             manager->priv->style);
 
-    xfconf_channel_set_int (
-            manager->priv->channel,
-            brightness_prop,
-            manager->priv->brightness);
-    xfconf_channel_set_double (
-            manager->priv->channel,
-            saturation_prop,
-            manager->priv->saturation);
-
     g_free (image_path_prop);
     g_free (image_style_prop);
-    g_free (brightness_prop);
-    g_free (saturation_prop);
 
     return FALSE;
 }
@@ -374,11 +404,7 @@ rstto_xfce_wallpaper_manager_init (GObject *object)
     gint n_monitors = gdk_screen_get_n_monitors (screen);
     GdkRectangle monitor_geometry;
     GtkWidget *vbox;
-    GtkWidget *style_label = gtk_label_new( _("Style:"));
-    GtkWidget *brightness_label = gtk_label_new( _("Brightness:"));
-    GtkWidget *saturation_label = gtk_label_new( _("Saturation:"));
-    GtkWidget *brightness_slider;
-    GtkWidget *saturation_slider;
+    GtkWidget *style_label = gtk_label_new (_("Style:"));
     GtkWidget *image_prop_grid = gtk_grid_new ();
 
     manager->priv = g_new0(RsttoXfceWallpaperManagerPriv, 1);
@@ -388,8 +414,6 @@ rstto_xfce_wallpaper_manager_init (GObject *object)
     manager->priv->color2 = g_new0 (RsttoColor, 1);
     manager->priv->color2->a = 0xffff;
     manager->priv->style = 3; /* stretched is now default value */
-    manager->priv->brightness = 0;
-    manager->priv->saturation = 1.0;
     manager->priv->check_button = gtk_check_button_new_with_label (
             _("Apply to all workspaces"));
     manager->priv->workspace_mode = xfconf_channel_get_bool (
@@ -408,39 +432,13 @@ rstto_xfce_wallpaper_manager_init (GObject *object)
             _("_OK"),
             GTK_RESPONSE_OK,
             NULL);
-    vbox = gtk_dialog_get_content_area ( GTK_DIALOG (manager->priv->dialog));
-    manager->priv->brightness_adjustment = gtk_adjustment_new (
-            0.0,
-            -128.0,
-            127.0,
-            1.0,
-            10.0,
-            0.0);
-    manager->priv->saturation_adjustment = gtk_adjustment_new (
-            1.0,
-            -10.0,
-            10.0,
-            0.1,
-            0.5,
-            0.0);
+    vbox = gtk_dialog_get_content_area (GTK_DIALOG (manager->priv->dialog));
 
-    g_signal_connect (
-            G_OBJECT(manager->priv->brightness_adjustment),
-            "value-changed",
-            G_CALLBACK (cb_brightness_adjustment_value_changed),
-            manager);
-    g_signal_connect (
-            G_OBJECT(manager->priv->saturation_adjustment),
-            "value-changed",
-            G_CALLBACK (cb_saturation_adjustment_value_changed),
-            manager);
-
-    brightness_slider = gtk_scale_new (
-            GTK_ORIENTATION_HORIZONTAL, manager->priv->brightness_adjustment);
-    saturation_slider = gtk_scale_new (
-            GTK_ORIENTATION_HORIZONTAL, manager->priv->saturation_adjustment);
     manager->priv->monitor_chooser = rstto_monitor_chooser_new ();
     manager->priv->style_combo = gtk_combo_box_text_new ();
+
+    gtk_grid_set_row_spacing (GTK_GRID (image_prop_grid), 6);
+    gtk_grid_set_column_spacing (GTK_GRID (image_prop_grid), 6);
 
     for (i = 0; i < n_monitors; ++i)
     {
@@ -467,59 +465,18 @@ rstto_xfce_wallpaper_manager_init (GObject *object)
             FALSE,
             0);
 
-    gtk_scale_set_value_pos (
-            GTK_SCALE (brightness_slider),
-            GTK_POS_RIGHT);
-    gtk_scale_set_digits (
-            GTK_SCALE (brightness_slider),
-            0);
-
-    gtk_scale_set_value_pos (
-            GTK_SCALE (saturation_slider),
-            GTK_POS_RIGHT);
-    gtk_scale_set_digits (
-            GTK_SCALE (saturation_slider),
-            1);
-    gtk_grid_attach (
-            GTK_GRID (image_prop_grid),
-            brightness_label,
-            0,
-            0,
-            1,
-            1);
-    gtk_grid_attach (
-            GTK_GRID (image_prop_grid),
-            brightness_slider,
-            1,
-            0,
-            1,
-            1);
-    gtk_grid_attach (
-            GTK_GRID (image_prop_grid),
-            saturation_label,
-            0,
-            1,
-            1,
-            1);
-    gtk_grid_attach (
-            GTK_GRID (image_prop_grid),
-            saturation_slider,
-            1,
-            1,
-            1,
-            1);
     gtk_grid_attach (
             GTK_GRID (image_prop_grid),
             style_label,
             0,
-            2,
+            0,
             1,
             1);
     gtk_grid_attach (
             GTK_GRID (image_prop_grid),
             manager->priv->style_combo,
             1,
-            2,
+            0,
             1,
             1);
 
@@ -569,7 +526,7 @@ rstto_xfce_wallpaper_manager_init (GObject *object)
             GTK_GRID (image_prop_grid),
             manager->priv->check_button,
             0,
-            3,
+            1,
             2,
             1);
     g_signal_connect (manager->priv->check_button,
@@ -609,6 +566,8 @@ rstto_xfce_wallpaper_manager_dispose (GObject *object)
             g_object_unref (xfce_wallpaper_manager->priv->channel);
             xfce_wallpaper_manager->priv->channel = NULL;
         }
+        g_free (xfce_wallpaper_manager->priv->color1);
+        g_free (xfce_wallpaper_manager->priv->color2);
         g_free (xfce_wallpaper_manager->priv);
         xfce_wallpaper_manager->priv = NULL;
     }
@@ -759,80 +718,6 @@ cb_monitor_chooser_changed (
 }
 
 static void
-cb_brightness_adjustment_value_changed (
-        GtkAdjustment *adjustment,
-        RsttoXfceWallpaperManager *manager)
-{
-    configure_monitor_chooser_pixbuf (manager);
-}
-
-static void
-cb_saturation_adjustment_value_changed (
-        GtkAdjustment *adjustment,
-        RsttoXfceWallpaperManager *manager)
-{
-    configure_monitor_chooser_pixbuf (manager);
-}
-
-/** adjust_brightness:
- * @src: Source Pixbuf
- * @amount: Amount of brightness to be adjusted, a positive value means
- * increased brightness, a negative value means decreased brightness.
- *
- * The contents of this function are copied from xfdesktop, written by 
- * Brian Tarricone
- */
-static GdkPixbuf *
-adjust_brightness (
-        GdkPixbuf *src,
-        gint amount )
-{
-    GdkPixbuf *newpix;
-    GdkPixdata pdata;
-    gboolean has_alpha = FALSE;
-    gint i, len;
-    GError *err = NULL;
-    
-    g_return_val_if_fail(src != NULL, NULL);
-    if(amount == 0)
-    {
-        return src;
-    }
-    
-    gdk_pixdata_from_pixbuf(&pdata, src, FALSE);
-    has_alpha = (pdata.pixdata_type & GDK_PIXDATA_COLOR_TYPE_RGBA);
-    if(pdata.length < 1)
-        len = pdata.width * pdata.height * (has_alpha?4:3);
-    else
-        len = pdata.length - GDK_PIXDATA_HEADER_LENGTH;
-    
-    for(i = 0; i < len; i++) {
-        gshort scaled;
-        
-        if(has_alpha && (i+1)%4)
-            continue;
-        
-        scaled = pdata.pixel_data[i] + amount;
-        if(scaled > 255)
-            scaled = 255;
-        if(scaled < 0)
-            scaled = 0;
-        pdata.pixel_data[i] = scaled;
-    }
-    
-    newpix = gdk_pixbuf_from_pixdata(&pdata, TRUE, &err);
-    if(!newpix) {
-        g_warning("%s: Unable to modify image brightness: %s", PACKAGE,
-                err->message);
-        g_error_free(err);
-        return src;
-    }
-    g_object_unref(G_OBJECT(src));
-    
-    return newpix;
-}
-
-static void
 configure_monitor_chooser_pixbuf (
     RsttoXfceWallpaperManager *manager )
 {
@@ -844,8 +729,6 @@ configure_monitor_chooser_pixbuf (
 
     gint monitor_width = 0;
     gint monitor_height = 0;
-    gdouble saturation = gtk_adjustment_get_value (manager->priv->saturation_adjustment);
-    gdouble brightness = gtk_adjustment_get_value (manager->priv->brightness_adjustment);
 
     gint surface_width = 0;
     gint surface_height = 0;
@@ -861,15 +744,6 @@ configure_monitor_chooser_pixbuf (
         tmp_pixbuf = gdk_pixbuf_copy (manager->priv->pixbuf);
         if ( NULL != tmp_pixbuf )
         {
-            gdk_pixbuf_saturate_and_pixelate (
-                tmp_pixbuf,
-                tmp_pixbuf,
-                saturation,
-                FALSE);
-            tmp_pixbuf = adjust_brightness (
-                tmp_pixbuf,
-                (gint)brightness);
-
             rstto_monitor_chooser_get_dimensions (
                     RSTTO_MONITOR_CHOOSER (manager->priv->monitor_chooser),
                     manager->priv->monitor,

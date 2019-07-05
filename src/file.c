@@ -398,23 +398,34 @@ rstto_file_get_collate_key ( RsttoFile *r_file )
 const gchar *
 rstto_file_get_content_type ( RsttoFile *r_file )
 {
-    const gchar *content_type = NULL;
+    const gchar *file_path, *content_type = NULL;
 
     if ( NULL == r_file->priv->content_type )
     {
 #if HAVE_MAGIC_H
-        magic_t magic = magic_open(MAGIC_MIME_TYPE | MAGIC_SYMLINK);
-        if ( magic != NULL )
+        magic_t magic = magic_open (MAGIC_MIME_TYPE | MAGIC_SYMLINK);
+        if ( NULL != magic )
         {
-            if ( magic_load(magic, NULL) == 0 )
+            file_path = rstto_file_get_path (r_file);
+            if ( NULL != file_path && magic_load (magic, NULL) == 0 )
             {
-                content_type = magic_file(magic, rstto_file_get_path(r_file));
+                content_type = magic_file (magic, file_path);
                 if ( NULL != content_type )
                 {
+                    /* image types that aren't supported by gdk_pixbuf_loader_new_with_mime_type () */
+                    if ( g_strcmp0 (content_type, "image/x-ms-bmp") == 0 )
+                    {
+                        content_type = "image/bmp"; // bug #13489
+                    }
+                    else if ( g_strcmp0 (content_type, "image/x-portable-greymap") == 0 )
+                    {
+                        content_type = "image/x-portable-graymap"; // bug #14709
+                    }
+
                     r_file->priv->content_type = g_strdup (content_type);
                 }
             }
-            magic_close(magic);
+            magic_close (magic);
         }
 #endif
 
@@ -452,6 +463,19 @@ rstto_file_get_modified_time ( RsttoFile *r_file )
     g_object_unref (file_info);
 
     return time_;
+}
+
+goffset
+rstto_file_get_size (RsttoFile *r_file )
+{
+    goffset size = 0;
+    GFileInfo *file_info = g_file_query_info (r_file->priv->file, G_FILE_ATTRIBUTE_STANDARD_SIZE, 0, NULL, NULL);
+
+    size = g_file_info_get_size ( file_info );
+
+    g_object_unref (file_info);
+
+    return size;
 }
 
 ExifEntry *
@@ -575,14 +599,15 @@ rstto_file_get_thumbnail (
 
     thumbnail_path = rstto_file_get_thumbnail_path (r_file);
 
+    thumbnailer = rstto_thumbnailer_new();
+    rstto_thumbnailer_queue_file (thumbnailer, r_file);
+
     if (NULL == thumbnail_path)
     {
         /* No thumbnail to return at this time */
+        g_object_unref (thumbnailer);
         return NULL;
     }
-
-    thumbnailer = rstto_thumbnailer_new();
-    rstto_thumbnailer_queue_file (thumbnailer, r_file);
 
     /* FIXME:
      *

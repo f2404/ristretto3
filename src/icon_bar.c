@@ -321,6 +321,7 @@ G_DEFINE_TYPE_WITH_CODE (
         RsttoIconBar,
         rstto_icon_bar,
         GTK_TYPE_CONTAINER,
+        G_ADD_PRIVATE (RsttoIconBar)
         G_IMPLEMENT_INTERFACE (GTK_TYPE_SCROLLABLE, NULL))
 
 
@@ -329,8 +330,6 @@ rstto_icon_bar_class_init (RsttoIconBarClass *klass)
 {
     GtkWidgetClass *gtkwidget_class;
     GObjectClass   *gobject_class;
-
-    g_type_class_add_private (klass, sizeof (RsttoIconBarPrivate));
 
     gobject_class = G_OBJECT_CLASS (klass);
     gobject_class->finalize = rstto_icon_bar_finalize;
@@ -1912,8 +1911,7 @@ rstto_icon_bar_set_model (
 
         g_object_unref (G_OBJECT (icon_bar->priv->model));
 
-        g_list_foreach (icon_bar->priv->items, (GFunc) rstto_icon_bar_item_free, NULL);
-        g_list_free (icon_bar->priv->items);
+        g_list_free_full (icon_bar->priv->items, (GDestroyNotify) rstto_icon_bar_item_free);
         icon_bar->priv->active_item = NULL;
         icon_bar->priv->cursor_item = NULL;
         icon_bar->priv->items = NULL;

@@ -325,6 +325,8 @@ rstto_image_list_init(RsttoImageList *image_list)
     image_list->priv->filter = gtk_file_filter_new ();
     g_object_ref_sink (image_list->priv->filter);
     gtk_file_filter_add_pixbuf_formats (image_list->priv->filter);
+    /* see https://bugs.launchpad.net/ubuntu/+source/ristretto/+bug/1778695 */
+    gtk_file_filter_add_mime_type (image_list->priv->filter, "image/x-canon-cr2");
 
     image_list->priv->cb_rstto_image_list_compare_func = (GCompareFunc)cb_rstto_image_list_image_name_compare_func;
 
@@ -403,7 +405,19 @@ rstto_image_list_dispose(GObject *object)
             g_object_unref (image_list->priv->filter);
             image_list->priv->filter= NULL;
         }
-        
+
+        if (image_list->priv->image_monitors)
+        {
+            g_list_free_full (image_list->priv->image_monitors, (GDestroyNotify) g_object_unref);
+            image_list->priv->image_monitors = NULL;
+        }
+
+        if (image_list->priv->images)
+        {
+            g_list_free_full (image_list->priv->images, (GDestroyNotify) g_object_unref);
+            image_list->priv->images = NULL;
+        }
+
         g_free (image_list->priv);
         image_list->priv = NULL;
     }
@@ -637,17 +651,15 @@ rstto_image_list_remove_all (RsttoImageList *image_list)
         gtk_tree_path_append_index(path_, i);
 
         gtk_tree_model_row_deleted(GTK_TREE_MODEL(image_list), path_);
+        gtk_tree_path_free (path_);
 
-        
-        image_iter = g_list_next (image_iter);     
+        image_iter = g_list_next (image_iter);
     }
 
-    g_list_foreach (image_list->priv->image_monitors, (GFunc)g_object_unref, NULL);
-    g_list_free (image_list->priv->image_monitors);
+    g_list_free_full (image_list->priv->image_monitors, (GDestroyNotify) g_object_unref);
     image_list->priv->image_monitors = NULL;
 
-    g_list_foreach (image_list->priv->images, (GFunc)g_object_unref, NULL);
-    g_list_free (image_list->priv->images);
+    g_list_free_full (image_list->priv->images, (GDestroyNotify) g_object_unref);
     image_list->priv->images = NULL;
 
     iter = image_list->priv->iterators;
@@ -836,17 +848,19 @@ rstto_image_list_monitor_dir (
                 NULL,
                 NULL);
 
-        g_signal_connect (
-                G_OBJECT(monitor),
-                "changed",
-                G_CALLBACK (cb_file_monitor_changed),
-                image_list);
+        if ( monitor != NULL )
+        {
+            g_signal_connect (
+                    G_OBJECT (monitor),
+                    "changed",
+                    G_CALLBACK (cb_file_monitor_changed),
+                    image_list);
+        }
     }
 
     if (image_list->priv->image_monitors)
     {
-        g_list_foreach (image_list->priv->image_monitors, (GFunc)g_object_unref, NULL);
-        g_list_free (image_list->priv->image_monitors);
+        g_list_free_full (image_list->priv->image_monitors, (GDestroyNotify) g_object_unref);
         image_list->priv->image_monitors = NULL;
     }
 

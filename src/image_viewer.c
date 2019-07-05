@@ -324,10 +324,13 @@ rstto_image_viewer_init (RsttoImageViewer *viewer)
             BACKGROUND_ICON_SIZE,
             0,
             NULL);
-    gdk_pixbuf_saturate_and_pixelate (
-            viewer->priv->bg_icon,
-            viewer->priv->bg_icon,
-            0, FALSE);
+    if (viewer->priv->bg_icon != NULL)
+    {
+        gdk_pixbuf_saturate_and_pixelate (
+                viewer->priv->bg_icon,
+                viewer->priv->bg_icon,
+                0, FALSE);
+    }
 
     g_signal_connect (
             G_OBJECT(viewer->priv->settings),
@@ -551,9 +554,6 @@ rstto_image_viewer_realize(GtkWidget *widget)
     }
 
     viewer->priv->bg_color_fs = g_value_get_boxed (&val_bg_color_fs);
-
-    g_value_unset (&val_bg_color);
-    g_value_unset (&val_bg_color_fs);
 }
 
 /**
@@ -718,11 +718,15 @@ set_scale (RsttoImageViewer *viewer, gdouble scale )
     {
         case RSTTO_IMAGE_ORIENT_90:
         case RSTTO_IMAGE_ORIENT_270:
+        case RSTTO_IMAGE_ORIENT_FLIP_TRANSVERSE:
+        case RSTTO_IMAGE_ORIENT_FLIP_TRANSPOSE:
             v_scale = (gdouble)(allocation.width) / (gdouble)viewer->priv->image_height;
             h_scale = (gdouble)(allocation.height) / (gdouble)viewer->priv->image_width;
             break;
         case RSTTO_IMAGE_ORIENT_NONE:
         case RSTTO_IMAGE_ORIENT_180:
+        case RSTTO_IMAGE_ORIENT_FLIP_HORIZONTAL:
+        case RSTTO_IMAGE_ORIENT_FLIP_VERTICAL:
         default:
             v_scale = (gdouble)(allocation.width) / (gdouble)viewer->priv->image_width;
             h_scale = (gdouble)(allocation.height) / (gdouble)viewer->priv->image_height;
@@ -978,6 +982,8 @@ correct_adjustments (RsttoImageViewer *viewer)
     {
         case RSTTO_IMAGE_ORIENT_NONE:
         case RSTTO_IMAGE_ORIENT_180:
+        case RSTTO_IMAGE_ORIENT_FLIP_HORIZONTAL:
+        case RSTTO_IMAGE_ORIENT_FLIP_VERTICAL:
         default:
             gtk_adjustment_set_upper (
                     viewer->hadjustment,
@@ -1015,6 +1021,8 @@ correct_adjustments (RsttoImageViewer *viewer)
             break;
         case RSTTO_IMAGE_ORIENT_90:
         case RSTTO_IMAGE_ORIENT_270:
+        case RSTTO_IMAGE_ORIENT_FLIP_TRANSPOSE:
+        case RSTTO_IMAGE_ORIENT_FLIP_TRANSVERSE:
             gtk_adjustment_set_upper (
                     viewer->hadjustment,
                     floor(image_height * scale));
@@ -1161,6 +1169,7 @@ paint_image (GtkWidget *widget, cairo_t *ctx)
     gint block_height = 10;
     gdouble bg_scale = 1.0;
     GtkAllocation allocation;
+    cairo_matrix_t transform_matrix;
 
     gtk_widget_get_allocation (widget, &allocation);
 
@@ -1170,6 +1179,8 @@ paint_image (GtkWidget *widget, cairo_t *ctx)
         {
             case RSTTO_IMAGE_ORIENT_90:
             case RSTTO_IMAGE_ORIENT_270:
+            case RSTTO_IMAGE_ORIENT_FLIP_TRANSVERSE:
+            case RSTTO_IMAGE_ORIENT_FLIP_TRANSPOSE:
                 viewer->priv->rendering.x_offset = ((gdouble)allocation.width - (
                             (gdouble)viewer->priv->image_height * 
                                 viewer->priv->scale) ) / 2.0;
@@ -1183,6 +1194,8 @@ paint_image (GtkWidget *widget, cairo_t *ctx)
                 break;
             case RSTTO_IMAGE_ORIENT_NONE:
             case RSTTO_IMAGE_ORIENT_180:
+            case RSTTO_IMAGE_ORIENT_FLIP_HORIZONTAL:
+            case RSTTO_IMAGE_ORIENT_FLIP_VERTICAL:
             default:
                 viewer->priv->rendering.x_offset = ((gdouble)allocation.width - (
                             (gdouble)viewer->priv->image_width * 
@@ -1260,9 +1273,74 @@ paint_image (GtkWidget *widget, cairo_t *ctx)
 /* END PAINT CHECKERED BACKGROUND */
         cairo_restore (ctx);
 
-        /* TODO: make this work for all rotations */
         switch (viewer->priv->orientation)
         {
+            case RSTTO_IMAGE_ORIENT_FLIP_HORIZONTAL:
+                cairo_translate (
+                        ctx,
+                        0.0 - floor(gtk_adjustment_get_value (viewer->hadjustment)),
+                        0.0 - floor(gtk_adjustment_get_value (viewer->vadjustment)));
+                cairo_translate (
+                        ctx,
+                        viewer->priv->image_width * viewer->priv->scale,
+                        0.0);
+                cairo_translate (
+                        ctx,
+                        x_offset,
+                        y_offset);
+                cairo_matrix_init_identity(&transform_matrix);
+                transform_matrix.xx = -1.0;
+                cairo_transform(ctx, &transform_matrix);
+                break;
+            case RSTTO_IMAGE_ORIENT_FLIP_VERTICAL:
+                cairo_translate (
+                        ctx,
+                        0.0 - floor(gtk_adjustment_get_value (viewer->hadjustment)),
+                        0.0 - floor(gtk_adjustment_get_value (viewer->vadjustment)));
+                cairo_translate (
+                        ctx,
+                        0.0,
+                        viewer->priv->image_height * viewer->priv->scale);
+                cairo_translate (
+                        ctx,
+                        x_offset,
+                        y_offset);
+                cairo_matrix_init_identity(&transform_matrix);
+                transform_matrix.yy = -1.0;
+                cairo_transform(ctx, &transform_matrix);
+                break;
+            case RSTTO_IMAGE_ORIENT_FLIP_TRANSPOSE:
+                cairo_rotate ( ctx, M_PI*1.5);
+                cairo_translate (
+                        ctx,
+                        floor(gtk_adjustment_get_value (viewer->vadjustment)),
+                        floor(0.0 - gtk_adjustment_get_value (viewer->hadjustment)));
+                cairo_translate (
+                        ctx,
+                        -1.0 * y_offset,
+                        x_offset);
+                cairo_matrix_init_identity(&transform_matrix);
+                transform_matrix.xx = -1.0;
+                cairo_transform(ctx, &transform_matrix);
+                break;
+            case RSTTO_IMAGE_ORIENT_FLIP_TRANSVERSE:
+                cairo_rotate ( ctx, M_PI*0.5);
+                cairo_translate (
+                        ctx,
+                        floor(0.0 - gtk_adjustment_get_value (viewer->vadjustment)),
+                        floor(gtk_adjustment_get_value (viewer->hadjustment)));
+                cairo_translate (
+                        ctx,
+                        viewer->priv->image_width * viewer->priv->scale,
+                        -1.0 * viewer->priv->image_height * viewer->priv->scale);
+                cairo_translate (
+                        ctx,
+                        y_offset,
+                        -1.0 * x_offset);
+                cairo_matrix_init_identity(&transform_matrix);
+                transform_matrix.xx = -1.0;
+                cairo_transform(ctx, &transform_matrix);
+                break;
             case RSTTO_IMAGE_ORIENT_90:
                 cairo_rotate (
                         ctx,
@@ -2263,11 +2341,16 @@ rstto_scroll_event (GtkWidget *widget, GdkEventScroll *event)
                 {
                     case RSTTO_IMAGE_ORIENT_90:
                     case RSTTO_IMAGE_ORIENT_270:
+                    case RSTTO_IMAGE_ORIENT_FLIP_TRANSPOSE:
+                    case RSTTO_IMAGE_ORIENT_FLIP_TRANSVERSE:
                         v_scale = (gdouble)(allocation.width) / (gdouble)viewer->priv->image_height;
                         h_scale = (gdouble)(allocation.height) / (gdouble)viewer->priv->image_width;
                         break;
                     case RSTTO_IMAGE_ORIENT_NONE:
                     case RSTTO_IMAGE_ORIENT_180:
+                    case RSTTO_IMAGE_ORIENT_FLIP_HORIZONTAL:
+                    case RSTTO_IMAGE_ORIENT_FLIP_VERTICAL:
+
                     default:
                         v_scale = (gdouble)(allocation.width) / (gdouble)viewer->priv->image_width;
                         h_scale = (gdouble)(allocation.height) / (gdouble)viewer->priv->image_height;

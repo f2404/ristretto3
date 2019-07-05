@@ -1,3 +1,63 @@
+0.8.4
+=====
+- Add missing field initializers
+- Instead of thumbnails, the same icons with a crossed red circle (bug #13419)
+- Resolve g_type_class_add_private() deprecation
+- Glib-Critical errors to stdout: Source ID X was not found when attempting to
+  remove it (bug #15268)
+- Fix memory leak (bug #12034)
+- Show file size in the status bar (bug #14791)
+- Fix opening of PPM files (bug #14709)
+
+* Translation updates:
+  Arabic (ar), Asturian (ast), Belarusian (be), Bulgarian (bg), Catalan (ca),
+  Czech (cs), Danish (da), German (de), Greek (el), English (United Kingdom)
+  (en_GB), Spanish (es), Basque (eu), Finnish (fi), French (fr), Galician (gl),
+  Hebrew (he), Croatian (hr), Hungarian (hu), Indonesian (id), Icelandic (is),
+  Italian (it), Japanese (ja), Kazakh (kk), Korean (ko), Lithuanian (lt), Malay
+  (ms), Norwegian Bokmål (nb), Dutch (nl), Occitan (oc), Polish (pl), Portuguese
+  (pt), Portuguese (Brazil) (pt_BR), Romanian (ro), Russian (ru), Slovak (sk),
+  Slovenian (sl), Albanian (sq), Serbian (sr), Swedish (sv), Telugu (te), Thai
+  (th), Turkish (tr), Uighur (ug), Ukrainian (uk), Chinese (China) (zh_CN),
+  Chinese (Taiwan) (zh_TW)
+
+0.8.3
+=====
+- Fix GLib-GObject-CRITICAL in directory monitoring code
+- Fix loading image from an URL
+- Freeing memory used for storing bg colors was done wrong (bug #13335)
+- Fix opening image files that are symlinks (bug #13576)
+- Fix BMP files failing to load with libmagic (bug #13489)
+- Port to GDBus
+
+* Translation updates:
+  Arabic (ar), Asturian (ast), Bulgarian (bg), Catalan (ca), Czech (cs), Danish
+  (da), German (de), Greek (el), English (Australia) (en_AU), English (United
+  Kingdom) (en_GB), Spanish (es), Basque (eu), Finnish (fi), French (fr),
+  Galician (gl), Hebrew (he), Croatian (hr), Hungarian (hu), Indonesian (id),
+  Icelandic (is), Italian (it), Japanese (ja), Kazakh (kk), Korean (ko),
+  Lithuanian (lt), Malay (ms), Norwegian Bokmål (nb), Dutch (nl), Occitan (oc),
+  Polish (pl), Portuguese (pt), Portuguese (Brazil) (pt_BR), Romanian (ro),
+  Russian (ru), Slovak (sk), Slovenian (sl), Albanian (sq), Serbian (sr),
+  Swedish (sv), Thai (th), Turkish (tr), Uighur (ug), Ukrainian (uk), Chinese
+  (China) (zh_CN), Chinese (Taiwan) (zh_TW)
+
+0.8.2
+=====
+- Implement sorting by file type (Bug #12749)
+- Detect image type by its mime type instead of file extension
+  (ligmagic is used) (Bugs #11680, 12499)
+- Allow images to be flipped vertically and horizontally (Bug #13313)
+- Fix memory leaks
+
+* Translation updates:
+  Catalan (ca), Czech (cs), Danish (da), Deutsch (de), English (Australia)
+  (en_AU), Spanish (es), French (fr), Hebrew (he), Croatian (hr), Italian (it),
+  Japanese (ja), Kazakh (kk), Korean (ko), Lithuanian (lt), Malay (ms),
+  Norwegian Bokmål (nb), Polish (pl), Portuguese (pt), Portuguese (Brazilian)
+  (pt_BR), Russian (ru), Slovak (sk), Swedish (sv), Ukrainian (uk), Chinese
+  (China) (zh_CN), Chinese (Taiwan) (zh_TW).
+
 0.8.1
 =====
 - Prepare for gtk3 migration: Do not include individual headers;
