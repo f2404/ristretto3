@@ -228,7 +228,7 @@ cb_rstto_image_viewer_read_file_ready (GObject *source_object, GAsyncResult *res
 static void
 cb_rstto_image_viewer_read_input_stream_ready (GObject *source_object, GAsyncResult *result, gpointer user_data);
 static void
-cb_rstto_image_loader_area_prepared (GdkPixbufLoader *, RsttoImageViewerTransaction *);
+cb_rstto_image_loader_image_ready (GdkPixbufLoader *, RsttoImageViewerTransaction *);
 static void
 cb_rstto_image_loader_size_prepared (GdkPixbufLoader *, gint , gint , RsttoImageViewerTransaction *);
 static void
@@ -1801,7 +1801,6 @@ rstto_image_viewer_load_image (RsttoImageViewer *viewer, RsttoFile *file, gdoubl
     transaction->viewer = viewer;
     transaction->scale = scale;
 
-    g_signal_connect(transaction->loader, "area-prepared", G_CALLBACK(cb_rstto_image_loader_area_prepared), transaction);
     g_signal_connect(transaction->loader, "size-prepared", G_CALLBACK(cb_rstto_image_loader_size_prepared), transaction);
     g_signal_connect(transaction->loader, "closed", G_CALLBACK(cb_rstto_image_loader_closed), transaction);
 
@@ -2009,10 +2008,7 @@ static void
 cb_rstto_image_viewer_value_changed (GtkAdjustment *adjustment, RsttoImageViewer *viewer)
 {
     GtkWidget *widget = GTK_WIDGET (viewer);
-    gdk_window_invalidate_rect (
-            gtk_widget_get_window (widget),
-            NULL,
-            FALSE);
+    gdk_window_invalidate_rect (gtk_widget_get_window (widget), NULL, FALSE);
 }
 
 static void
@@ -2051,7 +2047,7 @@ cb_rstto_image_viewer_read_input_stream_ready (GObject *source_object, GAsyncRes
 
     if (read_bytes > 0)
     {
-        if(gdk_pixbuf_loader_write (transaction->loader, (const guchar *)transaction->buffer, read_bytes, &transaction->error) == FALSE)
+        if (gdk_pixbuf_loader_write (transaction->loader, (const guchar *)transaction->buffer, read_bytes, &transaction->error) == FALSE)
         {
             /* Clean up the input-stream */
             g_input_stream_close (G_INPUT_STREAM (source_object), NULL, NULL);
@@ -2074,13 +2070,13 @@ cb_rstto_image_viewer_read_input_stream_ready (GObject *source_object, GAsyncRes
 
         /* Clean up the input-stream */
         g_input_stream_close (G_INPUT_STREAM (source_object), NULL, NULL);
-        g_object_unref(source_object);
+        g_object_unref (source_object);
     }
 }
 
 
 static void
-cb_rstto_image_loader_area_prepared (GdkPixbufLoader *loader, RsttoImageViewerTransaction *transaction)
+cb_rstto_image_loader_image_ready (GdkPixbufLoader *loader, RsttoImageViewerTransaction *transaction)
 {
     gint timeout = 0;
     RsttoImageViewer *viewer = transaction->viewer;
@@ -2114,13 +2110,12 @@ cb_rstto_image_loader_area_prepared (GdkPixbufLoader *loader, RsttoImageViewerTr
 
         if (timeout > 0)
         {
-            viewer->priv->animation_timeout_id = gdk_threads_add_timeout(timeout, (GSourceFunc)cb_rstto_image_viewer_update_pixbuf, viewer);
-        }   
+            viewer->priv->animation_timeout_id =
+                    gdk_threads_add_timeout (timeout, (GSourceFunc) cb_rstto_image_viewer_update_pixbuf, viewer);
+        }
         else
         {
-
-            /* This is a single-frame image, there is no need to copy the pixbuf since it won't change.
-             */
+            /* This is a single-frame image, there is no need to copy the pixbuf since it won't change */
             viewer->priv->pixbuf = gdk_pixbuf_animation_iter_get_pixbuf (viewer->priv->iter);
             g_object_ref (viewer->priv->pixbuf);
         }
@@ -2144,7 +2139,6 @@ cb_rstto_image_loader_size_prepared (GdkPixbufLoader *loader, gint width, gint h
     transaction->image_width = width;
     transaction->image_height = height;
 
-
     if (limit_quality == TRUE)
     {
         /*
@@ -2158,21 +2152,19 @@ cb_rstto_image_loader_size_prepared (GdkPixbufLoader *loader, gint width, gint h
              *  scale = MIN(width / screen_width, height / screen_height)
              *
              */
-            if(((gdouble)width / (gdouble)s_width) < ((gdouble)height / (gdouble)s_height))
+            if (((gdouble)width / (gdouble)s_width) < ((gdouble)height / (gdouble)s_height))
             {
                 transaction->image_scale = (gdouble)s_width / (gdouble)width;
-                gdk_pixbuf_loader_set_size (
-                        loader,
-                        s_width,
-                        (gint)((gdouble)height/(gdouble)width*(gdouble)s_width)); 
+                gdk_pixbuf_loader_set_size (loader,
+                                            s_width,
+                                            (gint)((gdouble)height/(gdouble)width*(gdouble)s_width));
             }
             else
             {
                 transaction->image_scale = (gdouble)s_height / (gdouble)height;
-                gdk_pixbuf_loader_set_size (
-                        loader,
-                        (gint)((gdouble)width/(gdouble)height*(gdouble)s_height),
-                        s_height); 
+                gdk_pixbuf_loader_set_size (loader,
+                                            (gint)((gdouble)width/(gdouble)height*(gdouble)s_height),
+                                            s_height);
             }
         }
         else
@@ -2192,19 +2184,20 @@ static void
 cb_rstto_image_loader_closed (GdkPixbufLoader *loader, RsttoImageViewerTransaction *transaction)
 {
     RsttoImageViewer *viewer = transaction->viewer;
-    GtkWidget *widget = GTK_WIDGET(viewer);
+    GtkWidget *widget = GTK_WIDGET (viewer);
 
     if (viewer->priv->transaction == transaction)
     {
-        
         if (NULL == transaction->error)
         {
-            gtk_widget_set_tooltip_text (GTK_WIDGET (viewer), NULL);
+            gtk_widget_set_tooltip_text (widget, NULL);
             viewer->priv->image_scale = transaction->image_scale;
             viewer->priv->image_width = transaction->image_width;
             viewer->priv->image_height = transaction->image_height;
             viewer->priv->orientation = transaction->orientation;
             set_scale (viewer, transaction->scale);
+
+            cb_rstto_image_loader_image_ready (loader, transaction);
         }
         else
         {
@@ -2217,33 +2210,29 @@ cb_rstto_image_loader_closed (GdkPixbufLoader *loader, RsttoImageViewerTransacti
                 viewer->priv->pixbuf = NULL;
             }
 
-            gtk_widget_set_tooltip_text (GTK_WIDGET (viewer), transaction->error->message);
+            gtk_widget_set_tooltip_text (widget, transaction->error->message);
         }
-
 
         viewer->priv->error = transaction->error;
         transaction->error = NULL;
         viewer->priv->transaction = NULL;
 
-        gdk_window_invalidate_rect (
-                gtk_widget_get_window (widget),
-                NULL,
-                FALSE);
+        gdk_window_invalidate_rect (gtk_widget_get_window (widget), NULL, FALSE);
     }
 
-    g_signal_emit_by_name(transaction->viewer, "size-ready");
+    g_signal_emit_by_name (transaction->viewer, "size-ready");
     rstto_image_viewer_transaction_free (transaction);
 }
 
 static gboolean
 cb_rstto_image_viewer_update_pixbuf (RsttoImageViewer *viewer)
 {
-    GtkWidget *widget = GTK_WIDGET(viewer);
+    GtkWidget *widget = GTK_WIDGET (viewer);
     gint timeout = 0;
 
     if (viewer->priv->iter)
     {
-        if(gdk_pixbuf_animation_iter_advance (viewer->priv->iter, NULL))
+        if (gdk_pixbuf_animation_iter_advance (viewer->priv->iter, NULL))
         {
             /* Cleanup old image */
             if (viewer->priv->pixbuf)
@@ -2263,13 +2252,11 @@ cb_rstto_image_viewer_update_pixbuf (RsttoImageViewer *viewer)
 
         if (timeout > 0)
         {
-            viewer->priv->animation_timeout_id = gdk_threads_add_timeout(timeout, (GSourceFunc)cb_rstto_image_viewer_update_pixbuf, viewer);
+            viewer->priv->animation_timeout_id =
+                    gdk_threads_add_timeout(timeout, (GSourceFunc)cb_rstto_image_viewer_update_pixbuf, viewer);
         }
 
-        gdk_window_invalidate_rect (
-                gtk_widget_get_window (widget),
-                NULL,
-                FALSE);
+        gdk_window_invalidate_rect (gtk_widget_get_window (widget), NULL, FALSE);
 
         return FALSE;
     }
