@@ -448,7 +448,7 @@ static GtkActionEntry action_entries[] =
             NULL, },
   { "sorting-menu",
             NULL,
-            N_ ("_Sorting"),
+            N_ ("_Sort by"),
             NULL,
             NULL,
             NULL, },
@@ -647,8 +647,8 @@ static GtkActionEntry action_entries[] =
             NULL, /* Tooltip text */
             G_CALLBACK (cb_rstto_main_window_fullscreen), },
   { "tb-menu",
-	        NULL,
-	        NULL,
+            NULL,
+            NULL,
             NULL,
             NULL,
             NULL, }
@@ -688,19 +688,19 @@ static const GtkRadioActionEntry radio_action_sort_entries[] =
 {
     {"sort-filename",
             NULL, /* Icon-name */
-            N_("sort by filename"), /* Label-text */
+            N_("file name"), /* Label-text */
             NULL, /* Keyboard shortcut */
             NULL, /* Tooltip text */
             SORT_TYPE_NAME},
     {"sort-filetype",
             NULL, /* Icon-name */
-            N_("sort by filetype"), /* Label-text */
+            N_("file type"), /* Label-text */
             NULL, /* Keyboard shortcut */
             NULL, /* Tooltip text */
             SORT_TYPE_TYPE},
     {"sort-date",
             NULL, /* Icon-name */
-            N_("sort by date"), /* Label-text */
+            N_("date"), /* Label-text */
             NULL, /* Keyboard shortcut */
             NULL, /* Tooltip text */
             SORT_TYPE_DATE},
