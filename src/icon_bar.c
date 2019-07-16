@@ -430,6 +430,13 @@ rstto_icon_bar_class_init (RsttoIconBarClass *klass)
                 G_PARAM_READABLE));
 
     gtk_widget_class_install_style_property (gtkwidget_class,
+            g_param_spec_boxed ("active-item-text-color",
+                _("Active item text color"),
+                _("Active item text color"),
+                GDK_TYPE_RGBA,
+                G_PARAM_READABLE));
+
+    gtk_widget_class_install_style_property (gtkwidget_class,
             g_param_spec_boxed ("cursor-item-fill-color",
                 _("Cursor item fill color"),
                 _("Cursor item fill color"),
@@ -440,6 +447,13 @@ rstto_icon_bar_class_init (RsttoIconBarClass *klass)
             g_param_spec_boxed ("cursor-item-border-color",
                 _("Cursor item border color"),
                 _("Cursor item border color"),
+                GDK_TYPE_RGBA,
+                G_PARAM_READABLE));
+
+    gtk_widget_class_install_style_property (gtkwidget_class,
+            g_param_spec_boxed ("cursor-item-text-color",
+                _("Cursor item text color"),
+                _("Cursor item text color"),
                 GDK_TYPE_RGBA,
                 G_PARAM_READABLE));
 
@@ -1303,7 +1317,7 @@ rstto_icon_bar_paint_item (
         }
 
         cairo_save (cr);
-        cairo_clip (cr);
+        //cairo_clip (cr);
         cairo_set_source_rgb (cr, fill_color->red, fill_color->green, fill_color->blue);
         cairo_rectangle (cr, x + focus_pad + focus_width, y + focus_pad + focus_width,
                          icon_bar->priv->item_width - 2 * (focus_width + focus_pad),
@@ -1342,7 +1356,7 @@ rstto_icon_bar_paint_item (
         }
 
         cairo_save (cr);
-        cairo_clip (cr);
+        //cairo_clip (cr);
         cairo_set_source_rgb (cr, fill_color->red, fill_color->green, fill_color->blue);
         cairo_rectangle (cr, x + focus_pad + focus_width, y + focus_pad + focus_width,
                          icon_bar->priv->item_width - 2 * (focus_width + focus_pad),
