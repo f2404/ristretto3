@@ -1021,17 +1021,18 @@ rstto_main_window_init (RsttoMainWindow *window)
         RSTTO_IMAGE_VIEWER(window->priv->image_viewer),
         GTK_MENU(window->priv->image_viewer_menu));
 
-    window->priv->thumbnailbar = rstto_icon_bar_new();
-    rstto_icon_bar_set_show_text (RSTTO_ICON_BAR (window->priv->thumbnailbar), FALSE);
-
-    g_signal_connect(G_OBJECT(window->priv->thumbnailbar), "selection-changed", G_CALLBACK(cb_icon_bar_selection_changed), window);
-
     window->priv->t_bar_s_window = gtk_scrolled_window_new (NULL, NULL);
     gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (window->priv->t_bar_s_window), GTK_POLICY_ALWAYS, GTK_POLICY_NEVER);
+    gtk_scrolled_window_set_overlay_scrolling (GTK_SCROLLED_WINDOW (window->priv->t_bar_s_window), FALSE);
+
+    window->priv->thumbnailbar = rstto_icon_bar_new (window->priv->t_bar_s_window);
     gtk_container_add (GTK_CONTAINER (window->priv->t_bar_s_window), window->priv->thumbnailbar);
 
+    rstto_icon_bar_set_show_text (RSTTO_ICON_BAR (window->priv->thumbnailbar), FALSE);
     rstto_icon_bar_set_file_column (RSTTO_ICON_BAR (window->priv->thumbnailbar), 0);
     rstto_icon_bar_set_item_width (RSTTO_ICON_BAR (window->priv->thumbnailbar), 96);
+
+    g_signal_connect(G_OBJECT(window->priv->thumbnailbar), "selection-changed", G_CALLBACK(cb_icon_bar_selection_changed), window);
 
     window->priv->grid = gtk_grid_new ();
 
