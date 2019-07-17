@@ -1032,7 +1032,8 @@ rstto_main_window_init (RsttoMainWindow *window)
     rstto_icon_bar_set_file_column (RSTTO_ICON_BAR (window->priv->thumbnailbar), 0);
     rstto_icon_bar_set_item_width (RSTTO_ICON_BAR (window->priv->thumbnailbar), 96);
 
-    g_signal_connect(G_OBJECT(window->priv->thumbnailbar), "selection-changed", G_CALLBACK(cb_icon_bar_selection_changed), window);
+    g_signal_connect (G_OBJECT (window->priv->thumbnailbar), "selection-changed",
+                      G_CALLBACK (cb_icon_bar_selection_changed), window);
 
     window->priv->grid = gtk_grid_new ();
 
@@ -1659,7 +1660,7 @@ static void
 rstto_main_activate_file_menu_actions (RsttoMainWindow *window, gboolean activate)
 {
     GtkWidget   *widget;
-    gint         i;
+    guint        i;
     const gchar *actions[] = {
         "/main-menu/file-menu/save-copy",
         //"/main-menu/file-menu/print",
@@ -1679,7 +1680,7 @@ static void
 rstto_main_activate_go_menu_actions (RsttoMainWindow *window, gboolean activate)
 {
     GtkWidget   *widget;
-    gint         i;
+    guint        i;
     const gchar *actions[] = {
         "/main-menu/go-menu/forward",
         "/main-menu/go-menu/back",
@@ -1698,7 +1699,7 @@ static void
 rstto_main_activate_view_menu_actions (RsttoMainWindow *window, gboolean activate)
 {
     GtkWidget   *widget;
-    gint         i;
+    guint        i;
     const gchar *actions[] = {
         "/main-menu/view-menu/set-as-wallpaper",
         "/main-menu/view-menu/zoom-menu",
@@ -1718,7 +1719,7 @@ static void
 rstto_main_activate_popup_menu_actions (RsttoMainWindow *window, gboolean activate)
 {
     GtkWidget   *widget;
-    gint         i;
+    guint        i;
     const gchar *actions[] = {
         "/image-viewer-menu/close",
         "/image-viewer-menu/open-with-menu",
@@ -1739,7 +1740,7 @@ static void
 rstto_main_activate_toolbar_actions (RsttoMainWindow *window, gboolean activate)
 {
     GtkWidget   *widget;
-    gint         i;
+    guint        i;
     const gchar *actions[] = {
         "/main-toolbar/save-copy",
         "/main-toolbar/edit",
