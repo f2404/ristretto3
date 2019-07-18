@@ -59,6 +59,7 @@ enum
     PROP_MODEL,
     PROP_ACTIVE,
     PROP_SHOW_TEXT,
+    PROP_SCROLLED_WINDOW
 };
 
 enum
@@ -416,6 +417,19 @@ rstto_icon_bar_class_init (RsttoIconBarClass *klass)
                 TRUE,
                 G_PARAM_READWRITE));
 
+    /**
+     * RsttoIconBar:s_window:
+     *
+     * The scrolled window icon bar is placed into.
+     **/
+    g_object_class_install_property (gobject_class,
+            PROP_SCROLLED_WINDOW,
+            g_param_spec_object ("scrolled-window",
+                _("Scrolled window"),
+                _("Scrolled window icon bar is placed into"),
+                GTK_TYPE_WIDGET,
+                G_PARAM_READWRITE));
+
     gtk_widget_class_install_style_property (gtkwidget_class,
             g_param_spec_boxed ("active-item-fill-color",
                 _("Active item fill color"),
@@ -573,6 +587,10 @@ rstto_icon_bar_get_property (
             g_value_set_boolean (value, rstto_icon_bar_get_show_text (icon_bar));
             break;
 
+        case PROP_SCROLLED_WINDOW:
+            g_value_set_object (value, icon_bar->priv->s_window);
+            break;
+
         default:
             G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
             break;
@@ -589,6 +607,7 @@ rstto_icon_bar_set_property (
         GParamSpec   *pspec)
 {
     RsttoIconBar *icon_bar = RSTTO_ICON_BAR (object);
+    GtkWidget    *hscrollbar, *vscrollbar;
 
     switch (prop_id)
     {
@@ -610,6 +629,15 @@ rstto_icon_bar_set_property (
 
         case PROP_SHOW_TEXT:
             rstto_icon_bar_set_show_text (icon_bar, g_value_get_boolean (value));
+            break;
+
+        case PROP_SCROLLED_WINDOW:
+            icon_bar->priv->s_window = g_value_get_object (value);
+            hscrollbar = gtk_scrolled_window_get_hscrollbar (GTK_SCROLLED_WINDOW (icon_bar->priv->s_window));
+            vscrollbar = gtk_scrolled_window_get_vscrollbar (GTK_SCROLLED_WINDOW (icon_bar->priv->s_window));
+            g_signal_connect_swapped (icon_bar->priv->s_window, "scroll-event", G_CALLBACK (rstto_icon_bar_scroll), icon_bar);
+            g_signal_connect_swapped (hscrollbar, "scroll-event", G_CALLBACK (rstto_icon_bar_scroll), icon_bar);
+            g_signal_connect_swapped (vscrollbar, "scroll-event", G_CALLBACK (rstto_icon_bar_scroll), icon_bar);
             break;
 
         default:
@@ -1013,7 +1041,6 @@ rstto_icon_bar_scroll (
         GtkWidget      *widget,
         GdkEventScroll *event)
 {
-#if 0
     RsttoIconBar  *icon_bar   = RSTTO_ICON_BAR (widget);
     GtkAdjustment *adjustment = NULL;
     gdouble        val        = 0;
@@ -1022,12 +1049,12 @@ rstto_icon_bar_scroll (
 
     if (icon_bar->priv->orientation == GTK_ORIENTATION_VERTICAL)
     {
-        adjustment = icon_bar->priv->vadjustment;
+        adjustment = gtk_scrolled_window_get_vadjustment (GTK_SCROLLED_WINDOW (icon_bar->priv->s_window));
         step_size = icon_bar->priv->item_height / 2.0;
     }
     else
     {
-        adjustment = icon_bar->priv->hadjustment;
+        adjustment = gtk_scrolled_window_get_hadjustment (GTK_SCROLLED_WINDOW (icon_bar->priv->s_window));
         step_size = icon_bar->priv->item_width / 2.0;
     }
 
@@ -1038,17 +1065,41 @@ rstto_icon_bar_scroll (
     {
         case GDK_SCROLL_UP:
         case GDK_SCROLL_LEFT:
-            val-=step_size;
-            if (val<0) val = 0.0;
+            val -= step_size;
+            if (val < 0) val = 0.0;
             break;
         case GDK_SCROLL_DOWN:
         case GDK_SCROLL_RIGHT:
-            val+=step_size;
+            val += step_size;
             if (val > max_value) val = max_value;
             break;
+
+        default: /* GDK_SCROLL_SMOOTH */
+            if (icon_bar->priv->orientation == GTK_ORIENTATION_VERTICAL)
+            {
+                if (event->delta_y < 0) {
+                    val -= step_size;
+                    if (val < 0) val = 0.0;
+                } else if (event->delta_y > 0) {
+                    val += step_size;
+                    if (val > max_value) val = max_value;
+                }
+            }
+            else
+            {
+                if (event->delta_y < 0) {
+                    val -= step_size;
+                    if (val<0) val = 0.0;
+                } else if (event->delta_y > 0) {
+                    val += step_size;
+                    if (val > max_value) val = max_value;
+                }
+            }
+            break;
     }
+
     gtk_adjustment_set_value (adjustment, val);
-#endif
+
     return TRUE;
 }
 
@@ -1654,10 +1705,9 @@ rstto_icon_bar_new (GtkWidget *s_window)
 {
     g_return_val_if_fail (GTK_IS_SCROLLED_WINDOW (s_window), NULL);
 
-    GtkWidget *icon_bar = g_object_new (RSTTO_TYPE_ICON_BAR, NULL);
-    RSTTO_ICON_BAR (icon_bar)->priv->s_window = s_window;
-
-    return icon_bar;
+    return g_object_new (RSTTO_TYPE_ICON_BAR,
+            "scrolled-window", s_window,
+            NULL);
 }
 
 
