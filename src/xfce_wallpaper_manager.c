@@ -248,14 +248,13 @@ rstto_xfce_wallpaper_manager_check_running (RsttoWallpaperManager *self)
 {
     gchar selection_name[100];
     Atom xfce_selection_atom;
-    GdkScreen *gdk_screen = gdk_screen_get_default();
-    gint xscreen = gdk_screen_get_number(gdk_screen);
-    Display *gdk_display = gdk_x11_get_default_xdisplay();
+    gint xscreen = 0;
+    Display *gdk_display = gdk_x11_get_default_xdisplay ();
 
     g_snprintf(selection_name, 100, XFDESKTOP_SELECTION_FMT, xscreen);
 
     xfce_selection_atom = XInternAtom (gdk_display, selection_name, False);
-    if((XGetSelectionOwner(gdk_display, xfce_selection_atom)))
+    if ((XGetSelectionOwner (gdk_display, xfce_selection_atom)))
     {
         return TRUE;
     }
@@ -281,8 +280,8 @@ rstto_xfce_wallpaper_manager_set (RsttoWallpaperManager *self, RsttoFile *file)
 
     workspace_nr = rstto_get_active_workspace_number (gdk_screen);
 
-    monitor_name = gdk_screen_get_monitor_plug_name (gdk_screen,
-            manager->priv->monitor);
+    monitor_name = gdk_monitor_get_model (
+            gdk_display_get_monitor (display, manager->priv->monitor));
 
     /* New properties since xfdesktop >= 4.11 */
     if (monitor_name)
@@ -400,8 +399,8 @@ rstto_xfce_wallpaper_manager_init (GObject *object)
 {
     RsttoXfceWallpaperManager *manager = RSTTO_XFCE_WALLPAPER_MANAGER (object);
     gint i;
-    GdkScreen *screen = gdk_screen_get_default ();
-    gint n_monitors = gdk_screen_get_n_monitors (screen);
+    GdkDisplay *display = gdk_display_get_default ();
+    gint n_monitors = gdk_display_get_n_monitors (display);
     GdkRectangle monitor_geometry;
     GtkWidget *vbox;
     GtkWidget *style_label = gtk_label_new (_("Style:"));
@@ -442,9 +441,8 @@ rstto_xfce_wallpaper_manager_init (GObject *object)
 
     for (i = 0; i < n_monitors; ++i)
     {
-        gdk_screen_get_monitor_geometry (
-                screen,
-                i,
+        gdk_monitor_get_geometry (
+                gdk_display_get_monitor (display, i),
                 &monitor_geometry);
         rstto_monitor_chooser_add (
                 RSTTO_MONITOR_CHOOSER (manager->priv->monitor_chooser),
@@ -504,7 +502,8 @@ rstto_xfce_wallpaper_manager_init (GObject *object)
             GTK_COMBO_BOX (manager->priv->style_combo),
             3);
 
-    manager->priv->screen = gdk_screen_get_number (screen);
+    // there's only one screen in GTK3
+    manager->priv->screen = 0;
 
     gtk_window_set_resizable (GTK_WINDOW (manager->priv->dialog), FALSE);
 
